@@ -20,10 +20,12 @@
     "--dana-input-border": "rgba(255,255,255,0.45)",
     "--dana-send-bg": "#8F0046",
     "--dana-send-fg": "#ffffff",
-    "--dana-chat-overlay": "rgba(143, 0, 70, 0.28)",
-    "--dana-glass-bg": "rgba(255, 255, 255, 0.16)",
-    "--dana-glass-border": "rgba(255, 255, 255, 0.28)",
-    "--dana-glass-blur": "18px"
+    "--dana-chat-overlay": "rgba(80, 0, 40, 0.42)",
+    "--dana-glass-bg": "rgba(255, 255, 255, 0.18)",
+    "--dana-glass-border": "rgba(255, 255, 255, 0.32)",
+    "--dana-glass-blur": "18px",
+    "--dana-text-shadow": "0 1px 2px rgba(0, 0, 0, 0.65), 0 2px 12px rgba(0, 0, 0, 0.35)",
+    "--dana-text-glow": "0 0 14px rgba(255, 255, 255, 0.22)"
   },
   "logo": "/static/dana/brand/icons/dana-icon-512.png",
   "favicon": "/static/dana/brand/icons/dana-icon-512.png",
@@ -40,15 +42,48 @@
   },
   "copy": {
     "product_name": "دانا",
-    "subtitle": "محصول شرکت اعتبارسنجی ایران (ICS)",
-    "empty_title": "سلام، من دانا هستم",
-    "empty_body": "دستیار هوشمند اعتبارسنجی ایران. سؤال خود را به فارسی بپرسید.",
+    "subtitle": "شرکت اعتبارسنجی ایران",
+    "empty_title": "دانا",
+    "empty_body": "سؤال اعتبارسنجی خود را بپرسید.",
     "placeholder": "پیام خود را بنویسید…",
     "send": "ارسال",
     "feedback_useful": "مفید بود",
     "feedback_not_useful": "مفید نبود",
-    "feedback_report": "گزارش خطا"
+    "feedback_report": "گزارش خطا",
+    "suggestions_heading": "پیشنهادها"
   },
+  "prompt_suggestions": [
+    {
+      "id": "dana-credit-score",
+      "title": ["رتبه اعتباری", "معنای نمره و بازه‌ها"],
+      "content": "رتبه اعتباری چیست و بازه‌های نمره اعتباری چگونه تفسیر می‌شوند؟"
+    },
+    {
+      "id": "dana-report-howto",
+      "title": ["گزارش اعتباری", "چگونه دریافت کنم؟"],
+      "content": "چگونه می‌توانم گزارش اعتباری خود را از شرکت اعتبارسنجی ایران دریافت کنم؟"
+    },
+    {
+      "id": "dana-company-check",
+      "title": ["استعلام شرکت", "وضعیت و سوابق"],
+      "content": "چگونه وضعیت اعتباری و سوابق یک شرکت را بررسی کنم؟"
+    },
+    {
+      "id": "dana-improve-score",
+      "title": ["بهبود رتبه", "اقدامات مؤثر"],
+      "content": "چه اقداماتی برای بهبود رتبه اعتباری مؤثر است؟"
+    },
+    {
+      "id": "dana-dispute",
+      "title": ["اعتراض به گزارش", "فرآیند اصلاح"],
+      "content": "در صورت وجود خطا در گزارش اعتباری، فرآیند اعتراض و اصلاح چگونه است؟"
+    },
+    {
+      "id": "dana-loan-eligibility",
+      "title": ["وام و تسهیلات", "نقش رتبه اعتباری"],
+      "content": "رتبه اعتباری چه نقشی در دریافت وام و تسهیلات بانکی دارد؟"
+    }
+  ],
   "component_tokens": {
     "input_radius": "1rem",
     "button_radius": "9999px",

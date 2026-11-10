@@ -108,14 +108,18 @@
 		$config?.license_metadata?.chat_placeholder_description ||
 		resolveLocalizedModelDescription(selectedModel, $i18n.language);
 	$: selectedSuggestionPrompts =
-		resolveLocalizedModelPromptSuggestions(atSelectedModel, $i18n.language) ??
-		resolveLocalizedModelPromptSuggestions(models[selectedModelIdx], $i18n.language) ??
-		resolveLocalizedPromptSuggestions(
-			$config?.default_prompt_suggestions,
-			$config?.default_prompt_suggestions_i18n ?? {},
-			$i18n.language,
-			(key) => $i18n.t(key)
-		);
+		$isDanaBranded &&
+		Array.isArray($danaThemePack?.prompt_suggestions) &&
+		$danaThemePack.prompt_suggestions.length > 0
+			? $danaThemePack.prompt_suggestions
+			: (resolveLocalizedModelPromptSuggestions(atSelectedModel, $i18n.language) ??
+				resolveLocalizedModelPromptSuggestions(models[selectedModelIdx], $i18n.language) ??
+				resolveLocalizedPromptSuggestions(
+					$config?.default_prompt_suggestions,
+					$config?.default_prompt_suggestions_i18n ?? {},
+					$i18n.language,
+					(key) => $i18n.t(key)
+				));
 
 	// True when viewing a shared folder the current user doesn't own AND lacks write access
 	$: folderReadOnly =
@@ -192,7 +196,9 @@
 					</div>
 
 					<h2
-						class=" text-2xl @sm:text-2xl line-clamp-1 flex items-center"
+						class="{$isDanaBranded
+							? 'dana-empty-title text-4xl @sm:text-5xl font-bold tracking-tight'
+							: 'text-2xl @sm:text-2xl'} line-clamp-1 flex items-center"
 						in:fade={{ duration: 100 }}
 						dir={$isDanaBranded ? 'rtl' : undefined}
 					>
@@ -218,10 +224,13 @@
 				<div class="flex mt-1 mb-2">
 					<div in:fade={{ duration: 100, delay: 50 }}>
 						{#if $isDanaBranded && $danaThemePack?.copy?.empty_body}
-							<div class="mt-0.5 px-2 text-sm font-normal text-gray-500 dark:text-gray-400 line-clamp-3 max-w-xl" dir="rtl">
+							<div
+								class="dana-empty-subtitle mt-1 px-2 text-base font-normal text-gray-500 dark:text-gray-200 line-clamp-2 max-w-xl"
+								dir="rtl"
+							>
 								{$danaThemePack.copy.empty_body}
 								{#if $danaThemePack.copy.subtitle}
-									<div class="mt-1 text-xs opacity-80">{$danaThemePack.copy.subtitle}</div>
+									<div class="mt-1 text-sm opacity-90">{$danaThemePack.copy.subtitle}</div>
 								{/if}
 							</div>
 						{:else if selectedModelDescription}

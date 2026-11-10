@@ -4,6 +4,7 @@
 	import DOMPurify from 'dompurify';
 
 	import { config, user, models as _models, temporaryChatEnabled } from '$lib/stores';
+	import { danaThemePack, isDanaBranded } from '$lib/dana/theme';
 	import { onMount, getContext } from 'svelte';
 
 	import { blur, fade } from 'svelte/transition';
@@ -45,14 +46,18 @@
 		$config?.license_metadata?.chat_placeholder_description ||
 		resolveLocalizedModelDescription(selectedModel, $i18n.language);
 	$: selectedSuggestionPrompts =
-		resolveLocalizedModelPromptSuggestions(atSelectedModel, $i18n.language) ??
-		resolveLocalizedModelPromptSuggestions(models[selectedModelIdx], $i18n.language) ??
-		resolveLocalizedPromptSuggestions(
-			$config?.default_prompt_suggestions,
-			$config?.default_prompt_suggestions_i18n ?? {},
-			$i18n.language,
-			(key) => $i18n.t(key)
-		);
+		$isDanaBranded &&
+		Array.isArray($danaThemePack?.prompt_suggestions) &&
+		$danaThemePack.prompt_suggestions.length > 0
+			? $danaThemePack.prompt_suggestions
+			: (resolveLocalizedModelPromptSuggestions(atSelectedModel, $i18n.language) ??
+				resolveLocalizedModelPromptSuggestions(models[selectedModelIdx], $i18n.language) ??
+				resolveLocalizedPromptSuggestions(
+					$config?.default_prompt_suggestions,
+					$config?.default_prompt_suggestions_i18n ?? {},
+					$i18n.language,
+					(key) => $i18n.t(key)
+				));
 
 	onMount(() => {
 		mounted = true;

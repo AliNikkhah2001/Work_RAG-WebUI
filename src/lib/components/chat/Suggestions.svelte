@@ -3,6 +3,7 @@
 	import Bolt from '$lib/components/icons/Bolt.svelte';
 	import { getContext } from 'svelte';
 	import { settings, WEBUI_NAME } from '$lib/stores';
+	import { danaThemePack, isDanaBranded } from '$lib/dana/theme';
 	import { WEBUI_VERSION } from '$lib/constants';
 
 	const i18n = getContext('i18n');
@@ -62,10 +63,17 @@
 	}
 </script>
 
-<div class="mb-1 flex gap-1 text-xs font-normal items-center text-gray-600 dark:text-gray-400">
+<div
+	class="dana-suggestions mb-1 flex gap-1 text-xs font-normal items-center text-gray-600 dark:text-gray-400"
+	dir={$isDanaBranded ? 'rtl' : undefined}
+>
 	{#if filteredPrompts.length > 0}
 		<Bolt />
-		<h3 id="suggestions-heading">{$i18n.t('Suggested')}</h3>
+		<h3 id="suggestions-heading">
+			{$isDanaBranded && $danaThemePack?.copy?.suggestions_heading
+				? $danaThemePack.copy.suggestions_heading
+				: $i18n.t('Suggested')}
+		</h3>
 	{:else}
 		<!-- Keine Vorschläge -->
 
@@ -82,7 +90,7 @@
 	{/if}
 </div>
 
-<div class="h-36 w-full">
+<div class="dana-suggestions h-36 w-full" dir={$isDanaBranded ? 'rtl' : undefined}>
 	{#if filteredPrompts.length > 0}
 		<div
 			role="list"
@@ -92,13 +100,15 @@
 			{#each filteredPrompts as prompt, idx (prompt.id || `${prompt.content}-${idx}`)}
 				<div role="listitem" class="contents">
 					<button
-						class="waterfall flex flex-col flex-1 shrink-0 w-full justify-between
+						class="waterfall dana-suggestion-item flex flex-col flex-1 shrink-0 w-full justify-between
 				       px-2.5 py-1.5 rounded-lg bg-transparent transition-colors
 				       hover:text-gray-950 dark:hover:text-white group"
 						style="animation-delay: {idx * 45}ms"
 						on:click={() => onSelect({ type: 'prompt', data: prompt.content })}
 					>
-						<div class="flex flex-col text-left leading-snug">
+						<div
+							class="flex flex-col leading-snug {$isDanaBranded ? 'text-start' : 'text-left'}"
+						>
 							{#if prompt.title && prompt.title[0] !== ''}
 								<div
 									class="text-sm font-normal group-hover:text-gray-950 dark:text-gray-300 dark:group-hover:text-white transition line-clamp-1"

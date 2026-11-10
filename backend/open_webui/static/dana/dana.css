@@ -331,6 +331,9 @@ html.dana-theme #splash-screen.dana-splash {
 html.dana-theme[data-dana-theme='ics-dark'] {
   color-scheme: dark;
   background-color: var(--dana-bg, #8f0046);
+  --dana-readable-shadow:
+    var(--dana-text-shadow, 0 1px 2px rgba(0, 0, 0, 0.65), 0 2px 12px rgba(0, 0, 0, 0.35)),
+    var(--dana-text-glow, 0 0 14px rgba(255, 255, 255, 0.22));
 }
 
 html.dana-theme[data-dana-theme='ics-dark'] body,
@@ -344,12 +347,13 @@ html.dana-theme[data-dana-theme='ics-dark'] [data-main-chat-pane] {
 html.dana-theme[data-dana-theme='ics-dark'] #auth-login-card,
 html.dana-theme[data-dana-theme='ics-dark'] .dana-composer,
 html.dana-theme[data-dana-theme='ics-dark'] [data-dana-composer='1'] {
-  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.16)) !important;
+  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.18)) !important;
   backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
   -webkit-backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
-  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.28)) !important;
+  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.32)) !important;
   color: #fff !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+  text-shadow: var(--dana-readable-shadow);
 }
 
 /* Conversation bubbles — mid-transparent glassmorphism */
@@ -360,17 +364,59 @@ html.dana-theme[data-dana-theme='ics-dark'] #messages-container .dark\:bg-gray-8
 html.dana-theme[data-dana-theme='ics-dark'] #chat-container .bg-gray-50,
 html.dana-theme[data-dana-theme='ics-dark'] #chat-container .dark\:bg-gray-800,
 html.dana-theme[data-dana-theme='ics-dark'] #chat-container .dark\:bg-gray-850 {
-  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.16)) !important;
+  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.18)) !important;
   backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
   -webkit-backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
-  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.28));
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.32));
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
   color: #fff !important;
 }
 
 html.dana-theme[data-dana-theme='ics-dark'] #messages-container .markdown-prose,
-html.dana-theme[data-dana-theme='ics-dark'] #messages-container .markdown-prose * {
-  color: inherit;
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container .markdown-prose *,
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container p,
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container li,
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container span,
+html.dana-theme[data-dana-theme='ics-dark'] #chat-container textarea,
+html.dana-theme[data-dana-theme='ics-dark'] #chat-container [contenteditable='true'] {
+  color: #fff !important;
+  text-shadow: var(--dana-readable-shadow);
+}
+
+/* Empty state + suggestions stay readable over motion watermark */
+html.dana-theme[data-dana-theme='ics-dark'] .dana-empty-title,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-empty-subtitle,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-suggestions,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-suggestions #suggestions-heading,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-suggestion-item,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-suggestion-item * {
+  color: #fff !important;
+  text-shadow: var(--dana-readable-shadow);
+}
+
+html.dana-theme[data-dana-theme='ics-dark'] .dana-suggestion-item:hover,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-suggestion-item:hover * {
+  color: #fff !important;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.75),
+    0 0 18px rgba(255, 255, 255, 0.35);
+}
+
+html.dana-theme[data-dana-theme='ics-dark'] .dana-magic-root,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-score-gauge,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-timeline,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-info-banner {
+  color: #fff;
+  text-shadow: var(--dana-readable-shadow);
+}
+
+/* Mobile: denser glass so long Persian body stays sharp over the watermark */
+@media (max-width: 640px) {
+  html.dana-theme[data-dana-theme='ics-dark'] {
+    --dana-glass-bg: rgba(70, 0, 35, 0.72);
+    --dana-glass-blur: 10px;
+    --dana-chat-overlay: rgba(60, 0, 30, 0.55);
+  }
 }
 
 .dana-chat-bg {
@@ -404,7 +450,19 @@ html.dana-theme[data-dana-theme='ics-dark'] #messages-container .markdown-prose 
 .dana-chat-bg__veil {
   position: absolute;
   inset: 0;
-  background: var(--dana-chat-overlay, rgba(143, 0, 70, 0.28));
+  background:
+    linear-gradient(180deg, rgba(40, 0, 20, 0.35) 0%, transparent 28%, transparent 72%, rgba(40, 0, 20, 0.45) 100%),
+    var(--dana-chat-overlay, rgba(80, 0, 40, 0.42));
+}
+
+/* Light maroon: keep empty-state brand hierarchy without dark-only glow */
+html.dana-theme[data-dana-theme='ics-maroon'] .dana-empty-title {
+  color: var(--dana-primary, #ba0c54);
+  letter-spacing: 0;
+}
+
+html.dana-theme[data-dana-theme='ics-maroon'] .dana-empty-subtitle {
+  color: #3a3a3a;
 }
 
 html.dana-theme[data-dana-theme='ics-dark'] .app,
