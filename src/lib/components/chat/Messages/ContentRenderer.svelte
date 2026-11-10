@@ -25,7 +25,6 @@
 	import { createMessagesList, replaceOutsideCode } from '$lib/utils';
 	import { loadMagicCatalog, parseMagicSegments } from '$lib/dana/magic';
 	import MagicRenderer from '$lib/components/dana/magic/MagicRenderer.svelte';
-	import type { MagicSegment } from '$lib/dana/types';
 
 	/**
 	 * Extracts all top-level <details>...</details> blocks from content,
