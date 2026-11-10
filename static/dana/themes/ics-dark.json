@@ -9,29 +9,34 @@
     "cssUrl": "https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css"
   },
   "colors": {
-    "--dana-primary": "#BA0C54",
-    "--dana-primary-shade": "#2C0015",
-    "--dana-primary-deep": "#6D0035",
+    "--dana-primary": "#8F0046",
+    "--dana-primary-shade": "#5C002E",
+    "--dana-primary-deep": "#3D001F",
     "--dana-primary-tint": "#e8a0c0",
-    "--dana-accent": "#ff6b9d",
-    "--dana-bg": "#6D0035",
+    "--dana-accent": "#c44a7a",
+    "--dana-bg": "#8F0046",
     "--dana-fg": "#ffffff",
-    "--dana-splash-bg": "#6D0035",
-    "--dana-input-border": "#ffffff",
-    "--dana-send-bg": "#BA0C54",
+    "--dana-splash-bg": "#8F0046",
+    "--dana-input-border": "rgba(255,255,255,0.45)",
+    "--dana-send-bg": "#8F0046",
     "--dana-send-fg": "#ffffff",
-    "--dana-chat-overlay": "rgba(44, 0, 21, 0.55)"
+    "--dana-chat-overlay": "rgba(143, 0, 70, 0.28)",
+    "--dana-glass-bg": "rgba(255, 255, 255, 0.16)",
+    "--dana-glass-border": "rgba(255, 255, 255, 0.28)",
+    "--dana-glass-blur": "18px"
   },
   "logo": "/static/dana/brand/icons/dana-icon-512.png",
   "favicon": "/static/dana/brand/icons/dana-icon-512.png",
   "keyvisual": "/static/dana/brand/keyvisual/stair-hero.png",
   "splash": {
     "webm": "/static/dana/brand/motion/ics-white-logo-hor.webm",
-    "gif": "/static/dana/brand/motion/ics-white-logo-hor.gif"
+    "gif": "/static/dana/brand/backgrounds/ics-white-logo-chat.gif"
   },
   "chat_background": {
+    "image": "/static/dana/brand/backgrounds/ics-pdf-chat-bg-1280.png",
+    "gif": "/static/dana/brand/backgrounds/ics-white-logo-chat.gif",
     "webm": "/static/dana/brand/motion/ics-white-logo-hor.webm",
-    "gif": "/static/dana/brand/motion/ics-white-logo-hor.gif"
+    "still": "/static/dana/brand/backgrounds/ics-white-logo-still.png"
   },
   "copy": {
     "product_name": "دانا",
@@ -47,7 +52,7 @@
   "component_tokens": {
     "input_radius": "1rem",
     "button_radius": "9999px",
-    "sidebar_accent": "#BA0C54"
+    "sidebar_accent": "#8F0046"
   },
   "feedback": {
     "show_useful": true,

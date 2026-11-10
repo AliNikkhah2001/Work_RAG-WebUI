@@ -195,14 +195,14 @@
 				<script>
 					(() => {
 						try {
-							const rawTheme = localStorage.getItem('dana.theme_id') || 'ics-maroon';
+							const rawTheme = localStorage.getItem('dana.theme_id') || 'ics-dark';
 							const themeId = rawTheme === 'ics-gauge' ? 'ics-dark' : rawTheme;
 							if (!themeId || themeId === 'vanilla') return;
 							const splash = document.getElementById('splash-screen');
 							const isDark = themeId === 'ics-dark';
 							if (splash) {
 								splash.classList.add('dana-splash');
-								splash.style.background = isDark ? '#6D0035' : '#2C0015';
+								splash.style.background = isDark ? '#8F0046' : '#2C0015';
 							}
 							const video = document.getElementById('dana-splash-video');
 							const gif = document.getElementById('dana-splash-gif');

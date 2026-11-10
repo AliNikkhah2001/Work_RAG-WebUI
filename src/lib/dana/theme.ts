@@ -48,6 +48,7 @@ function removeStylesheet(id: string) {
 export function resolveInitialDanaThemeId(): DanaThemeId {
 	const fromConfig = (get(config) as any)?.ui?.default_interface_settings?.dana_theme_id;
 	const fromStorage = localStorage.getItem(DANA_STORAGE_KEY);
+	// Prefer admin/config default so freshly set ics-dark wins over stale localStorage
 	const raw = (fromConfig || fromStorage || DANA_DEFAULT_THEME) as string;
 	const candidate = DANA_THEME_ALIASES[raw] || raw;
 	return (DANA_THEME_IDS as readonly string[]).includes(candidate)

@@ -122,10 +122,11 @@ html.dana-theme #splash-screen.dana-splash {
   }
 }
 
-/* Dark-red brand shell + animated chat background */
+/* Dark-red brand shell + animated chat background
+   Brand red sampled from ICS_white-Logo motion BG: #8F0046 */
 html.dana-theme[data-dana-theme='ics-dark'] {
   color-scheme: dark;
-  background-color: var(--dana-bg, #6d0035);
+  background-color: var(--dana-bg, #8f0046);
 }
 
 html.dana-theme[data-dana-theme='ics-dark'] body,
@@ -139,9 +140,33 @@ html.dana-theme[data-dana-theme='ics-dark'] [data-main-chat-pane] {
 html.dana-theme[data-dana-theme='ics-dark'] #auth-login-card,
 html.dana-theme[data-dana-theme='ics-dark'] .dana-composer,
 html.dana-theme[data-dana-theme='ics-dark'] [data-dana-composer='1'] {
-  background-color: color-mix(in srgb, #2c0015 70%, transparent) !important;
-  border-color: color-mix(in srgb, #fff 35%, transparent) !important;
+  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.16)) !important;
+  backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.28)) !important;
   color: #fff !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Conversation bubbles — mid-transparent glassmorphism */
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container .bg-gray-50,
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container .bg-gray-100,
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container .dark\:bg-gray-800,
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container .dark\:bg-gray-850,
+html.dana-theme[data-dana-theme='ics-dark'] #chat-container .bg-gray-50,
+html.dana-theme[data-dana-theme='ics-dark'] #chat-container .dark\:bg-gray-800,
+html.dana-theme[data-dana-theme='ics-dark'] #chat-container .dark\:bg-gray-850 {
+  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.16)) !important;
+  backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.28));
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+  color: #fff !important;
+}
+
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container .markdown-prose,
+html.dana-theme[data-dana-theme='ics-dark'] #messages-container .markdown-prose * {
+  color: inherit;
 }
 
 .dana-chat-bg {
@@ -150,7 +175,7 @@ html.dana-theme[data-dana-theme='ics-dark'] [data-dana-composer='1'] {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: var(--dana-bg, #6d0035);
+  background: var(--dana-bg, #8f0046);
 }
 
 .dana-chat-bg__media {
@@ -160,17 +185,30 @@ html.dana-theme[data-dana-theme='ics-dark'] [data-dana-composer='1'] {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.92;
+}
+
+.dana-chat-bg__still {
+  opacity: 1;
+  filter: saturate(1.05);
+}
+
+.dana-chat-bg__motion {
+  opacity: 0.72;
+  mix-blend-mode: normal;
 }
 
 .dana-chat-bg__veil {
   position: absolute;
   inset: 0;
-  background: var(--dana-chat-overlay, rgba(44, 0, 21, 0.55));
+  background: var(--dana-chat-overlay, rgba(143, 0, 70, 0.28));
 }
 
 html.dana-theme[data-dana-theme='ics-dark'] .app,
 html.dana-theme[data-dana-theme='ics-dark'] #chat-container {
   position: relative;
   z-index: 1;
+}
+
+html.dana-theme[data-dana-theme='ics-dark'] #splash-screen.dana-splash {
+  background: var(--dana-splash-bg, #8f0046) !important;
 }
