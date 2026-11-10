@@ -14,6 +14,12 @@ export type DanaThemePack = {
 	splash: { webm?: string; gif?: string } | null;
 	chat_background?: { webm?: string; gif?: string; image?: string; still?: string } | null;
 	copy: Record<string, string>;
+	/** ICS/credit starter prompts; overrides Open WebUI stock suggestions when present. */
+	prompt_suggestions?: Array<{
+		title: [string, string] | string[];
+		content: string;
+		id?: string;
+	}>;
 	component_tokens: Record<string, string>;
 	feedback: { show_useful?: boolean; show_report?: boolean };
 };
