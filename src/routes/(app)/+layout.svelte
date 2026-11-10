@@ -43,6 +43,7 @@
 		chatId,
 		chats
 	} from '$lib/stores';
+	import { isDanaBranded } from '$lib/dana/theme';
 
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import SettingsModal from '$lib/components/chat/SettingsModal.svelte';
@@ -490,7 +491,9 @@
 			{#if !['user', 'admin'].includes($user?.role)}
 				<AccountPending />
 			{:else}
-				<Sidebar />
+				{#if !$isDanaBranded}
+					<Sidebar />
+				{/if}
 
 				{#if loaded}
 					<main class="contents">

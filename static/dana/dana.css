@@ -2,7 +2,9 @@
 
 html.dana-theme {
   --primary: var(--dana-primary, #ba0c54);
+  --app-text-scale: 1.28;
   font-family: var(--dana-font-sans, "Vazirmatn", ui-sans-serif, system-ui, sans-serif);
+  font-size: 112.5%; /* ~18px base vs typical 16px */
 }
 
 html.dana-theme body {
@@ -11,6 +13,27 @@ html.dana-theme body {
 
 html.dana-theme[dir='rtl'] .markdown-prose {
   text-align: right;
+  font-size: 1.05em;
+  line-height: 1.75;
+}
+
+/* Remove left app sidebar + right controls/tabs entirely for branded Dana */
+html.dana-theme #sidebar,
+html.dana-theme [data-sidebar],
+html.dana-theme #controls-container,
+html.dana-theme [data-chat-controls] {
+  display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+html.dana-theme #chat-container,
+html.dana-theme [data-main-chat-pane],
+html.dana-theme .app > div {
+  max-width: 100% !important;
 }
 
 /* Chat composer */

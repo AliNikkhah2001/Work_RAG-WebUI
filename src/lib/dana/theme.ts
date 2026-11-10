@@ -1,6 +1,7 @@
 import { derived, get, writable } from 'svelte/store';
-import { WEBUI_NAME, config, settings } from '$lib/stores';
+import { WEBUI_NAME, config, settings, showSidebar, showTabs } from '$lib/stores';
 import { changeLanguage } from '$lib/i18n';
+import { setTextScale } from '$lib/utils/text-scale';
 import type { DanaThemeId, DanaThemePack } from './types';
 
 export const DANA_THEME_IDS = ['ics-maroon', 'ics-gauge', 'vanilla'] as const;
@@ -66,12 +67,18 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 		root.removeAttribute('data-dana-theme');
 		removeStylesheet('dana-brand-css');
 		removeStylesheet('dana-font-css');
+		setTextScale(1);
 		danaReady.set(true);
 		return;
 	}
 
 	root.classList.add('dana-theme');
 	root.setAttribute('data-dana-theme', pack.id);
+
+	// Immersive chat chrome: no left/right side panels
+	showSidebar.set(false);
+	showTabs.set(false);
+	setTextScale(1.28);
 
 	for (const [k, v] of Object.entries(pack.colors || {})) {
 		root.style.setProperty(k, v);

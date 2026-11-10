@@ -17,6 +17,7 @@
 		temporaryChatEnabled,
 		user
 	} from '$lib/stores';
+	import { isDanaBranded } from '$lib/dana/theme';
 
 	import { slide } from 'svelte/transition';
 	import { page } from '$app/stores';
@@ -334,7 +335,7 @@
 
 		<div class=" flex max-w-full w-full mx-auto bg-transparent">
 			<div class="flex items-center w-full max-w-full">
-				{#if $mobile && !$showSidebar}
+				{#if $mobile && !$showSidebar && !$isDanaBranded}
 					<div class="mr-1 flex flex-none items-center self-start">
 						<Tooltip content={$showSidebar ? $i18n.t('Close Sidebar') : $i18n.t('Open Sidebar')}>
 							<button
