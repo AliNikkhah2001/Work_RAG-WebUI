@@ -32,8 +32,8 @@ ARG USE_SLIM
 ARG UID
 ARG GID
 
-# Set Node.js options (heap limit Allocation failed - JavaScript heap out of memory)
-# ENV NODE_OPTIONS="--max-old-space-size=4096"
+# Cap Node heap for laptop Docker Desktop (~8Gi VM).
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 WORKDIR /app
 
