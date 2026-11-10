@@ -60,6 +60,14 @@ html.dana-theme #splash-screen.dana-splash {
 
 .dana-magic-root {
   margin: 0.75rem 0;
+  letter-spacing: 0;
+  line-height: 1.8;
+  font-family: var(--dana-font-sans, "Vazirmatn", ui-sans-serif, system-ui, sans-serif);
+}
+
+.dana-score-bands-wrap {
+  direction: rtl;
+  text-align: start;
 }
 
 .dana-score-bands {
@@ -73,26 +81,222 @@ html.dana-theme #splash-screen.dana-splash {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.35rem 0.75rem;
+  padding: 0.45rem 0.85rem;
+  min-height: 44px;
   border-radius: 9999px;
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--band, var(--dana-primary, #8f0046));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.dana-score-band.is-active {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  transform: translateY(-1px);
+}
+
+.dana-score-band__range {
+  opacity: 0.85;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.dana-score-bands__current {
+  margin-top: 0.65rem;
+  font-size: 0.9rem;
+  color: inherit;
+}
+
+/* Credit score gauge — vibefarsi ProgressRing pattern */
+.dana-score-gauge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  direction: rtl;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.14));
+  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.28));
+  backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+}
+
+.dana-score-gauge__ring {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.dana-score-gauge__svg {
+  transform: rotate(-90deg);
+  display: block;
+}
+
+.dana-score-gauge__arc {
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+}
+
+.dana-score-gauge__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+
+.dana-score-gauge__score {
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.dana-score-gauge__meta {
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+
+.dana-score-gauge__copy {
+  min-width: 0;
+  text-align: start;
+}
+
+.dana-score-gauge__label {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.dana-score-gauge__band {
+  margin: 0.2rem 0 0;
+  display: inline-block;
+  padding: 0.15rem 0.65rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--dana-primary, #8f0046) 75%, white);
+  color: #fff;
+  font-size: 0.78rem;
   font-weight: 600;
 }
 
+.dana-score-gauge__range {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* Company timeline — vibefarsi Timeline (RTL rail at inline-start) */
+.dana-timeline {
+  direction: rtl;
+  text-align: start;
+  padding: 1rem 1rem 0.85rem;
+  border-radius: 1rem;
+  background: var(--dana-glass-bg, rgba(255, 255, 255, 0.14));
+  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.28));
+  backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+}
+
+.dana-timeline__title {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.dana-timeline__list {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0.25rem 0;
+  list-style: none;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.28);
+  padding-inline-start: 1.15rem;
+}
+
+.dana-timeline__item {
+  position: relative;
+  margin: 0 0 1rem;
+}
+
+.dana-timeline__item:last-child {
+  margin-bottom: 0.25rem;
+}
+
+.dana-timeline__dot {
+  position: absolute;
+  inset-inline-start: calc(-1.15rem - 5px);
+  top: 0.4rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.dana-timeline__item.is-active .dana-timeline__dot {
+  background: var(--dana-primary, #8f0046);
+  border-color: #fff;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--dana-primary, #8f0046) 35%, transparent);
+}
+
+.dana-timeline__item-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.dana-timeline__date {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.dana-timeline__desc {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  opacity: 0.92;
+}
+
+.dana-timeline__empty {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
 .dana-info-banner {
-  border: 1px solid var(--dana-primary, #ba0c54);
-  background: color-mix(in srgb, var(--dana-primary, #ba0c54) 12%, white);
+  border: 1px solid var(--dana-glass-border, rgba(255, 255, 255, 0.28));
+  background: var(--dana-glass-bg, color-mix(in srgb, var(--dana-primary, #8f0046) 12%, white));
   border-radius: 0.75rem;
   padding: 0.85rem 1rem;
   direction: rtl;
-  text-align: right;
+  text-align: start;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .dana-info-banner strong {
-  color: var(--dana-primary-shade, #6d0035);
+  color: inherit;
   display: block;
   margin-bottom: 0.25rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dana-score-gauge__arc {
+    transition: none;
+  }
+  .dana-birthday-cake {
+    animation: none;
+  }
 }
 
 .dana-birthday {
