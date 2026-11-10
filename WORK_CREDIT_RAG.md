@@ -11,3 +11,14 @@ Remotes:
 
 - `origin` → `AliNikkhah2001/Work_RAG-WebUI`
 - `upstream` → `open-webui/open-webui`
+
+## Local Mac image build
+
+Docker Desktop (~8Gi) OOMs on the in-container Vite build. Use the host frontend build path:
+
+```bash
+bash components/webui/scripts/dana-local-image.sh
+# or npm ci && npm run build, then compose build webui (Dockerfile.local)
+```
+
+`Dockerfile` remains the full upstream multi-stage build for CI/machines with enough RAM.
