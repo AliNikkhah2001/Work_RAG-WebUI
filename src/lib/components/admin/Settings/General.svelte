@@ -26,6 +26,8 @@
 	import I18nSettings from './I18nSettings.svelte';
 	import { updateI18n } from '$lib/i18n';
 	import { entriesToI18n, i18nToEntries, type I18nEntry } from '$lib/utils/translationDictionary';
+	import DanaThemeAdmin from '$lib/components/dana/DanaThemeAdmin.svelte';
+	import { DANA_DEFAULT_THEME } from '$lib/dana/theme';
 
 	const i18n: any = getContext('i18n');
 
@@ -45,6 +47,7 @@
 
 	let banners: Banner[] = [];
 	let bannerLocale = '';
+	let danaThemeIdSetting = DANA_DEFAULT_THEME;
 	const inputClass =
 		'w-full h-7 rounded-lg border border-gray-100/50 bg-gray-50/40 px-2 text-xs text-gray-700 outline-hidden transition-colors placeholder:text-gray-300 focus:border-blue-400 dark:border-white/[0.04] dark:bg-white/[0.03] dark:text-gray-300 dark:placeholder:text-gray-700 dark:focus:border-blue-500';
 	const textareaClass =
@@ -87,7 +90,10 @@
 				SKILL_CONTENT_MAX_CHARS: adminConfig.SKILL_CONTENT_MAX_CHARS ?? null,
 				SKILL_PREVIEW_MAX_CHARS: adminConfig.SKILL_PREVIEW_MAX_CHARS ?? null,
 				VIEW_CHAT_MAX_CHARS: adminConfig.VIEW_CHAT_MAX_CHARS ?? null,
-				DEFAULT_INTERFACE_SETTINGS: defaultInterfaceSettings,
+				DEFAULT_INTERFACE_SETTINGS: {
+					...defaultInterfaceSettings,
+					dana_theme_id: danaThemeIdSetting
+				},
 				I18N: cleaned
 			});
 			if (!res) throw new Error($i18n.t('Failed to update settings'));
@@ -116,6 +122,10 @@
 	onMount(async () => {
 		adminConfig = await getAdminConfig(localStorage.token);
 		defaultInterfaceSettings = getDefaultInterfaceSettings();
+		danaThemeIdSetting =
+			(defaultInterfaceSettings?.dana_theme_id as string) ||
+			localStorage.getItem('dana.theme_id') ||
+			DANA_DEFAULT_THEME;
 		uiI18nEntries = i18nToEntries(adminConfig.I18N ?? {});
 
 		banners = [...$_banners];
@@ -277,6 +287,19 @@
 						</a>
 					{/if}
 				</div>
+			</AdminSettingSection>
+
+			<AdminSettingSection title="دانا / ICS Brand">
+				<DanaThemeAdmin
+					themeId={danaThemeIdSetting}
+					onChange={(id) => {
+						danaThemeIdSetting = id;
+						defaultInterfaceSettings = {
+							...defaultInterfaceSettings,
+							dana_theme_id: id
+						};
+					}}
+				/>
 			</AdminSettingSection>
 
 			<AdminSettingSection title={$i18n.t('settings.admin.general.sections.features.title')}>

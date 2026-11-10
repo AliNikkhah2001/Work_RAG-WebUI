@@ -1,5 +1,6 @@
 <script>
 	import { setTheme } from '$lib/utils/theme';
+	import { applyDanaTheme, resolveInitialDanaThemeId } from '$lib/dana/theme';
 	import {
 		playNotificationSound,
 		setNotificationSoundEnabled,
@@ -1296,6 +1297,13 @@
 
 		theme.set(localStorage.theme);
 
+		// Dana / ICS brand layer (admin-selectable theme packs)
+		try {
+			await applyDanaTheme(resolveInitialDanaThemeId());
+		} catch (err) {
+			console.warn('Dana theme apply failed', err);
+		}
+
 		mobile.set(window.innerWidth < BREAKPOINT);
 
 		const onResize = () => {
@@ -1379,6 +1387,13 @@
 			// Do not alter, remove, obscure, or replace it except as LICENSE permits:
 			// https://docs.openwebui.com/license.
 			await WEBUI_NAME.set(backendConfig.name);
+
+			// Re-apply Dana pack after config loads (admin dana_theme_id + product name).
+			try {
+				await applyDanaTheme(resolveInitialDanaThemeId());
+			} catch (err) {
+				console.warn('Dana theme re-apply failed', err);
+			}
 
 			if ($config) {
 				await setupSocket($config.features?.enable_websocket ?? true);

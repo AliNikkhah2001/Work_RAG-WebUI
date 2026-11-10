@@ -1,0 +1,51 @@
+{
+  "id": "ics-gauge",
+  "label_fa": "گیج ICS",
+  "label_en": "ICS Gauge",
+  "dir": "rtl",
+  "locale": "fa-IR",
+  "fonts": {
+    "sans": "\"Vazirmatn\", \"RAY\", ui-sans-serif, system-ui, sans-serif",
+    "cssUrl": "https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css"
+  },
+  "colors": {
+    "--dana-primary": "#830040",
+    "--dana-primary-shade": "#490024",
+    "--dana-primary-deep": "#2C0015",
+    "--dana-primary-tint": "#deb3c8",
+    "--dana-accent": "#bd6691",
+    "--dana-bg": "#faf7f8",
+    "--dana-fg": "#1a1a1a",
+    "--dana-splash-bg": "#1a0010",
+    "--dana-input-border": "#830040",
+    "--dana-send-bg": "#830040",
+    "--dana-send-fg": "#ffffff"
+  },
+  "logo": "/static/dana/brand/logo/ics-logotype.png",
+  "favicon": "/static/dana/brand/logo/ics-logotype.png",
+  "keyvisual": "/static/dana/brand/keyvisual/stair-hero.png",
+  "splash": {
+    "webm": "/static/dana/brand/motion/ics-gauge-logo-hor.webm",
+    "gif": "/static/dana/brand/motion/ics-maroon-logo-hor.gif"
+  },
+  "copy": {
+    "product_name": "دانا",
+    "subtitle": "محصول شرکت اعتبارسنجی ایران (ICS)",
+    "empty_title": "سلام، من دانا هستم",
+    "empty_body": "دستیار هوشمند اعتبارسنجی ایران. سؤال خود را به فارسی بپرسید.",
+    "placeholder": "پیام خود را بنویسید…",
+    "send": "ارسال",
+    "feedback_useful": "مفید بود",
+    "feedback_not_useful": "مفید نبود",
+    "feedback_report": "گزارش خطا"
+  },
+  "component_tokens": {
+    "input_radius": "1rem",
+    "button_radius": "9999px",
+    "sidebar_accent": "#830040"
+  },
+  "feedback": {
+    "show_useful": true,
+    "show_report": true
+  }
+}

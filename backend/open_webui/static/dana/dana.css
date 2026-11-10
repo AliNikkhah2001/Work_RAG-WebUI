@@ -1,0 +1,100 @@
+/* Dana brand layer — activated via html.dana-theme */
+
+html.dana-theme {
+  --primary: var(--dana-primary, #ba0c54);
+  font-family: var(--dana-font-sans, "Vazirmatn", ui-sans-serif, system-ui, sans-serif);
+}
+
+html.dana-theme body {
+  font-family: inherit;
+}
+
+html.dana-theme[dir='rtl'] .markdown-prose {
+  text-align: right;
+}
+
+/* Chat composer */
+html.dana-theme .dana-composer,
+html.dana-theme [data-dana-composer='1'] {
+  border-color: var(--dana-input-border, #ba0c54) !important;
+  border-radius: var(--dana-input-radius, 1rem) !important;
+}
+
+html.dana-theme .dana-send,
+html.dana-theme [data-dana-send='1'] {
+  background-color: var(--dana-send-bg, #ba0c54) !important;
+  color: var(--dana-send-fg, #fff) !important;
+  border-radius: var(--dana-button-radius, 9999px) !important;
+}
+
+html.dana-theme .dana-sidebar-accent {
+  color: var(--dana-primary, #ba0c54);
+}
+
+html.dana-theme #splash-screen.dana-splash {
+  background: var(--dana-splash-bg, #2c0015) !important;
+}
+
+.dana-magic-root {
+  margin: 0.75rem 0;
+}
+
+.dana-score-bands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  direction: rtl;
+}
+
+.dana-score-band {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.dana-info-banner {
+  border: 1px solid var(--dana-primary, #ba0c54);
+  background: color-mix(in srgb, var(--dana-primary, #ba0c54) 12%, white);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  direction: rtl;
+  text-align: right;
+}
+
+.dana-info-banner strong {
+  color: var(--dana-primary-shade, #6d0035);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.dana-birthday {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #fff5f8, #fde8ef);
+  direction: rtl;
+}
+
+.dana-birthday-cake {
+  font-size: 3.5rem;
+  line-height: 1;
+  animation: dana-bounce 1.2s ease-in-out infinite;
+}
+
+@keyframes dana-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}

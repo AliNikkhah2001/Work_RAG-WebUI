@@ -6,6 +6,7 @@
 	import Tags from '$lib/components/common/Tags.svelte';
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import ChevronRight from '$lib/components/icons/ChevronRight.svelte';
+	import { danaThemePack, isDanaBranded } from '$lib/dana/theme';
 
 	const i18n = getContext('i18n');
 
@@ -115,13 +116,19 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
 	class=" my-2.5 rounded-xl px-4 py-3 border border-gray-100/30 dark:border-gray-850/30"
+	class:border-[color:var(--dana-primary,#BA0C54)]={$isDanaBranded}
 	id="message-feedback-{message.id}"
+	dir={$isDanaBranded ? 'rtl' : undefined}
 	on:click={(e) => {
 		e.stopPropagation();
 	}}
 >
 	<div class="flex justify-between items-center">
-		<div class="text-sm font-normal">{$i18n.t('How would you rate this response?')}</div>
+		<div class="text-sm font-normal">
+			{$isDanaBranded
+				? 'این پاسخ چقدر مفید بود؟'
+				: $i18n.t('How would you rate this response?')}
+		</div>
 
 		<!-- <div class=" text-sm">{$i18n.t('Tell us more:')}</div> -->
 
@@ -158,11 +165,15 @@
 
 			<div class="sticky top-0 bottom-0 left-0 right-0 flex justify-between text-xs">
 				<div>
-					1 - {$i18n.t('Awful')}
+					1 - {$isDanaBranded
+						? $danaThemePack?.copy?.feedback_not_useful || 'مفید نبود'
+						: $i18n.t('Awful')}
 				</div>
 
 				<div>
-					10 - {$i18n.t('Amazing')}
+					10 - {$isDanaBranded
+						? $danaThemePack?.copy?.feedback_useful || 'مفید بود'
+						: $i18n.t('Amazing')}
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,51 @@
+{
+  "id": "ics-maroon",
+  "label_fa": "مارون ICS",
+  "label_en": "ICS Maroon",
+  "dir": "rtl",
+  "locale": "fa-IR",
+  "fonts": {
+    "sans": "\"Vazirmatn\", \"RAY\", ui-sans-serif, system-ui, sans-serif",
+    "cssUrl": "https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css"
+  },
+  "colors": {
+    "--dana-primary": "#BA0C54",
+    "--dana-primary-shade": "#6D0035",
+    "--dana-primary-deep": "#910047",
+    "--dana-primary-tint": "#c880a3",
+    "--dana-accent": "#a7336c",
+    "--dana-bg": "#ffffff",
+    "--dana-fg": "#1a1a1a",
+    "--dana-splash-bg": "#2C0015",
+    "--dana-input-border": "#BA0C54",
+    "--dana-send-bg": "#BA0C54",
+    "--dana-send-fg": "#ffffff"
+  },
+  "logo": "/static/dana/brand/logo/ics-logotype.png",
+  "favicon": "/static/dana/brand/logo/ics-logotype.png",
+  "keyvisual": "/static/dana/brand/keyvisual/stair-hero.png",
+  "splash": {
+    "webm": "/static/dana/brand/motion/ics-maroon-logo-hor.webm",
+    "gif": "/static/dana/brand/motion/ics-maroon-logo-hor.gif"
+  },
+  "copy": {
+    "product_name": "دانا",
+    "subtitle": "محصول شرکت اعتبارسنجی ایران (ICS)",
+    "empty_title": "سلام، من دانا هستم",
+    "empty_body": "دستیار هوشمند اعتبارسنجی ایران. سؤال خود را به فارسی بپرسید.",
+    "placeholder": "پیام خود را بنویسید…",
+    "send": "ارسال",
+    "feedback_useful": "مفید بود",
+    "feedback_not_useful": "مفید نبود",
+    "feedback_report": "گزارش خطا"
+  },
+  "component_tokens": {
+    "input_radius": "1rem",
+    "button_radius": "9999px",
+    "sidebar_accent": "#BA0C54"
+  },
+  "feedback": {
+    "show_useful": true,
+    "show_report": true
+  }
+}
