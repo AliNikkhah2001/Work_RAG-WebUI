@@ -6,14 +6,57 @@
   },
   "CREDIT_SCORE_BANDS": {
     "renderer": "CreditScoreBands",
-    "description": "Colored credit-score range tags",
+    "description": "Colored credit-score range tags with Persian digits",
     "paramsSchema": "credit_score_bands",
     "params": {
       "bands": [
-        { "label": "ضعیف", "min": 0, "max": 499, "color": "#6D0035" },
-        { "label": "متوسط", "min": 500, "max": 649, "color": "#a7336c" },
-        { "label": "خوب", "min": 650, "max": 749, "color": "#BA0C54" },
-        { "label": "عالی", "min": 750, "max": 900, "color": "#c880a3" }
+        { "label": "ضعیف", "min": 0, "max": 499, "color": "#7A3A55" },
+        { "label": "متوسط", "min": 500, "max": 649, "color": "#A84A78" },
+        { "label": "خوب", "min": 650, "max": 749, "color": "#D45A8C" },
+        { "label": "عالی", "min": 750, "max": 900, "color": "#F0A0C0" }
+      ]
+    }
+  },
+  "CREDIT_SCORE_GAUGE": {
+    "renderer": "CreditScoreGauge",
+    "description": "Animated credit-score ring gauge with Persian digits",
+    "paramsSchema": "credit_score_gauge",
+    "params": {
+      "score": 720,
+      "min": 0,
+      "max": 900,
+      "label": "امتیاز اعتباری",
+      "band": "خوب"
+    }
+  },
+  "COMPANY_TIMELINE": {
+    "renderer": "CompanyTimeline",
+    "description": "RTL company history timeline",
+    "paramsSchema": "company_timeline",
+    "params": {
+      "title": "تاریخچه شرکت اعتبارسنجی ایران",
+      "activeIndex": 3,
+      "items": [
+        {
+          "date": "1385",
+          "title": "تأسیس",
+          "description": "آغاز فعالیت شرکت اعتبارسنجی ایران."
+        },
+        {
+          "date": "1390",
+          "title": "گسترش گزارش اعتباری",
+          "description": "توسعه پوشش گزارش‌های اعتباری اشخاص حقیقی و حقوقی."
+        },
+        {
+          "date": "1396",
+          "title": "سامانه‌های آنلاین",
+          "description": "ارائه خدمات آنلاین استعلام و گزارش به نهادهای مالی."
+        },
+        {
+          "date": "1403",
+          "title": "دستیار دانا",
+          "description": "راه‌اندازی دستیار هوشمند فارسی برای پاسخ‌گویی به پرسش‌های اعتباری."
+        }
       ]
     }
   },

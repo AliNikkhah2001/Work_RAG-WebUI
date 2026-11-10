@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>دانا · پیش‌نمایش تجربه کاربری</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css"
+		/>
+		<link rel="stylesheet" href="/static/dana/dana.css" />
+		<style>
+			:root {
+				--dana-primary: #8f0046;
+				--dana-bg: #8f0046;
+				--dana-fg: #fff;
+				--dana-glass-bg: rgba(255, 255, 255, 0.16);
+				--dana-glass-border: rgba(255, 255, 255, 0.28);
+				--dana-glass-blur: 18px;
+				--dana-font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				min-height: 100vh;
+				font-family: var(--dana-font-sans);
+				color: var(--dana-fg);
+				background: var(--dana-bg);
+				letter-spacing: 0;
+			}
+			.bg {
+				position: fixed;
+				inset: 0;
+				background:
+					radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.12), transparent 50%),
+					linear-gradient(160deg, #8f0046, #5c002e 70%);
+				z-index: 0;
+			}
+			.bg img {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				opacity: 0.35;
+			}
+			.shell {
+				position: relative;
+				z-index: 1;
+				max-width: 720px;
+				margin: 0 auto;
+				padding: 1.25rem 1rem 2.5rem;
+			}
+			.brand {
+				font-size: 1.75rem;
+				font-weight: 700;
+				line-height: 1.2;
+				margin: 0.25rem 0 0.15rem;
+			}
+			.sub {
+				margin: 0 0 1.25rem;
+				opacity: 0.88;
+				font-size: 0.95rem;
+				line-height: 1.7;
+			}
+			.bubble {
+				background: var(--dana-glass-bg);
+				border: 1px solid var(--dana-glass-border);
+				backdrop-filter: blur(18px) saturate(140%);
+				-webkit-backdrop-filter: blur(18px) saturate(140%);
+				border-radius: 1.25rem;
+				padding: 1rem 1.1rem;
+				margin: 0 0 1rem;
+				box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+			}
+			.bubble p {
+				margin: 0 0 0.75rem;
+				line-height: 1.8;
+				font-size: 1rem;
+			}
+			.composer {
+				display: flex;
+				gap: 0.5rem;
+				align-items: center;
+				margin-top: 1.25rem;
+				padding: 0.55rem 0.65rem;
+				border-radius: 1rem;
+				background: var(--dana-glass-bg);
+				border: 1px solid var(--dana-glass-border);
+				backdrop-filter: blur(18px);
+			}
+			.composer input {
+				flex: 1;
+				border: 0;
+				background: transparent;
+				color: #fff;
+				font: inherit;
+				padding: 0.55rem 0.4rem;
+				min-height: 44px;
+			}
+			.composer input::placeholder {
+				color: rgba(255, 255, 255, 0.65);
+			}
+			.composer button {
+				border: 0;
+				min-height: 44px;
+				min-width: 72px;
+				padding: 0 1rem;
+				border-radius: 9999px;
+				background: #8f0046;
+				color: #fff;
+				font: inherit;
+				font-weight: 600;
+				cursor: pointer;
+			}
+			.snap-label {
+				font-size: 0.75rem;
+				opacity: 0.7;
+				margin: 1.5rem 0 0.4rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bg" aria-hidden="true">
+			<img src="/static/dana/brand/backgrounds/ics-pdf-chat-bg-1280.png" alt="" />
+		</div>
+		<main class="shell">
+			<p class="snap-label" id="snap-empty">حالت خالی / خوش‌آمد</p>
+			<section class="bubble" data-snap="empty">
+				<p class="brand">دانا</p>
+				<p class="sub">سلام، من دانا هستم — دستیار هوشمند اعتبارسنجی ایران.</p>
+			</section>
+
+			<p class="snap-label" id="snap-gauge">ویجت گیج امتیاز</p>
+			<section class="bubble" data-snap="gauge">
+				<p>امتیاز اعتباری شما در وضعیت «خوب» قرار دارد:</p>
+				<div class="dana-magic-root dana-score-gauge" dir="rtl">
+					<div class="dana-score-gauge__ring" style="width:148px;height:148px">
+						<svg width="148" height="148" class="dana-score-gauge__svg" aria-hidden="true">
+							<circle cx="74" cy="74" r="68" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="12"></circle>
+							<circle
+								cx="74"
+								cy="74"
+								r="68"
+								fill="none"
+								stroke="rgba(255,255,255,0.95)"
+								stroke-width="12"
+								stroke-linecap="round"
+								stroke-dasharray="427.256"
+								stroke-dashoffset="85.45"
+								class="dana-score-gauge__arc"
+							></circle>
+						</svg>
+						<div class="dana-score-gauge__center">
+							<span class="dana-score-gauge__score">۷۲۰</span>
+							<span class="dana-score-gauge__meta">۸۰٪</span>
+						</div>
+					</div>
+					<div class="dana-score-gauge__copy">
+						<p class="dana-score-gauge__label">امتیاز اعتباری</p>
+						<p class="dana-score-gauge__band">خوب</p>
+						<p class="dana-score-gauge__range">بازه ۰ تا ۹۰۰</p>
+					</div>
+				</div>
+				<div class="dana-score-bands" style="margin-top:0.85rem">
+					<span class="dana-score-band" style="--band:#7A3A55"><span class="dana-score-band__label">ضعیف</span><span class="dana-score-band__range">۰–۴۹۹</span></span>
+					<span class="dana-score-band" style="--band:#A84A78"><span class="dana-score-band__label">متوسط</span><span class="dana-score-band__range">۵۰۰–۶۴۹</span></span>
+					<span class="dana-score-band is-active" style="--band:#D45A8C"><span class="dana-score-band__label">خوب</span><span class="dana-score-band__range">۶۵۰–۷۴۹</span></span>
+					<span class="dana-score-band" style="--band:#F0A0C0"><span class="dana-score-band__label">عالی</span><span class="dana-score-band__range">۷۵۰–۹۰۰</span></span>
+				</div>
+			</section>
+
+			<p class="snap-label" id="snap-timeline">ویجت خط زمان شرکت</p>
+			<section class="bubble" data-snap="timeline">
+				<p>مرور کوتاه تاریخچه شرکت:</p>
+				<div class="dana-magic-root dana-timeline" dir="rtl">
+					<h3 class="dana-timeline__title">تاریخچه شرکت اعتبارسنجی ایران</h3>
+					<ol class="dana-timeline__list">
+						<li class="dana-timeline__item">
+							<span class="dana-timeline__dot"></span>
+							<p class="dana-timeline__item-title">تأسیس</p>
+							<p class="dana-timeline__date">۱۳۸۵</p>
+							<p class="dana-timeline__desc">آغاز فعالیت شرکت اعتبارسنجی ایران.</p>
+						</li>
+						<li class="dana-timeline__item">
+							<span class="dana-timeline__dot"></span>
+							<p class="dana-timeline__item-title">گسترش گزارش اعتباری</p>
+							<p class="dana-timeline__date">۱۳۹۰</p>
+							<p class="dana-timeline__desc">توسعه پوشش گزارش‌های اعتباری اشخاص حقیقی و حقوقی.</p>
+						</li>
+						<li class="dana-timeline__item">
+							<span class="dana-timeline__dot"></span>
+							<p class="dana-timeline__item-title">سامانه‌های آنلاین</p>
+							<p class="dana-timeline__date">۱۳۹۶</p>
+							<p class="dana-timeline__desc">ارائه خدمات آنلاین استعلام و گزارش به نهادهای مالی.</p>
+						</li>
+						<li class="dana-timeline__item is-active">
+							<span class="dana-timeline__dot"></span>
+							<p class="dana-timeline__item-title">دستیار دانا</p>
+							<p class="dana-timeline__date">۱۴۰۳</p>
+							<p class="dana-timeline__desc">راه‌اندازی دستیار هوشمند فارسی برای پاسخ‌گویی به پرسش‌های اعتباری.</p>
+						</li>
+					</ol>
+				</div>
+			</section>
+
+			<p class="snap-label" id="snap-composer">ورودی پیام</p>
+			<div class="composer" data-snap="composer">
+				<input value="" placeholder="پیام خود را بنویسید…" aria-label="پیام" />
+				<button type="button">ارسال</button>
+			</div>
+		</main>
+	</body>
+</html>

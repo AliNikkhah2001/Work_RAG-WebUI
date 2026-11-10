@@ -1,6 +1,8 @@
 <script lang="ts">
 	import BirthdayCake from './BirthdayCake.svelte';
 	import CreditScoreBands from './CreditScoreBands.svelte';
+	import CreditScoreGauge from './CreditScoreGauge.svelte';
+	import CompanyTimeline from './CompanyTimeline.svelte';
 	import InfoBanner from './InfoBanner.svelte';
 
 	export let renderer: string;
@@ -9,6 +11,8 @@
 	const registry: Record<string, any> = {
 		BirthdayCake,
 		CreditScoreBands,
+		CreditScoreGauge,
+		CompanyTimeline,
 		InfoBanner
 	};
 
