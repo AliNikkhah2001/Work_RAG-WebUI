@@ -4506,11 +4506,14 @@
 			});
 		}
 
+		// Always stream by default for lower TTFT (API + self-hosted upstreams).
+		// Only opt out when an explicit false is set on model/params/settings.
 		const stream =
 			model?.info?.params?.stream_response ??
 			params?.stream_response ??
 			$settings?.params?.stream_response ??
 			true;
+		const useStream = stream !== false;
 		// Always include system prompt — backend extracts it and prepends to DB messages.
 		// Only temp chats need conversation messages (persisted chats load from DB).
 		let messages: any[] = [
@@ -4610,7 +4613,7 @@
 		const res = await generateOpenAIChatCompletion(
 			localStorage.token,
 			{
-				stream: stream,
+				stream: useStream,
 				model: model.id,
 				...(messages.length > 0 ? { messages } : {}),
 				params: {
