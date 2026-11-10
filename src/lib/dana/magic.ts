@@ -16,6 +16,15 @@ export async function loadMagicCatalog(): Promise<Record<string, MagicTokenDef>>
 const SIMPLE_RE = /<([A-Z][A-Z0-9_]*)>/g;
 const BLOCK_RE = /<<<MAGIC:([A-Z][A-Z0-9_]*)\s*([\s\S]*?)>>>/g;
 
+/** Prefer richer visuals when multiple magic tokens appear in one reply. */
+const MAGIC_PRIORITY: Record<string, number> = {
+	CREDIT_SCORE_GAUGE: 100,
+	COMPANY_TIMELINE: 80,
+	CREDIT_SCORE_BANDS: 60,
+	INFO_BANNER: 40,
+	BIRTHDAY: 20
+};
+
 function safeParams(raw: string): Record<string, unknown> {
 	const trimmed = raw.trim();
 	if (!trimmed) return {};
@@ -25,6 +34,10 @@ function safeParams(raw: string): Record<string, unknown> {
 	} catch {
 		return {};
 	}
+}
+
+function magicPriority(token: string): number {
+	return MAGIC_PRIORITY[token] ?? 10;
 }
 
 /** Split assistant content into text + allowlisted magic widget segments. */
@@ -64,19 +77,36 @@ export function parseMagicSegments(
 
 	marks.sort((a, b) => a.start - b.start);
 
+	// One magic widget per assistant reply — pick highest-priority mark.
+	let keepIdx = -1;
+	if (marks.length > 0) {
+		keepIdx = 0;
+		for (let i = 1; i < marks.length; i++) {
+			const keep = marks[keepIdx];
+			const cand = marks[i];
+			const kp = magicPriority(keep.token);
+			const cp = magicPriority(cand.token);
+			if (cp > kp || (cp === kp && cand.start < keep.start)) keepIdx = i;
+		}
+	}
+
 	const segments: MagicSegment[] = [];
 	let cursor = 0;
-	for (const mark of marks) {
+	for (let i = 0; i < marks.length; i++) {
+		const mark = marks[i];
 		if (mark.start < cursor) continue;
 		if (mark.start > cursor) {
 			segments.push({ type: 'text', value: content.slice(cursor, mark.start) });
 		}
-		segments.push({
-			type: 'magic',
-			token: mark.token,
-			params: mark.params,
-			renderer: defs[mark.token].renderer
-		});
+		if (i === keepIdx) {
+			segments.push({
+				type: 'magic',
+				token: mark.token,
+				params: mark.params,
+				renderer: defs[mark.token].renderer
+			});
+		}
+		// Extra magic tokens are stripped (not shown as raw markup).
 		cursor = mark.end;
 	}
 	if (cursor < content.length) {
