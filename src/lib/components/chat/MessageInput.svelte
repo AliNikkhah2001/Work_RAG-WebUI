@@ -29,6 +29,7 @@
 
 	const dispatch = createEventDispatcher();
 
+	import { isDanaBranded } from '$lib/dana/theme';
 	import {
 		type Model,
 		mobile,
@@ -2229,6 +2230,7 @@
 						<div
 							id={inputId === 'chat-input' ? 'message-input-container' : `${inputId}-wrapper`}
 							data-composer-id={inputId}
+							data-dana-composer={$isDanaBranded ? '1' : undefined}
 							class="flex-1 flex flex-col relative w-full shadow-lg rounded-3xl border {isTemporary
 								? 'border-dashed border-gray-100 dark:border-gray-800 hover:border-gray-200 focus-within:border-gray-200 hover:dark:border-gray-700 focus-within:dark:border-gray-700'
 								: ' border-gray-100/50 dark:border-gray-850/50 hover:border-gray-200 focus-within:border-gray-100 hover:dark:border-gray-800 focus-within:dark:border-gray-800'} {($settings?.highContrastMode ??
@@ -3108,8 +3110,11 @@
 															? 'send-message-button'
 															: `${inputId}-send-message-button`}
 														aria-label={$i18n.t('Send message')}
+														data-dana-send={$isDanaBranded ? '1' : undefined}
 														class="{!(prompt === '' && files.length === 0)
-															? 'bg-black text-white hover:bg-gray-900 dark:bg-white dark:text-black dark:hover:bg-gray-100 '
+															? $isDanaBranded
+																? 'dana-send bg-[color:var(--dana-send-bg,#BA0C54)] text-[color:var(--dana-send-fg,#fff)] hover:opacity-90 '
+																: 'bg-black text-white hover:bg-gray-900 dark:bg-white dark:text-black dark:hover:bg-gray-100 '
 															: 'text-white bg-gray-200 dark:text-gray-900 dark:bg-gray-700 disabled'} transition rounded-full p-[0.3125rem] self-center"
 														type="submit"
 														disabled={prompt === '' && files.length === 0}

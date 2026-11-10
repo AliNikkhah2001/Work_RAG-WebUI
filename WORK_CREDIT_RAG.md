@@ -22,3 +22,11 @@ bash components/webui/scripts/dana-local-image.sh
 ```
 
 `Dockerfile` remains the full upstream multi-stage build for CI/machines with enough RAM.
+
+## Dana / ICS brand layer
+
+- Themes (admin-only): `backend/open_webui/static/dana/themes/{ics-maroon,ics-gauge,vanilla}.json`
+- Magic tokens: `backend/open_webui/static/dana/magic-tokens.json` + Svelte widgets under `src/lib/components/dana/magic/`
+- Apply/switch: Admin → Settings → General → «دانا / ICS Brand»
+- Default theme: `ics-maroon` (RTL + fa-IR + ICS Maroon `#BA0C54`)
+- Import brand media: `ICS_BRAND_PACK=... bash scripts/import-ics-brand.sh`

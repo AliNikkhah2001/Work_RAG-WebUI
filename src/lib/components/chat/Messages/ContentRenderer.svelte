@@ -23,6 +23,9 @@
 	import StructuredOutputRenderer from './StructuredOutputRenderer.svelte';
 	import FloatingButtons from '../ContentRenderer/FloatingButtons.svelte';
 	import { createMessagesList, replaceOutsideCode } from '$lib/utils';
+	import { loadMagicCatalog, parseMagicSegments } from '$lib/dana/magic';
+	import MagicRenderer from '$lib/components/dana/magic/MagicRenderer.svelte';
+	import type { MagicSegment } from '$lib/dana/types';
 
 	/**
 	 * Extracts all top-level <details>...</details> blocks from content,
@@ -117,6 +120,27 @@
 
 	let sourceIds = [];
 	$: getSourceIds(sources);
+
+	/** @type {MagicSegment[]} */
+	let magicSegments = [];
+	let magicCatalogReady = false;
+
+	onMount(async () => {
+		try {
+			const catalog = await loadMagicCatalog();
+			magicCatalogReady = true;
+			magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), catalog);
+		} catch (e) {
+			console.warn('Dana magic catalog failed', e);
+			magicSegments = [{ type: 'text', value: formatMessageContent(content ?? '') }];
+		}
+	});
+
+	$: if (magicCatalogReady) {
+		loadMagicCatalog().then((catalog) => {
+			magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), catalog);
+		});
+	}
 
 	const getSourceIds = (sources) => {
 		const result = [];
@@ -326,27 +350,33 @@
 				toolbar_id: floatingButtons ? `floating-buttons-${id}` : undefined
 			}}
 		>
-			<Markdown
-				{id}
-				{chatId}
-				{messageId}
-				content={formatMessageContent(content)}
-				{model}
-				{save}
-				{preview}
-				{compactPreview}
-				{done}
-				{allowEmbeds}
-				{editCodeBlock}
-				{topPadding}
-				{sourceIds}
-				{onSourceClick}
-				{onTaskClick}
-				{onToolCallResolved}
-				{onSave}
-				onUpdate={markdownUpdateHandler}
-				onPreview={previewHandler}
-			/>
+			{#each magicSegments.length ? magicSegments : [{ type: 'text', value: formatMessageContent(content) }] as segment, sIdx}
+				{#if segment.type === 'magic'}
+					<MagicRenderer renderer={segment.renderer} params={segment.params} />
+				{:else if segment.value}
+					<Markdown
+						id={`${id}-m${sIdx}`}
+						{chatId}
+						{messageId}
+						content={segment.value}
+						{model}
+						{save}
+						{preview}
+						{compactPreview}
+						{done}
+						{allowEmbeds}
+						{editCodeBlock}
+						{topPadding}
+						{sourceIds}
+						{onSourceClick}
+						{onTaskClick}
+						{onToolCallResolved}
+						{onSave}
+						onUpdate={markdownUpdateHandler}
+						onPreview={previewHandler}
+					/>
+				{/if}
+			{/each}
 		</div>
 	{:else}
 		{@const extracted = extractDetailsBlocks(content)}

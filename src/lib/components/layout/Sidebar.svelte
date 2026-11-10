@@ -28,6 +28,7 @@
 		WEBUI_NAME,
 		sidebarWidth
 	} from '$lib/stores';
+	import { danaThemePack, isDanaBranded } from '$lib/dana/theme';
 	import {
 		allLoaded,
 		loadNextChatListPage,
@@ -1133,8 +1134,10 @@
 							Do not alter, remove, obscure, or replace it except as LICENSE permits:
 							https://docs.openwebui.com/license. -->
 								<img
-									src="{WEBUI_BASE_URL}/static/favicon.png"
-									class="sidebar-new-chat-icon size-5 rounded-full group-hover:hidden"
+									src={$isDanaBranded && $danaThemePack?.logo
+										? $danaThemePack.logo
+										: `${WEBUI_BASE_URL}/static/favicon.png`}
+									class="sidebar-new-chat-icon size-5 rounded-full group-hover:hidden object-contain"
 									alt=""
 								/>
 
@@ -1322,8 +1325,10 @@
 					https://docs.openwebui.com/license. -->
 						<img
 							crossorigin="anonymous"
-							src="{WEBUI_BASE_URL}/static/favicon.png"
-							class="sidebar-new-chat-icon size-5 rounded-full"
+							src={$isDanaBranded && $danaThemePack?.logo
+								? $danaThemePack.logo
+								: `${WEBUI_BASE_URL}/static/favicon.png`}
+							class="sidebar-new-chat-icon size-5 rounded-full object-contain"
 							alt=""
 						/>
 					</a>
@@ -1335,8 +1340,14 @@
 						<div
 							id="sidebar-webui-name"
 							class=" self-center truncate font-normal text-gray-700 dark:text-gray-200"
+							dir={$isDanaBranded ? 'rtl' : undefined}
 						>
 							{$WEBUI_NAME}
+							{#if $isDanaBranded && $danaThemePack?.copy?.subtitle}
+								<div class="text-[0.65rem] font-normal text-gray-400 dark:text-gray-500 truncate">
+									{$danaThemePack.copy.subtitle}
+								</div>
+							{/if}
 						</div>
 					</a>
 					<div class="flex shrink-0 items-center gap-px">

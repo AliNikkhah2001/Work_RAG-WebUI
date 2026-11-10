@@ -1,0 +1,19 @@
+{
+  "id": "vanilla",
+  "label_fa": "پیش‌فرض Open WebUI",
+  "label_en": "Vanilla Open WebUI",
+  "dir": null,
+  "locale": null,
+  "fonts": null,
+  "colors": {},
+  "logo": null,
+  "favicon": null,
+  "keyvisual": null,
+  "splash": null,
+  "copy": {},
+  "component_tokens": {},
+  "feedback": {
+    "show_useful": true,
+    "show_report": true
+  }
+}

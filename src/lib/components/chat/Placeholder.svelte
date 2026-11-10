@@ -18,6 +18,7 @@
 		temporaryChatEnabled,
 		selectedFolder
 	} from '$lib/stores';
+	import { danaThemePack, isDanaBranded } from '$lib/dana/theme';
 	import { refreshChatList, refreshFolderChatLists } from '$lib/stores/chatList';
 	import { sanitizeResponseContent, extractCurlyBraceWords } from '$lib/utils';
 	import {
@@ -193,8 +194,11 @@
 					<h2
 						class=" text-2xl @sm:text-2xl line-clamp-1 flex items-center"
 						in:fade={{ duration: 100 }}
+						dir={$isDanaBranded ? 'rtl' : undefined}
 					>
-						{#if selectedModelName}
+						{#if $isDanaBranded && $danaThemePack?.copy?.empty_title}
+							<span class="line-clamp-1">{$danaThemePack.copy.empty_title}</span>
+						{:else if selectedModelName}
 							<Tooltip
 								as="span"
 								content={selectedModelName}
@@ -213,7 +217,14 @@
 
 				<div class="flex mt-1 mb-2">
 					<div in:fade={{ duration: 100, delay: 50 }}>
-						{#if selectedModelDescription}
+						{#if $isDanaBranded && $danaThemePack?.copy?.empty_body}
+							<div class="mt-0.5 px-2 text-sm font-normal text-gray-500 dark:text-gray-400 line-clamp-3 max-w-xl" dir="rtl">
+								{$danaThemePack.copy.empty_body}
+								{#if $danaThemePack.copy.subtitle}
+									<div class="mt-1 text-xs opacity-80">{$danaThemePack.copy.subtitle}</div>
+								{/if}
+							</div>
+						{:else if selectedModelDescription}
 							<Tooltip
 								className=" w-fit"
 								content={DOMPurify.sanitize(
@@ -288,7 +299,9 @@
 						{onToolApprovalModeChange}
 						{stopResponse}
 						{createMessagePair}
-						placeholder={$i18n.t('How can I help you today?')}
+						placeholder={$isDanaBranded && $danaThemePack?.copy?.placeholder
+							? $danaThemePack.copy.placeholder
+							: $i18n.t('How can I help you today?')}
 						{onChange}
 						{onUpload}
 						{onUpdate}

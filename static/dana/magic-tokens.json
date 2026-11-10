@@ -1,0 +1,29 @@
+{
+  "BIRTHDAY": {
+    "renderer": "BirthdayCake",
+    "description": "Celebrate with an animated cake widget",
+    "params": {}
+  },
+  "CREDIT_SCORE_BANDS": {
+    "renderer": "CreditScoreBands",
+    "description": "Colored credit-score range tags",
+    "paramsSchema": "credit_score_bands",
+    "params": {
+      "bands": [
+        { "label": "ضعیف", "min": 0, "max": 499, "color": "#6D0035" },
+        { "label": "متوسط", "min": 500, "max": 649, "color": "#a7336c" },
+        { "label": "خوب", "min": 650, "max": 749, "color": "#BA0C54" },
+        { "label": "عالی", "min": 750, "max": 900, "color": "#c880a3" }
+      ]
+    }
+  },
+  "INFO_BANNER": {
+    "renderer": "InfoBanner",
+    "description": "ICS maroon callout banner",
+    "paramsSchema": "info_banner",
+    "params": {
+      "title": "اطلاعیه",
+      "body": ""
+    }
+  }
+}

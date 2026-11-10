@@ -177,6 +177,52 @@
 					fetchpriority="high"
 					class="animate-pulse-fast"
 				/>
+				<!-- Dana / ICS splash (enabled when dana.theme_id is a branded pack) -->
+				<video
+					id="dana-splash-video"
+					autoplay
+					muted
+					loop
+					playsinline
+					style="display: none; width: min(22rem, 80vw); height: auto; border-radius: 0.75rem"
+				></video>
+				<img
+					id="dana-splash-gif"
+					alt="دانا"
+					style="display: none; width: min(22rem, 80vw); height: auto"
+					loading="eager"
+				/>
+				<script>
+					(() => {
+						try {
+							const themeId = localStorage.getItem('dana.theme_id') || 'ics-maroon';
+							if (!themeId || themeId === 'vanilla') return;
+							const splash = document.getElementById('splash-screen');
+							if (splash) {
+								splash.classList.add('dana-splash');
+								splash.style.background = '#2C0015';
+							}
+							const video = document.getElementById('dana-splash-video');
+							const gif = document.getElementById('dana-splash-gif');
+							const her = document.getElementById('logo-her');
+							const motion =
+								themeId === 'ics-gauge'
+									? '/static/dana/brand/motion/ics-gauge-logo-hor.webm'
+									: '/static/dana/brand/motion/ics-maroon-logo-hor.webm';
+							const gifSrc = '/static/dana/brand/motion/ics-maroon-logo-hor.gif';
+							if (video) {
+								video.src = motion;
+								video.style.display = 'block';
+								if (her) her.style.display = 'none';
+							} else if (gif) {
+								gif.src = gifSrc;
+								gif.style.display = 'block';
+								if (her) her.style.display = 'none';
+							}
+							document.title = 'دانا';
+						} catch (_) {}
+					})();
+				</script>
 
 				<div style="position: relative; width: 24rem; margin-top: 0.5rem">
 					<div
