@@ -5,7 +5,7 @@ import { setTextScale } from '$lib/utils/text-scale';
 import type { DanaThemeId, DanaThemePack } from './types';
 
 export const DANA_THEME_IDS = ['ics-maroon', 'ics-dark', 'vanilla'] as const;
-export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-maroon';
+export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-dark';
 export const DANA_STORAGE_KEY = 'dana.theme_id';
 const DANA_THEME_ALIASES: Record<string, DanaThemeId> = { 'ics-gauge': 'ics-dark' };
 
