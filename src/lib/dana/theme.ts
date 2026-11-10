@@ -7,6 +7,9 @@ import type { DanaThemeId, DanaThemePack } from './types';
 export const DANA_THEME_IDS = ['ics-maroon', 'ics-dark', 'vanilla'] as const;
 export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-dark';
 export const DANA_STORAGE_KEY = 'dana.theme_id';
+export const DANA_DEFAULT_VERSION_KEY = 'dana.theme_default_ver';
+/** Bump when shipping a new product default so stale localStorage is migrated once. */
+export const DANA_DEFAULT_VERSION = '2-ics-dark';
 const DANA_THEME_ALIASES: Record<string, DanaThemeId> = { 'ics-gauge': 'ics-dark' };
 
 export const danaThemeId = writable<DanaThemeId>(DANA_DEFAULT_THEME);
@@ -47,8 +50,20 @@ function removeStylesheet(id: string) {
 
 export function resolveInitialDanaThemeId(): DanaThemeId {
 	const fromConfig = (get(config) as any)?.ui?.default_interface_settings?.dana_theme_id;
+
+	// Migrate browsers still on the previous product default (ics-maroon)
+	try {
+		if (localStorage.getItem(DANA_DEFAULT_VERSION_KEY) !== DANA_DEFAULT_VERSION) {
+			localStorage.setItem(DANA_DEFAULT_VERSION_KEY, DANA_DEFAULT_VERSION);
+			if (!fromConfig) {
+				localStorage.setItem(DANA_STORAGE_KEY, DANA_DEFAULT_THEME);
+			}
+		}
+	} catch {
+		/* private mode */
+	}
+
 	const fromStorage = localStorage.getItem(DANA_STORAGE_KEY);
-	// Prefer admin/config default so freshly set ics-dark wins over stale localStorage
 	const raw = (fromConfig || fromStorage || DANA_DEFAULT_THEME) as string;
 	const candidate = DANA_THEME_ALIASES[raw] || raw;
 	return (DANA_THEME_IDS as readonly string[]).includes(candidate)

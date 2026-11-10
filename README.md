@@ -1,3 +1,20 @@
+# Work_RAG-WebUI — دانا (Dana)
+
+ICS fork of Open WebUI for the Persian credit-scoring assistant **دانا**.
+
+- Brand / themes / magic widgets: **[DANA.md](DANA.md)**
+- Magic token screenshots:
+
+| Token | Preview |
+| --- | --- |
+| `CREDIT_SCORE_GAUGE` | ![gauge](docs/dana/magic/CREDIT_SCORE_GAUGE.png) |
+| `CREDIT_SCORE_BANDS` | ![bands](docs/dana/magic/CREDIT_SCORE_BANDS.png) |
+| `COMPANY_TIMELINE` | ![timeline](docs/dana/magic/COMPANY_TIMELINE.png) |
+| `INFO_BANNER` | ![banner](docs/dana/magic/INFO_BANNER.png) |
+| `BIRTHDAY` | ![birthday](docs/dana/magic/BIRTHDAY.png) |
+
+---
+
 <h2>Open WebUI</h2>
 
 <p>Open WebUI is <a href="https://docs.openwebui.com/"><strong>a home for AI</strong></a>: an extensible, easy-to-use, self-hosted platform built to run entirely offline. Connect local models through Ollama or use OpenAI-compatible APIs for local and cloud models.</p>
