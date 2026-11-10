@@ -1,0 +1,56 @@
+{
+  "id": "ics-dark",
+  "label_fa": "قرمز تیره ICS",
+  "label_en": "ICS Dark Red",
+  "dir": "rtl",
+  "locale": "fa-IR",
+  "fonts": {
+    "sans": "\"Vazirmatn\", \"RAY\", ui-sans-serif, system-ui, sans-serif",
+    "cssUrl": "https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css"
+  },
+  "colors": {
+    "--dana-primary": "#BA0C54",
+    "--dana-primary-shade": "#2C0015",
+    "--dana-primary-deep": "#6D0035",
+    "--dana-primary-tint": "#e8a0c0",
+    "--dana-accent": "#ff6b9d",
+    "--dana-bg": "#6D0035",
+    "--dana-fg": "#ffffff",
+    "--dana-splash-bg": "#6D0035",
+    "--dana-input-border": "#ffffff",
+    "--dana-send-bg": "#BA0C54",
+    "--dana-send-fg": "#ffffff",
+    "--dana-chat-overlay": "rgba(44, 0, 21, 0.55)"
+  },
+  "logo": "/static/dana/brand/icons/dana-icon-512.png",
+  "favicon": "/static/dana/brand/icons/dana-icon-512.png",
+  "keyvisual": "/static/dana/brand/keyvisual/stair-hero.png",
+  "splash": {
+    "webm": "/static/dana/brand/motion/ics-white-logo-hor.webm",
+    "gif": "/static/dana/brand/motion/ics-white-logo-hor.gif"
+  },
+  "chat_background": {
+    "webm": "/static/dana/brand/motion/ics-white-logo-hor.webm",
+    "gif": "/static/dana/brand/motion/ics-white-logo-hor.gif"
+  },
+  "copy": {
+    "product_name": "دانا",
+    "subtitle": "محصول شرکت اعتبارسنجی ایران (ICS)",
+    "empty_title": "سلام، من دانا هستم",
+    "empty_body": "دستیار هوشمند اعتبارسنجی ایران. سؤال خود را به فارسی بپرسید.",
+    "placeholder": "پیام خود را بنویسید…",
+    "send": "ارسال",
+    "feedback_useful": "مفید بود",
+    "feedback_not_useful": "مفید نبود",
+    "feedback_report": "گزارش خطا"
+  },
+  "component_tokens": {
+    "input_radius": "1rem",
+    "button_radius": "9999px",
+    "sidebar_accent": "#BA0C54"
+  },
+  "feedback": {
+    "show_useful": true,
+    "show_report": true
+  }
+}

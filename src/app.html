@@ -195,21 +195,24 @@
 				<script>
 					(() => {
 						try {
-							const themeId = localStorage.getItem('dana.theme_id') || 'ics-maroon';
+							const rawTheme = localStorage.getItem('dana.theme_id') || 'ics-maroon';
+							const themeId = rawTheme === 'ics-gauge' ? 'ics-dark' : rawTheme;
 							if (!themeId || themeId === 'vanilla') return;
 							const splash = document.getElementById('splash-screen');
+							const isDark = themeId === 'ics-dark';
 							if (splash) {
 								splash.classList.add('dana-splash');
-								splash.style.background = '#2C0015';
+								splash.style.background = isDark ? '#6D0035' : '#2C0015';
 							}
 							const video = document.getElementById('dana-splash-video');
 							const gif = document.getElementById('dana-splash-gif');
 							const her = document.getElementById('logo-her');
-							const motion =
-								themeId === 'ics-gauge'
-									? '/static/dana/brand/motion/ics-gauge-logo-hor.webm'
-									: '/static/dana/brand/motion/ics-maroon-logo-hor.webm';
-							const gifSrc = '/static/dana/brand/motion/ics-maroon-logo-hor.gif';
+							const motion = isDark
+								? '/static/dana/brand/motion/ics-white-logo-hor.webm'
+								: '/static/dana/brand/motion/ics-maroon-logo-hor.webm';
+							const gifSrc = isDark
+								? '/static/dana/brand/motion/ics-white-logo-hor.gif'
+								: '/static/dana/brand/motion/ics-maroon-logo-hor.gif';
 							if (video) {
 								video.src = motion;
 								video.style.display = 'block';

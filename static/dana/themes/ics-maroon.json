@@ -22,7 +22,7 @@
     "--dana-send-fg": "#ffffff"
   },
   "logo": "/static/dana/brand/logo/ics-logotype.png",
-  "favicon": "/static/dana/brand/logo/ics-logotype.png",
+  "favicon": "/static/dana/brand/icons/dana-icon-512.png",
   "keyvisual": "/static/dana/brand/keyvisual/stair-hero.png",
   "splash": {
     "webm": "/static/dana/brand/motion/ics-maroon-logo-hor.webm",

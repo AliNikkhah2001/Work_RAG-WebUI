@@ -11,7 +11,17 @@
 	let error = '';
 
 	onMount(async () => {
-		packs = await Promise.all(DANA_THEME_IDS.map((id) => loadThemePack(id)));
+		let ids: string[] = [...DANA_THEME_IDS];
+		try {
+			const res = await fetch('/static/dana/themes/index.json', { cache: 'no-cache' });
+			if (res.ok) {
+				const idx = await res.json();
+				if (Array.isArray(idx?.themes) && idx.themes.length) ids = idx.themes;
+			}
+		} catch {
+			/* fall back to compiled allowlist */
+		}
+		packs = await Promise.all(ids.map((id) => loadThemePack(id as (typeof DANA_THEME_IDS)[number])));
 	});
 
 	const select = async (id: string) => {

@@ -25,6 +25,7 @@
 
 	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
 	import { WEBUI_NAME, config, user, socket } from '$lib/stores';
+	import { danaThemePack, isDanaBranded } from '$lib/dana/theme';
 
 	import { generateInitialsImage, canvasPixelTest, getUserTimezone } from '$lib/utils';
 
@@ -320,7 +321,10 @@
 									<img
 										id="logo"
 										crossorigin="anonymous"
-										src="{WEBUI_BASE_URL}/static/favicon.png"
+										src={$danaThemePack?.favicon ||
+											($isDanaBranded
+												? `${WEBUI_BASE_URL}/static/dana/brand/icons/dana-icon-512.png`
+												: `${WEBUI_BASE_URL}/static/favicon.png`)}
 										class="size-24 rounded-full"
 										alt="{$WEBUI_NAME} logo"
 									/>
@@ -704,7 +708,10 @@
 						<img
 							id="logo"
 							crossorigin="anonymous"
-							src="{WEBUI_BASE_URL}/static/favicon.png"
+							src={$danaThemePack?.favicon ||
+								($isDanaBranded
+									? `${WEBUI_BASE_URL}/static/dana/brand/icons/dana-icon-512.png`
+									: `${WEBUI_BASE_URL}/static/favicon.png`)}
 							class=" w-6 rounded-full"
 							alt=""
 						/>

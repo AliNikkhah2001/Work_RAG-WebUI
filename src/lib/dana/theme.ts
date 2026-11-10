@@ -4,9 +4,10 @@ import { changeLanguage } from '$lib/i18n';
 import { setTextScale } from '$lib/utils/text-scale';
 import type { DanaThemeId, DanaThemePack } from './types';
 
-export const DANA_THEME_IDS = ['ics-maroon', 'ics-gauge', 'vanilla'] as const;
+export const DANA_THEME_IDS = ['ics-maroon', 'ics-dark', 'vanilla'] as const;
 export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-maroon';
 export const DANA_STORAGE_KEY = 'dana.theme_id';
+const DANA_THEME_ALIASES: Record<string, DanaThemeId> = { 'ics-gauge': 'ics-dark' };
 
 export const danaThemeId = writable<DanaThemeId>(DANA_DEFAULT_THEME);
 export const danaThemePack = writable<DanaThemePack | null>(null);
@@ -47,7 +48,8 @@ function removeStylesheet(id: string) {
 export function resolveInitialDanaThemeId(): DanaThemeId {
 	const fromConfig = (get(config) as any)?.ui?.default_interface_settings?.dana_theme_id;
 	const fromStorage = localStorage.getItem(DANA_STORAGE_KEY);
-	const candidate = (fromConfig || fromStorage || DANA_DEFAULT_THEME) as string;
+	const raw = (fromConfig || fromStorage || DANA_DEFAULT_THEME) as string;
+	const candidate = DANA_THEME_ALIASES[raw] || raw;
 	return (DANA_THEME_IDS as readonly string[]).includes(candidate)
 		? (candidate as DanaThemeId)
 		: DANA_DEFAULT_THEME;
@@ -64,6 +66,7 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 
 	if (pack.id === 'vanilla') {
 		root.classList.remove('dana-theme');
+		root.classList.remove('dark');
 		root.removeAttribute('data-dana-theme');
 		removeStylesheet('dana-brand-css');
 		removeStylesheet('dana-font-css');
@@ -74,6 +77,9 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 
 	root.classList.add('dana-theme');
 	root.setAttribute('data-dana-theme', pack.id);
+	if (pack.id !== 'ics-dark') {
+		root.classList.remove('dark');
+	}
 
 	// Immersive chat chrome: no left/right side panels
 	showSidebar.set(false);
@@ -124,6 +130,13 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 	if (pack.favicon) {
 		const fav = document.querySelector('link[rel="icon"]') as HTMLLinkElement | null;
 		if (fav) fav.href = pack.favicon;
+		const apple = document.querySelector('link[rel="apple-touch-icon"]') as HTMLLinkElement | null;
+		if (apple) apple.href = pack.favicon;
+	}
+
+	// Dark-red pack leans on dark shell tokens so message panes stay readable over the motion BG
+	if (pack.id === 'ics-dark') {
+		root.classList.add('dark');
 	}
 
 	danaReady.set(true);

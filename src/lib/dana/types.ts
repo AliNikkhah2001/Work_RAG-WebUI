@@ -1,4 +1,4 @@
-export type DanaThemeId = 'ics-maroon' | 'ics-gauge' | 'vanilla' | string;
+export type DanaThemeId = 'ics-maroon' | 'ics-dark' | 'vanilla' | string;
 
 export type DanaThemePack = {
 	id: DanaThemeId;
@@ -12,6 +12,7 @@ export type DanaThemePack = {
 	favicon: string | null;
 	keyvisual: string | null;
 	splash: { webm?: string; gif?: string } | null;
+	chat_background?: { webm?: string; gif?: string } | null;
 	copy: Record<string, string>;
 	component_tokens: Record<string, string>;
 	feedback: { show_useful?: boolean; show_report?: boolean };

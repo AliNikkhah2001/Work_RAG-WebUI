@@ -1,4 +1,4 @@
 {
   "default": "ics-maroon",
-  "themes": ["ics-maroon", "ics-gauge", "vanilla"]
+  "themes": ["ics-maroon", "ics-dark", "vanilla"]
 }

@@ -1,6 +1,7 @@
 <script>
 	import { setTheme } from '$lib/utils/theme';
 	import { applyDanaTheme, resolveInitialDanaThemeId } from '$lib/dana/theme';
+	import DanaChatBackground from '$lib/components/dana/DanaChatBackground.svelte';
 	import {
 		playNotificationSound,
 		setNotificationSoundEnabled,
@@ -1537,6 +1538,8 @@
 		crossorigin="use-credentials"
 	/>
 </svelte:head>
+
+<DanaChatBackground />
 
 <a
 	href="#main-content"

@@ -121,3 +121,56 @@ html.dana-theme #splash-screen.dana-splash {
     transform: translateY(-8px);
   }
 }
+
+/* Dark-red brand shell + animated chat background */
+html.dana-theme[data-dana-theme='ics-dark'] {
+  color-scheme: dark;
+  background-color: var(--dana-bg, #6d0035);
+}
+
+html.dana-theme[data-dana-theme='ics-dark'] body,
+html.dana-theme[data-dana-theme='ics-dark'] .app > div,
+html.dana-theme[data-dana-theme='ics-dark'] #chat-container,
+html.dana-theme[data-dana-theme='ics-dark'] [data-main-chat-pane] {
+  background-color: transparent !important;
+  color: var(--dana-fg, #fff);
+}
+
+html.dana-theme[data-dana-theme='ics-dark'] #auth-login-card,
+html.dana-theme[data-dana-theme='ics-dark'] .dana-composer,
+html.dana-theme[data-dana-theme='ics-dark'] [data-dana-composer='1'] {
+  background-color: color-mix(in srgb, #2c0015 70%, transparent) !important;
+  border-color: color-mix(in srgb, #fff 35%, transparent) !important;
+  color: #fff !important;
+}
+
+.dana-chat-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--dana-bg, #6d0035);
+}
+
+.dana-chat-bg__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.92;
+}
+
+.dana-chat-bg__veil {
+  position: absolute;
+  inset: 0;
+  background: var(--dana-chat-overlay, rgba(44, 0, 21, 0.55));
+}
+
+html.dana-theme[data-dana-theme='ics-dark'] .app,
+html.dana-theme[data-dana-theme='ics-dark'] #chat-container {
+  position: relative;
+  z-index: 1;
+}
