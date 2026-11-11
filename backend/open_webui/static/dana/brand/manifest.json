@@ -1,0 +1,87 @@
+{
+  "source": "drive-download-20261111T061205Z-1-001",
+  "extracted_at": "2026-11-11",
+  "colors": {
+    "ics_maroon_foundation": "#960032",
+    "ics_maroon_hex": "#BA0C54",
+    "ics_maroon_shade": "#6D0035",
+    "ics_maroon_deep": "#830040",
+    "ics_chat_red": "#8F0046",
+    "white": "#FFFFFF",
+    "black": "#000000",
+    "shade_scale": [
+      "#3C0014",
+      "#6B0024",
+      "#960032",
+      "#C10041",
+      "#EC004F",
+      "#FF1768",
+      "#FF4281",
+      "#FF6D9A",
+      "#FF97B3",
+      "#FFC2CC"
+    ],
+    "gauge": {
+      "blue": "#1E88E5",
+      "green": "#00C853",
+      "yellow": "#FFD600",
+      "orange": "#FFAB00",
+      "red": "#FF5252"
+    }
+  },
+  "fonts": [
+    "w_Ray.ttf",
+    "w_Ray Medium.ttf"
+  ],
+  "motion_web": [
+    "ICS_Gauge-Color-Logo_Hor-still.png",
+    "ICS_Gauge-Color-Logo_Hor.webm",
+    "ICS_Maroon-Logo_Hor-preview.gif",
+    "ICS_Maroon-Logo_Hor-still.png",
+    "ICS_Maroon-Logo_Hor.webm",
+    "ICS_Maroon-Logo_Ver-preview.gif",
+    "ICS_Maroon-Logo_Ver-still.png",
+    "ICS_Maroon-Logo_Ver.webm",
+    "ICS_Mono-Color-Logo_Hor-still.png",
+    "ICS_Mono-Color-Logo_Hor.webm",
+    "ICS_Stair_Transparent_V02_Hor-still.png",
+    "ICS_Stair_Transparent_V02_Hor.webm",
+    "ICS_Stair_Transparent_test_Hor-preview.gif",
+    "ICS_Stair_Transparent_test_Hor-still.png",
+    "ICS_Stair_Transparent_test_Hor.webm",
+    "ICS_Stair_Transparent_test_Ver-preview.gif",
+    "ICS_Stair_Transparent_test_Ver-still.png",
+    "ICS_Stair_Transparent_test_Ver.webm",
+    "ICS_white-Logo_Hor-preview.gif",
+    "ICS_white-Logo_Hor-still.png",
+    "ICS_white-Logo_Hor.webm",
+    "ICS_white-Logo_Ver-preview.gif",
+    "ICS_white-Logo_Ver-still.png",
+    "ICS_white-Logo_Ver.webm",
+    "ICS_white-and-Gauge-Logo_Hor-preview.gif",
+    "ICS_white-and-Gauge-Logo_Hor-still.png",
+    "ICS_white-and-Gauge-Logo_Hor.webm",
+    "ICS_white-and-Gauge-Logo_Ver-preview.gif",
+    "ICS_white-and-Gauge-Logo_Ver-still.png",
+    "ICS_white-and-Gauge-Logo_Ver.webm"
+  ],
+  "touchpoints": [
+    "ICS_Flag-T-1.png",
+    "ICS_Flag-T-2.png",
+    "ICS_Folder-1.png",
+    "ICS_Folder-2.png",
+    "ICS_ID-Card-1.png",
+    "ICS_ID-Card-2.png",
+    "ICS_Letterhead_A4-1.png",
+    "ICS_Letterhead_A4-2.png",
+    "ICS_Shoppingbag-1.png"
+  ],
+  "pdf_pages": 40,
+  "icons_extracted": [
+    "ics-3d-icons-strip.png",
+    "ics-gauge-logo-hor.png",
+    "ics-maroon-logo-hor.png",
+    "ics-white-gauge-logo-hor.png",
+    "ics-white-logo-hor.png"
+  ]
+}

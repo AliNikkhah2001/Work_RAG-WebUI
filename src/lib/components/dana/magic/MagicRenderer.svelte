@@ -4,6 +4,9 @@
 	import CreditScoreGauge from './CreditScoreGauge.svelte';
 	import CompanyTimeline from './CompanyTimeline.svelte';
 	import InfoBanner from './InfoBanner.svelte';
+	import DataTable from './DataTable.svelte';
+	import CollapseList from './CollapseList.svelte';
+	import AnimatedLogo from './AnimatedLogo.svelte';
 
 	export let renderer: string;
 	export let params: Record<string, unknown> = {};
@@ -13,7 +16,10 @@
 		CreditScoreBands,
 		CreditScoreGauge,
 		CompanyTimeline,
-		InfoBanner
+		InfoBanner,
+		DataTable,
+		CollapseList,
+		AnimatedLogo
 	};
 
 	$: Comp = registry[renderer];

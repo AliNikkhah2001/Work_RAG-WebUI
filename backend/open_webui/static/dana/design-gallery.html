@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دانا — گالری تم و جادو</title>
+  <link rel="stylesheet" href="/static/dana/brand/fonts/ray.css" />
+  <link rel="stylesheet" href="/static/dana/dana.css" />
+  <style>
+    body { margin: 0; font-family: RAY, Vazirmatn, sans-serif; background: #1a0010; color: #fff; letter-spacing: 0; }
+    header { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,.15); }
+    h1 { margin: 0; font-size: 1.6rem; }
+    .grid { display: grid; gap: 1rem; padding: 1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .card { border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.06); }
+    .card img, .card video { width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; background: #3c0014; }
+    .card .meta { padding: .75rem 1rem 1rem; }
+    .section { padding: 1rem 1.25rem .25rem; opacity: .85; }
+    code { font-size: .75rem; opacity: .8; }
+  </style>
+</head>
+<body class="dana-theme" data-dana-theme="ics-dark">
+  <header>
+    <h1>گالری طراحی دانا — ۵ تم + واریانت‌های جادویی</h1>
+    <p>استخراج‌شده از بسته هویت بصری ICS (فونت RAY، موشن لوگو، Foundation).</p>
+  </header>
+
+  <p class="section">تم‌های چت</p>
+  <div class="grid" id="themes"></div>
+
+  <p class="section">موشن‌های برند (web)</p>
+  <div class="grid" id="motions"></div>
+
+  <p class="section">ویجت‌های جادویی — پیش‌نمایش زنده</p>
+  <p class="section"><a href="/static/dana/ux-preview.html" style="color:#ffc2cc">باز کردن ux-preview.html</a> · واریانت‌ها از <code>magic-variants.json</code> / تم / <code>params.variant</code></p>
+
+  <script>
+    const themes = [
+      ['ics-dark','قرمز تیره','/static/dana/brand/motion/web/ICS_white-Logo_Hor-still.png'],
+      ['ics-maroon','مارون روشن','/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor-still.png'],
+      ['ics-gauge','گیج رنگی','/static/dana/brand/motion/web/ICS_Gauge-Color-Logo_Hor-still.png'],
+      ['ics-stair','پله شفاف','/static/dana/brand/motion/web/ICS_Stair_Transparent_test_Hor-still.png'],
+      ['ics-mono','مونو','/static/dana/brand/motion/web/ICS_Mono-Color-Logo_Hor-still.png'],
+    ];
+    const motions = [
+      'ICS_white-Logo_Hor','ICS_Maroon-Logo_Hor','ICS_Gauge-Color-Logo_Hor',
+      'ICS_Stair_Transparent_test_Hor','ICS_Mono-Color-Logo_Hor','ICS_white-and-Gauge-Logo_Hor'
+    ];
+    const tg = document.getElementById('themes');
+    themes.forEach(([id,label,src]) => {
+      tg.insertAdjacentHTML('beforeend', `<article class="card"><img src="${src}" alt="${id}"/><div class="meta"><strong>${label}</strong><br/><code>${id}</code></div></article>`);
+    });
+    const mg = document.getElementById('motions');
+    motions.forEach((base) => {
+      mg.insertAdjacentHTML('beforeend', `<article class="card"><video autoplay muted loop playsinline poster="/static/dana/brand/motion/web/${base}-still.png"><source src="/static/dana/brand/motion/web/${base}.webm" type="video/webm"/></video><div class="meta"><code>${base}</code></div></article>`);
+    });
+  </script>
+</body>
+</html>

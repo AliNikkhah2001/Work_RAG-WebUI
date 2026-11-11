@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "RAY";
+  src: url("/static/dana/brand/fonts/w_Ray.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RAY";
+  src: url("/static/dana/brand/fonts/w_Ray%20Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

@@ -149,3 +149,45 @@ Includes code under the Open WebUI License, which requires preserving the Open W
 [Enterprise](https://docs.openwebui.com/enterprise) · [Careers](https://careers.openwebui.com/) · [Sponsor](https://github.com/sponsors/open-webui)
 
 Created by [Timothy Jaeryang Baek](https://github.com/tjbck).
+
+## Dana brand pack & design system
+
+Extracted from ICS Visual Identity (`ICS_Foundation_V01` + touchpoint motions + RAY fonts).
+
+### Chat themes (5)
+
+| Theme | Preview | Motion |
+|---|---|---|
+| `ics-dark` | ![dark](docs/dana/themes/ics-dark.png) | white logo |
+| `ics-maroon` | ![maroon](docs/dana/themes/ics-maroon.png) | maroon logo |
+| `ics-gauge` | ![gauge](docs/dana/themes/ics-gauge.png) | gauge color logo |
+| `ics-stair` | ![stair](docs/dana/themes/ics-stair.png) | stair transparent |
+| `ics-mono` | ![mono](docs/dana/themes/ics-mono.png) | mono logo |
+
+Gallery: [`/static/dana/design-gallery.html`](static/dana/design-gallery.html) · ![gallery](docs/dana/themes/gallery.png)
+
+Figma: [Dana ICS Chat — 5 Themes + Magic Variants](https://www.figma.com/design/fJmBWfAUlD8x72lUc157r9)
+
+### Magic tokens (3+ variants each)
+
+| Token | Variants | Notes |
+|---|---|---|
+| `CREDIT_SCORE_GAUGE` | `ring` · `arc` · `hero` | Foundation gauge colors |
+| `COMPANY_TIMELINE` | `vertical` · `horizontal` · `compact` | RTL history |
+| `DATA_TABLE` | `striped` · `cards` · `dense` | Persian digits |
+| `COLLAPSE_LIST` | `accordion` · `grid` · `chips` | FAQ / tags |
+| `ANIMATED_LOGO` | `white` · `maroon` · `gauge` | Brand motion webm |
+| (+ bands, banner, birthday) | — | existing |
+
+Catalog: [`static/dana/magic-tokens.json`](static/dana/magic-tokens.json) · variants: [`static/dana/magic-variants.json`](static/dana/magic-variants.json) · live: [`ux-preview.html`](static/dana/ux-preview.html)
+
+### Config / env
+
+See [`.env.dana.example`](.env.dana.example):
+
+- `DANA_THEME_ID=ics-dark|ics-maroon|ics-gauge|ics-stair|ics-mono`
+- `DANA_MAGIC_GAUGE` / `_TIMELINE` / `_TABLE` / `_LIST` / `_LOGO`
+- or `DEFAULT_INTERFACE_SETTINGS` JSON with `dana_theme_id` + `dana_magic_variants`
+
+Brand manifest: [`static/dana/brand/manifest.json`](static/dana/brand/manifest.json)
+
