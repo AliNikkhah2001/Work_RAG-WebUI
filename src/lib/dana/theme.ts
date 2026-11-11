@@ -4,13 +4,20 @@ import { changeLanguage } from '$lib/i18n';
 import { setTextScale } from '$lib/utils/text-scale';
 import type { DanaThemeId, DanaThemePack } from './types';
 
-export const DANA_THEME_IDS = ['ics-maroon', 'ics-dark', 'vanilla'] as const;
+export const DANA_THEME_IDS = [
+	'ics-dark',
+	'ics-maroon',
+	'ics-gauge',
+	'ics-stair',
+	'ics-mono',
+	'vanilla'
+] as const;
 export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-dark';
 export const DANA_STORAGE_KEY = 'dana.theme_id';
 export const DANA_DEFAULT_VERSION_KEY = 'dana.theme_default_ver';
 /** Bump when shipping a new product default so stale localStorage is migrated once. */
-export const DANA_DEFAULT_VERSION = '2-ics-dark';
-const DANA_THEME_ALIASES: Record<string, DanaThemeId> = { 'ics-gauge': 'ics-dark' };
+export const DANA_DEFAULT_VERSION = '3-five-themes';
+const DANA_THEME_ALIASES: Record<string, DanaThemeId> = {};
 
 export const danaThemeId = writable<DanaThemeId>(DANA_DEFAULT_THEME);
 export const danaThemePack = writable<DanaThemePack | null>(null);
@@ -49,22 +56,46 @@ function removeStylesheet(id: string) {
 }
 
 export function resolveInitialDanaThemeId(): DanaThemeId {
-	const fromConfig = (get(config) as any)?.ui?.default_interface_settings?.dana_theme_id;
+	const cfg = get(config) as any;
+	const fromConfig =
+		cfg?.ui?.default_interface_settings?.dana_theme_id ||
+		cfg?.ui?.dana_theme_id ||
+		(typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_DANA_THEME_ID);
 
-	// Migrate browsers still on the previous product default (ics-maroon)
+	let fromQuery: string | null = null;
+	try {
+		if (typeof location !== 'undefined') {
+			fromQuery = new URLSearchParams(location.search).get('dana_theme');
+		}
+	} catch {
+		/* non-browser */
+	}
+
+	// Migrate browsers when product default theme set changes
 	try {
 		if (localStorage.getItem(DANA_DEFAULT_VERSION_KEY) !== DANA_DEFAULT_VERSION) {
 			localStorage.setItem(DANA_DEFAULT_VERSION_KEY, DANA_DEFAULT_VERSION);
-			if (!fromConfig) {
+			if (!fromConfig && !fromQuery) {
 				localStorage.setItem(DANA_STORAGE_KEY, DANA_DEFAULT_THEME);
 			}
+		}
+		// Explicit ?dana_theme= sticks for subsequent visits
+		if (fromQuery) {
+			localStorage.setItem(DANA_STORAGE_KEY, fromQuery);
 		}
 	} catch {
 		/* private mode */
 	}
 
-	const fromStorage = localStorage.getItem(DANA_STORAGE_KEY);
-	const raw = (fromConfig || fromStorage || DANA_DEFAULT_THEME) as string;
+	const fromStorage = (() => {
+		try {
+			return localStorage.getItem(DANA_STORAGE_KEY);
+		} catch {
+			return null;
+		}
+	})();
+	// Prefer query/storage so gallery switcher can override container DEFAULT_INTERFACE_SETTINGS
+	const raw = (fromQuery || fromStorage || fromConfig || DANA_DEFAULT_THEME) as string;
 	const candidate = DANA_THEME_ALIASES[raw] || raw;
 	return (DANA_THEME_IDS as readonly string[]).includes(candidate)
 		? (candidate as DanaThemeId)
@@ -93,7 +124,8 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 
 	root.classList.add('dana-theme');
 	root.setAttribute('data-dana-theme', pack.id);
-	if (pack.id !== 'ics-dark') {
+	const darkShell = ['ics-dark', 'ics-gauge', 'ics-stair', 'ics-mono'].includes(pack.id);
+	if (!darkShell) {
 		root.classList.remove('dark');
 	}
 
@@ -104,6 +136,12 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 
 	for (const [k, v] of Object.entries(pack.colors || {})) {
 		root.style.setProperty(k, v);
+	}
+	const fromEnvCfg = (get(config) as any)?.ui?.default_interface_settings?.dana_magic_variants || {};
+	const magic = { ...((pack as any).magic_variants || {}), ...fromEnvCfg };
+	for (const [k, v] of Object.entries(magic)) {
+		root.style.setProperty(`--dana-magic-${k}`, String(v));
+		root.setAttribute(`data-dana-magic-${k}`, String(v));
 	}
 	if (pack.fonts?.sans) {
 		root.style.setProperty('--dana-font-sans', pack.fonts.sans);
@@ -150,8 +188,8 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 		if (apple) apple.href = pack.favicon;
 	}
 
-	// Dark-red pack leans on dark shell tokens so message panes stay readable over the motion BG
-	if (pack.id === 'ics-dark') {
+	// Dark shells lean on dark tokens so message panes stay readable over motion BGs
+	if (darkShell) {
 		root.classList.add('dark');
 	}
 

@@ -10,32 +10,34 @@
     "paramsSchema": "credit_score_bands",
     "params": {
       "bands": [
-        { "label": "ضعیف", "min": 0, "max": 499, "color": "#7A3A55" },
-        { "label": "متوسط", "min": 500, "max": 649, "color": "#A84A78" },
-        { "label": "خوب", "min": 650, "max": 749, "color": "#D45A8C" },
-        { "label": "عالی", "min": 750, "max": 900, "color": "#F0A0C0" }
+        { "label": "ضعیف", "min": 0, "max": 499, "color": "#FF5252" },
+        { "label": "متوسط", "min": 500, "max": 649, "color": "#FFAB00" },
+        { "label": "خوب", "min": 650, "max": 749, "color": "#FFD600" },
+        { "label": "عالی", "min": 750, "max": 900, "color": "#00C853" }
       ]
     }
   },
   "CREDIT_SCORE_GAUGE": {
     "renderer": "CreditScoreGauge",
-    "description": "Animated credit-score ring gauge with Persian digits",
+    "description": "Credit-score gauge (variants: ring | arc | hero)",
     "paramsSchema": "credit_score_gauge",
     "params": {
       "score": 720,
       "min": 0,
       "max": 900,
       "label": "امتیاز اعتباری",
-      "band": "خوب"
+      "band": "خوب",
+      "variant": "ring"
     }
   },
   "COMPANY_TIMELINE": {
     "renderer": "CompanyTimeline",
-    "description": "RTL company history timeline",
+    "description": "Company history timeline (variants: vertical | horizontal | compact)",
     "paramsSchema": "company_timeline",
     "params": {
       "title": "تاریخچه شرکت اعتبارسنجی ایران",
       "activeIndex": 3,
+      "variant": "vertical",
       "items": [
         {
           "date": "1385",
@@ -67,6 +69,56 @@
     "params": {
       "title": "اطلاعیه",
       "body": ""
+    }
+  },
+  "DATA_TABLE": {
+    "renderer": "DataTable",
+    "description": "Persian data table (variants: striped | cards | dense)",
+    "paramsSchema": "data_table",
+    "params": {
+      "title": "نمونه گزارش",
+      "variant": "striped",
+      "columns": ["عنوان", "وضعیت", "امتیاز"],
+      "rows": [
+        ["اعتبارسنجی حقیقی", "فعال", 720],
+        ["اعتبارسنجی حقوقی", "فعال", 680],
+        ["گزارش تسهیلات", "در صف", 640]
+      ]
+    }
+  },
+  "COLLAPSE_LIST": {
+    "renderer": "CollapseList",
+    "description": "Expandable / grid / chip lists (variants: accordion | grid | chips)",
+    "paramsSchema": "collapse_list",
+    "params": {
+      "title": "سوالات متداول",
+      "variant": "accordion",
+      "items": [
+        {
+          "title": "رتبه اعتباری چیست؟",
+          "body": "شاخصی عددی از رفتار اعتباری فرد یا شرکت.",
+          "tag": "پایه"
+        },
+        {
+          "title": "چگونه گزارش بگیرم؟",
+          "body": "از درگاه شرکت اعتبارسنجی ایران یا بانک طرف‌حساب.",
+          "tag": "راهنما"
+        },
+        {
+          "title": "اعتراض چگونه است؟",
+          "body": "از طریق سامانه ثبت درخواست اصلاح اطلاعات.",
+          "tag": "فرآیند"
+        }
+      ]
+    }
+  },
+  "ANIMATED_LOGO": {
+    "renderer": "AnimatedLogo",
+    "description": "ICS motion logo tool (variants: white | maroon | gauge)",
+    "paramsSchema": "animated_logo",
+    "params": {
+      "label": "شرکت اعتبارسنجی ایران",
+      "variant": "white"
     }
   }
 }

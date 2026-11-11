@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { faDigits } from '$lib/dana/fa';
+	import { resolveMagicVariant } from '$lib/dana/variants';
 
 	type Item = { date?: string; title: string; description?: string };
 
@@ -9,29 +10,55 @@
 	$: items = (Array.isArray(params.items) ? params.items : []) as Item[];
 	$: activeIndex =
 		typeof params.activeIndex === 'number' ? (params.activeIndex as number) : items.length - 1;
+	$: variant = resolveMagicVariant('timeline', params, 'vertical');
 
 	const toFaDate = (d?: string) => (d ? faDigits(d) : '');
 </script>
 
-<div class="dana-magic-root dana-timeline" dir="rtl">
+<div
+	class="dana-magic-root dana-timeline dana-timeline--{variant}"
+	dir="rtl"
+	data-variant={variant}
+>
 	{#if title}
 		<h3 class="dana-timeline__title">{title}</h3>
 	{/if}
 	{#if items.length}
-		<ol class="dana-timeline__list">
-			{#each items as item, i}
-				<li class="dana-timeline__item" class:is-active={i === activeIndex}>
-					<span class="dana-timeline__dot" aria-hidden="true"></span>
-					<p class="dana-timeline__item-title">{item.title}</p>
-					{#if item.date}
-						<p class="dana-timeline__date">{toFaDate(item.date)}</p>
-					{/if}
-					{#if item.description}
-						<p class="dana-timeline__desc">{item.description}</p>
-					{/if}
-				</li>
-			{/each}
-		</ol>
+		{#if variant === 'horizontal'}
+			<ol class="dana-timeline__rail">
+				{#each items as item, i}
+					<li class="dana-timeline__rail-item" class:is-active={i === activeIndex}>
+						<span class="dana-timeline__dot" aria-hidden="true"></span>
+						<p class="dana-timeline__item-title">{item.title}</p>
+						{#if item.date}<p class="dana-timeline__date">{toFaDate(item.date)}</p>{/if}
+					</li>
+				{/each}
+			</ol>
+		{:else if variant === 'compact'}
+			<ol class="dana-timeline__compact">
+				{#each items as item, i}
+					<li class:is-active={i === activeIndex}>
+						<span class="dana-timeline__compact-date">{toFaDate(item.date || '')}</span>
+						<span class="dana-timeline__compact-title">{item.title}</span>
+					</li>
+				{/each}
+			</ol>
+		{:else}
+			<ol class="dana-timeline__list">
+				{#each items as item, i}
+					<li class="dana-timeline__item" class:is-active={i === activeIndex}>
+						<span class="dana-timeline__dot" aria-hidden="true"></span>
+						<p class="dana-timeline__item-title">{item.title}</p>
+						{#if item.date}
+							<p class="dana-timeline__date">{toFaDate(item.date)}</p>
+						{/if}
+						{#if item.description}
+							<p class="dana-timeline__desc">{item.description}</p>
+						{/if}
+					</li>
+				{/each}
+			</ol>
+		{/if}
 	{:else}
 		<p class="dana-timeline__empty">رویدادی برای نمایش نیست.</p>
 	{/if}

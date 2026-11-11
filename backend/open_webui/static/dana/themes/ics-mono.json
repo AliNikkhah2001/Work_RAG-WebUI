@@ -1,0 +1,126 @@
+{
+  "id": "ics-mono",
+  "label_fa": "مونو ICS",
+  "label_en": "ICS Mono",
+  "dir": "rtl",
+  "locale": "fa-IR",
+  "fonts": {
+    "sans": "\"RAY\", \"Ray\", \"Vazirmatn\", ui-sans-serif, system-ui, sans-serif",
+    "cssUrl": "/static/dana/brand/fonts/ray.css"
+  },
+  "colors": {
+    "--dana-primary": "#960032",
+    "--dana-primary-shade": "#3C0014",
+    "--dana-primary-deep": "#000000",
+    "--dana-primary-tint": "#FFC2CC",
+    "--dana-accent": "#EC004F",
+    "--dana-bg": "#0a0a0a",
+    "--dana-fg": "#ffffff",
+    "--dana-splash-bg": "#000000",
+    "--dana-input-border": "rgba(255,255,255,0.35)",
+    "--dana-send-bg": "#960032",
+    "--dana-send-fg": "#ffffff",
+    "--dana-chat-overlay": "rgba(0,0,0,0.35)",
+    "--dana-glass-bg": "rgba(150,0,50,0.22)",
+    "--dana-glass-border": "rgba(255,255,255,0.2)",
+    "--dana-glass-blur": "14px",
+    "--dana-text-shadow": "0 1px 2px rgba(0,0,0,0.85)",
+    "--dana-text-glow": "0 0 10px rgba(255,255,255,0.15)",
+    "--dana-gauge-blue": "#1E88E5",
+    "--dana-gauge-green": "#00C853",
+    "--dana-gauge-yellow": "#FFD600",
+    "--dana-gauge-orange": "#FFAB00",
+    "--dana-gauge-red": "#FF5252"
+  },
+  "logo": "/static/dana/brand/icons/extracted/ics-maroon-logo-hor.png",
+  "favicon": "/static/dana/brand/icons/dana-icon-512.png",
+  "keyvisual": "/static/dana/brand/keyvisual/extracted/ics-keyvisual-blocks.png",
+  "splash": {
+    "webm": "/static/dana/brand/motion/web/ICS_Mono-Color-Logo_Hor.webm",
+    "gif": "/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor-still.png"
+  },
+  "chat_background": {
+    "image": "/static/dana/brand/backgrounds/extracted/ics-3d-cubes.png",
+    "gif": "/static/dana/brand/motion/web/ICS_Mono-Color-Logo_Hor.webm",
+    "webm": "/static/dana/brand/motion/web/ICS_Mono-Color-Logo_Hor.webm",
+    "still": "/static/dana/brand/motion/web/ICS_Mono-Color-Logo_Hor-still.png"
+  },
+  "copy": {
+    "product_name": "دانا",
+    "subtitle": "شرکت اعتبارسنجی ایران",
+    "empty_title": "دانا",
+    "empty_body": "سؤال اعتبارسنجی خود را بپرسید.",
+    "placeholder": "پیام خود را بنویسید…",
+    "send": "ارسال",
+    "feedback_useful": "مفید بود",
+    "feedback_not_useful": "مفید نبود",
+    "feedback_report": "گزارش خطا",
+    "suggestions_heading": "پیشنهادها"
+  },
+  "prompt_suggestions": [
+    {
+      "id": "dana-credit-score",
+      "title": [
+        "رتبه اعتباری",
+        "معنای نمره و بازه‌ها"
+      ],
+      "content": "رتبه اعتباری چیست و بازه‌های نمره اعتباری چگونه تفسیر می‌شوند؟"
+    },
+    {
+      "id": "dana-report-howto",
+      "title": [
+        "گزارش اعتباری",
+        "چگونه دریافت کنم؟"
+      ],
+      "content": "چگونه می‌توانم گزارش اعتباری خود را از شرکت اعتبارسنجی ایران دریافت کنم؟"
+    },
+    {
+      "id": "dana-company-check",
+      "title": [
+        "استعلام شرکت",
+        "وضعیت و سوابق"
+      ],
+      "content": "چگونه وضعیت اعتباری و سوابق یک شرکت را بررسی کنم؟"
+    },
+    {
+      "id": "dana-improve-score",
+      "title": [
+        "بهبود رتبه",
+        "اقدامات مؤثر"
+      ],
+      "content": "چه اقداماتی برای بهبود رتبه اعتباری مؤثر است؟"
+    },
+    {
+      "id": "dana-dispute",
+      "title": [
+        "اعتراض به گزارش",
+        "فرآیند اصلاح"
+      ],
+      "content": "در صورت وجود خطا در گزارش اعتباری، فرآیند اعتراض و اصلاح چگونه است؟"
+    },
+    {
+      "id": "dana-loan-eligibility",
+      "title": [
+        "وام و تسهیلات",
+        "نقش رتبه اعتباری"
+      ],
+      "content": "رتبه اعتباری چه نقشی در دریافت وام و تسهیلات بانکی دارد؟"
+    }
+  ],
+  "magic_variants": {
+    "gauge": "ring",
+    "timeline": "horizontal",
+    "table": "dense",
+    "list": "chips",
+    "logo": "maroon"
+  },
+  "component_tokens": {
+    "input_radius": "1rem",
+    "button_radius": "9999px",
+    "sidebar_accent": "#960032"
+  },
+  "feedback": {
+    "show_useful": true,
+    "show_report": true
+  }
+}
