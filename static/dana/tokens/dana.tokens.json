@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "dana": {
+    "color": {
+      "primary": {
+        "$type": "color",
+        "$value": "#8F0046"
+      },
+      "primaryFoundation": {
+        "$type": "color",
+        "$value": "#960032"
+      },
+      "primaryMaroon": {
+        "$type": "color",
+        "$value": "#BA0C54"
+      },
+      "primaryShade": {
+        "$type": "color",
+        "$value": "#6D0035"
+      },
+      "primaryDeep": {
+        "$type": "color",
+        "$value": "#830040"
+      },
+      "fg": {
+        "$type": "color",
+        "$value": "#ffffff"
+      },
+      "bg": {
+        "$type": "color",
+        "$value": "#8F0046"
+      },
+      "gaugeBlue": {
+        "$type": "color",
+        "$value": "#1E88E5"
+      },
+      "gaugeGreen": {
+        "$type": "color",
+        "$value": "#00C853"
+      },
+      "gaugeYellow": {
+        "$type": "color",
+        "$value": "#FFD600"
+      },
+      "gaugeOrange": {
+        "$type": "color",
+        "$value": "#FFAB00"
+      },
+      "gaugeRed": {
+        "$type": "color",
+        "$value": "#FF5252"
+      }
+    }
+  }
+}

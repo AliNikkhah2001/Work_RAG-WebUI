@@ -20,6 +20,10 @@ export type DanaThemePack = {
 		content: string;
 		id?: string;
 	}>;
+	/** Default magic widget skins: gauge/timeline/table/list/logo variant ids. */
+	magic_variants?: Partial<
+		Record<'gauge' | 'timeline' | 'table' | 'list' | 'logo', string>
+	>;
 	component_tokens: Record<string, string>;
 	feedback: { show_useful?: boolean; show_report?: boolean };
 };

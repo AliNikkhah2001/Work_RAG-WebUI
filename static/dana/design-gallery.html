@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دانا — گالری تم و جادو</title>
+  <link rel="stylesheet" href="/static/dana/brand/fonts/ray.css" />
+  <link rel="stylesheet" href="/static/dana/dana.css" />
+  <style>
+    :root { --dana-bg: #1a0010; --dana-fg: #fff; --dana-primary: #8F0046; }
+    body { margin: 0; font-family: RAY, Vazirmatn, sans-serif; background: var(--dana-bg); color: var(--dana-fg); letter-spacing: 0; min-height: 100vh; transition: background .25s ease; }
+    header { padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.15); position: sticky; top: 0; backdrop-filter: blur(12px); background: color-mix(in srgb, var(--dana-bg) 82%, transparent); z-index: 5; }
+    h1 { margin: 0; font-size: 1.45rem; }
+    .bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; align-items: center; }
+    .bar button, .bar a.btn {
+      appearance: none; border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.1);
+      color: inherit; border-radius: 999px; padding: .45rem .9rem; cursor: pointer; font: inherit; font-size: .85rem; text-decoration: none;
+    }
+    .bar button.active, .bar a.btn.primary { background: var(--dana-primary); border-color: transparent; font-weight: 600; }
+    .preview {
+      margin: 1rem 1.25rem; border-radius: 1.25rem; overflow: hidden; border: 1px solid rgba(255,255,255,.2);
+      min-height: 220px; position: relative; background: var(--dana-bg);
+    }
+    .preview .media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .42; }
+    .preview .veil { position: absolute; inset: 0; background: linear-gradient(160deg, color-mix(in srgb, var(--dana-bg) 55%, transparent), var(--dana-bg)); }
+    .preview .copy { position: relative; z-index: 1; padding: 2rem 1.5rem; }
+    .preview .copy h2 { margin: 0 0 .35rem; font-size: 2rem; }
+    .grid { display: grid; gap: 1rem; padding: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .card { border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.06); }
+    .card img, .card video { width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; background: #3c0014; }
+    .card .meta { padding: .75rem 1rem 1rem; display: flex; flex-direction: column; gap: .45rem; }
+    .section { padding: 1rem 1.25rem .25rem; opacity: .85; }
+    code { font-size: .75rem; opacity: .8; }
+    .hint { opacity: .75; font-size: .85rem; margin: .35rem 0 0; line-height: 1.6; }
+  </style>
+</head>
+<body class="dana-theme" data-dana-theme="ics-dark">
+  <header>
+    <h1>گالری طراحی دانا — ۵ تم</h1>
+    <p class="hint">یک تم را انتخاب کنید، سپس «باز کردن چت با این تم» را بزنید تا روی <code>:13000</code> اعمال شود.</p>
+    <div class="bar" id="theme-bar"></div>
+    <div class="bar">
+      <a class="btn primary" id="open-chat" href="/?dana_theme=ics-dark">باز کردن چت با این تم</a>
+      <a class="btn" href="/static/dana/ux-preview.html">پیش‌نمایش ویجت‌ها</a>
+      <span class="hint" id="status">بارگذاری…</span>
+    </div>
+  </header>
+
+  <div class="preview" id="live-preview">
+    <img class="media" id="preview-still" alt="" />
+    <video class="media" id="preview-video" autoplay muted loop playsinline hidden></video>
+    <div class="veil"></div>
+    <div class="copy">
+      <h2 id="preview-title">دانا</h2>
+      <p id="preview-sub" class="hint">سؤال اعتبارسنجی خود را بپرسید</p>
+      <code id="preview-id">ics-dark</code>
+    </div>
+  </div>
+
+  <p class="section">تم‌های چت</p>
+  <div class="grid" id="themes"></div>
+
+  <p class="section">موشن‌های برند (web)</p>
+  <div class="grid" id="motions"></div>
+
+  <script>
+    const THEMES = [
+      ['ics-dark', 'قرمز تیره'],
+      ['ics-maroon', 'مارون روشن'],
+      ['ics-gauge', 'گیج رنگی'],
+      ['ics-stair', 'پله شفاف'],
+      ['ics-mono', 'مونو'],
+    ];
+    const STORAGE = 'dana.theme_id';
+    const VER = 'dana.theme_default_ver';
+    let current = localStorage.getItem(STORAGE) || 'ics-dark';
+
+    const bar = document.getElementById('theme-bar');
+    const status = document.getElementById('status');
+    const openChat = document.getElementById('open-chat');
+    const tg = document.getElementById('themes');
+
+    function stillFromPack(pack) {
+      return pack?.splash?.still || pack?.chat_background?.still || pack?.splash?.gif || '';
+    }
+    function webmFromPack(pack) {
+      return pack?.splash?.webm || pack?.chat_background?.webm || '';
+    }
+
+    async function applyTheme(id) {
+      current = id;
+      localStorage.setItem(STORAGE, id);
+      localStorage.setItem(VER, '3-five-themes');
+      const res = await fetch(`/static/dana/themes/${id}.json`, { cache: 'no-cache' });
+      if (!res.ok) throw new Error(id);
+      const pack = await res.json();
+      const root = document.documentElement;
+      const body = document.body;
+      for (const name of [...root.style]) {
+        if (name.startsWith('--dana-')) root.style.removeProperty(name);
+      }
+      Object.entries(pack.colors || {}).forEach(([k, v]) => root.style.setProperty(k, v));
+      if (pack.fonts?.sans) root.style.setProperty('--dana-font-sans', pack.fonts.sans);
+      root.setAttribute('data-dana-theme', pack.id);
+      body.setAttribute('data-dana-theme', pack.id);
+      body.style.background = pack.colors?.['--dana-bg'] || '#1a0010';
+      document.getElementById('preview-title').textContent = pack.copy?.product_name || 'دانا';
+      document.getElementById('preview-sub').textContent = pack.copy?.tagline || pack.copy?.subtitle || '';
+      document.getElementById('preview-id').textContent = pack.id;
+      const still = stillFromPack(pack);
+      const webm = webmFromPack(pack);
+      const img = document.getElementById('preview-still');
+      const vid = document.getElementById('preview-video');
+      img.src = still || '';
+      img.hidden = !still;
+      if (webm) {
+        vid.src = webm;
+        vid.poster = still || '';
+        vid.hidden = false;
+        img.hidden = true;
+      } else {
+        vid.removeAttribute('src');
+        vid.hidden = true;
+      }
+      openChat.href = `/?dana_theme=${encodeURIComponent(id)}`;
+      [...bar.querySelectorAll('button')].forEach((b) => b.classList.toggle('active', b.dataset.id === id));
+      status.textContent = `فعال: ${id}`;
+    }
+
+    THEMES.forEach(([id, label]) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.id = id;
+      btn.textContent = `${label} · ${id}`;
+      btn.addEventListener('click', () => applyTheme(id).catch((e) => { status.textContent = String(e); }));
+      bar.appendChild(btn);
+
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = `<div class="meta"><strong>${label}</strong><code>${id}</code>
+        <button type="button" data-id="${id}">اعمال روی چت</button></div>`;
+      card.querySelector('button').addEventListener('click', async () => {
+        await applyTheme(id);
+        location.href = `/?dana_theme=${encodeURIComponent(id)}`;
+      });
+      // fill still after pack load
+      fetch(`/static/dana/themes/${id}.json`).then((r) => r.json()).then((pack) => {
+        const src = stillFromPack(pack);
+        if (src) {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = id;
+          card.prepend(img);
+        }
+      });
+      tg.appendChild(card);
+    });
+
+    const motions = [
+      'ICS_white-Logo_Hor','ICS_Maroon-Logo_Hor','ICS_Gauge-Color-Logo_Hor',
+      'ICS_Stair_Transparent_test_Hor','ICS_Mono-Color-Logo_Hor','ICS_white-and-Gauge-Logo_Hor'
+    ];
+    const mg = document.getElementById('motions');
+    motions.forEach((base) => {
+      mg.insertAdjacentHTML('beforeend', `<article class="card"><video autoplay muted loop playsinline poster="/static/dana/brand/motion/web/${base}-still.png"><source src="/static/dana/brand/motion/web/${base}.webm" type="video/webm"/></video><div class="meta"><code>${base}</code></div></article>`);
+    });
+
+    applyTheme(current).catch(() => applyTheme('ics-dark'));
+  </script>
+</body>
+</html>

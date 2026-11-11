@@ -1,0 +1,126 @@
+{
+  "id": "ics-stair",
+  "label_fa": "پله شفاف ICS",
+  "label_en": "ICS Stair Glass",
+  "dir": "rtl",
+  "locale": "fa-IR",
+  "fonts": {
+    "sans": "\"RAY\", \"Ray\", \"Vazirmatn\", ui-sans-serif, system-ui, sans-serif",
+    "cssUrl": "/static/dana/brand/fonts/ray.css"
+  },
+  "colors": {
+    "--dana-primary": "#830040",
+    "--dana-primary-shade": "#490024",
+    "--dana-primary-deep": "#2C0015",
+    "--dana-primary-tint": "#deb3c8",
+    "--dana-accent": "#FF4281",
+    "--dana-bg": "#2C0015",
+    "--dana-fg": "#ffffff",
+    "--dana-splash-bg": "#2C0015",
+    "--dana-input-border": "rgba(255,255,255,0.4)",
+    "--dana-send-bg": "#830040",
+    "--dana-send-fg": "#ffffff",
+    "--dana-chat-overlay": "rgba(44,0,21,0.35)",
+    "--dana-glass-bg": "rgba(255,255,255,0.12)",
+    "--dana-glass-border": "rgba(255,255,255,0.26)",
+    "--dana-glass-blur": "22px",
+    "--dana-text-shadow": "0 1px 3px rgba(0,0,0,0.75)",
+    "--dana-text-glow": "0 0 16px rgba(255,66,129,0.25)",
+    "--dana-gauge-blue": "#1E88E5",
+    "--dana-gauge-green": "#00C853",
+    "--dana-gauge-yellow": "#FFD600",
+    "--dana-gauge-orange": "#FFAB00",
+    "--dana-gauge-red": "#FF5252"
+  },
+  "logo": "/static/dana/brand/icons/extracted/ics-white-gauge-logo-hor.png",
+  "favicon": "/static/dana/brand/icons/dana-icon-512.png",
+  "keyvisual": "/static/dana/brand/keyvisual/extracted/ics-keyvisual-blocks.png",
+  "splash": {
+    "webm": "/static/dana/brand/motion/web/ICS_Stair_Transparent_V02_Hor.webm",
+    "gif": "/static/dana/brand/motion/web/ICS_Stair_Transparent_test_Hor-still.png"
+  },
+  "chat_background": {
+    "image": "/static/dana/brand/backgrounds/extracted/ics-stair-pattern.png",
+    "gif": "/static/dana/brand/motion/web/ICS_Stair_Transparent_test_Hor-still.png",
+    "webm": "/static/dana/brand/motion/web/ICS_Stair_Transparent_test_Hor.webm",
+    "still": "/static/dana/brand/motion/web/ICS_Stair_Transparent_test_Hor-still.png"
+  },
+  "copy": {
+    "product_name": "دانا",
+    "subtitle": "شرکت اعتبارسنجی ایران",
+    "empty_title": "دانا",
+    "empty_body": "سؤال اعتبارسنجی خود را بپرسید.",
+    "placeholder": "پیام خود را بنویسید…",
+    "send": "ارسال",
+    "feedback_useful": "مفید بود",
+    "feedback_not_useful": "مفید نبود",
+    "feedback_report": "گزارش خطا",
+    "suggestions_heading": "پیشنهادها"
+  },
+  "prompt_suggestions": [
+    {
+      "id": "dana-credit-score",
+      "title": [
+        "رتبه اعتباری",
+        "معنای نمره و بازه‌ها"
+      ],
+      "content": "رتبه اعتباری چیست و بازه‌های نمره اعتباری چگونه تفسیر می‌شوند؟"
+    },
+    {
+      "id": "dana-report-howto",
+      "title": [
+        "گزارش اعتباری",
+        "چگونه دریافت کنم؟"
+      ],
+      "content": "چگونه می‌توانم گزارش اعتباری خود را از شرکت اعتبارسنجی ایران دریافت کنم؟"
+    },
+    {
+      "id": "dana-company-check",
+      "title": [
+        "استعلام شرکت",
+        "وضعیت و سوابق"
+      ],
+      "content": "چگونه وضعیت اعتباری و سوابق یک شرکت را بررسی کنم؟"
+    },
+    {
+      "id": "dana-improve-score",
+      "title": [
+        "بهبود رتبه",
+        "اقدامات مؤثر"
+      ],
+      "content": "چه اقداماتی برای بهبود رتبه اعتباری مؤثر است؟"
+    },
+    {
+      "id": "dana-dispute",
+      "title": [
+        "اعتراض به گزارش",
+        "فرآیند اصلاح"
+      ],
+      "content": "در صورت وجود خطا در گزارش اعتباری، فرآیند اعتراض و اصلاح چگونه است؟"
+    },
+    {
+      "id": "dana-loan-eligibility",
+      "title": [
+        "وام و تسهیلات",
+        "نقش رتبه اعتباری"
+      ],
+      "content": "رتبه اعتباری چه نقشی در دریافت وام و تسهیلات بانکی دارد؟"
+    }
+  ],
+  "magic_variants": {
+    "gauge": "arc",
+    "timeline": "vertical",
+    "table": "cards",
+    "list": "accordion",
+    "logo": "white"
+  },
+  "component_tokens": {
+    "input_radius": "1rem",
+    "button_radius": "9999px",
+    "sidebar_accent": "#830040"
+  },
+  "feedback": {
+    "show_useful": true,
+    "show_report": true
+  }
+}

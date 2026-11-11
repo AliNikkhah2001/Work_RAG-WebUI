@@ -1740,6 +1740,31 @@ except Exception as e:
 
 DEFAULT_INTERFACE_SETTINGS = default_interface_settings if isinstance(default_interface_settings, dict) else {}
 
+# Dana theme / magic skins from dedicated env vars (compose-friendly)
+_dana_theme = os.getenv('DANA_THEME_ID', '').strip()
+if _dana_theme:
+    DEFAULT_INTERFACE_SETTINGS = {**DEFAULT_INTERFACE_SETTINGS, 'dana_theme_id': _dana_theme}
+_dana_magic = {
+    k: os.getenv(env, '').strip()
+    for k, env in (
+        ('gauge', 'DANA_MAGIC_GAUGE'),
+        ('timeline', 'DANA_MAGIC_TIMELINE'),
+        ('table', 'DANA_MAGIC_TABLE'),
+        ('list', 'DANA_MAGIC_LIST'),
+        ('logo', 'DANA_MAGIC_LOGO'),
+    )
+}
+_dana_magic = {k: v for k, v in _dana_magic.items() if v}
+if _dana_magic:
+    DEFAULT_INTERFACE_SETTINGS = {
+        **DEFAULT_INTERFACE_SETTINGS,
+        'dana_magic_variants': {
+            **(DEFAULT_INTERFACE_SETTINGS.get('dana_magic_variants') or {}),
+            **_dana_magic,
+        },
+    }
+
+
 try:
     UI_VISIBILITY = TypeAdapter(dict[str, StrictBool]).validate_json(os.getenv('UI_VISIBILITY', '{}'))
 except Exception as e:

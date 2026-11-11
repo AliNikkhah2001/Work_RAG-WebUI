@@ -5,8 +5,8 @@
   "dir": "rtl",
   "locale": "fa-IR",
   "fonts": {
-    "sans": "\"Vazirmatn\", \"RAY\", ui-sans-serif, system-ui, sans-serif",
-    "cssUrl": "https://cdn.jsdelivr.net/npm/vazirmatn@33.003/Vazirmatn-font-face.css"
+    "sans": "\"RAY\", \"Ray\", \"Vazirmatn\", ui-sans-serif, system-ui, sans-serif",
+    "cssUrl": "/static/dana/brand/fonts/ray.css"
   },
   "colors": {
     "--dana-primary": "#8F0046",
@@ -20,25 +20,30 @@
     "--dana-input-border": "rgba(255,255,255,0.45)",
     "--dana-send-bg": "#8F0046",
     "--dana-send-fg": "#ffffff",
-    "--dana-chat-overlay": "rgba(80, 0, 40, 0.42)",
-    "--dana-glass-bg": "rgba(255, 255, 255, 0.18)",
-    "--dana-glass-border": "rgba(255, 255, 255, 0.32)",
+    "--dana-chat-overlay": "rgba(80,0,40,0.42)",
+    "--dana-glass-bg": "rgba(255,255,255,0.18)",
+    "--dana-glass-border": "rgba(255,255,255,0.32)",
     "--dana-glass-blur": "18px",
-    "--dana-text-shadow": "0 1px 2px rgba(0, 0, 0, 0.65), 0 2px 12px rgba(0, 0, 0, 0.35)",
-    "--dana-text-glow": "0 0 14px rgba(255, 255, 255, 0.22)"
+    "--dana-text-shadow": "0 1px 2px rgba(0,0,0,0.65), 0 2px 12px rgba(0,0,0,0.35)",
+    "--dana-text-glow": "0 0 14px rgba(255,255,255,0.22)",
+    "--dana-gauge-blue": "#1E88E5",
+    "--dana-gauge-green": "#00C853",
+    "--dana-gauge-yellow": "#FFD600",
+    "--dana-gauge-orange": "#FFAB00",
+    "--dana-gauge-red": "#FF5252"
   },
-  "logo": "/static/dana/brand/icons/dana-icon-512.png",
+  "logo": "/static/dana/brand/icons/extracted/ics-white-logo-hor.png",
   "favicon": "/static/dana/brand/icons/dana-icon-512.png",
-  "keyvisual": "/static/dana/brand/keyvisual/stair-hero.png",
+  "keyvisual": "/static/dana/brand/keyvisual/extracted/ics-keyvisual-blocks.png",
   "splash": {
-    "webm": "/static/dana/brand/motion/ics-white-logo-hor.webm",
-    "gif": "/static/dana/brand/backgrounds/ics-white-logo-chat.gif"
+    "webm": "/static/dana/brand/motion/web/ICS_white-Logo_Hor.webm",
+    "gif": "/static/dana/brand/motion/web/ICS_white-Logo_Hor-still.png"
   },
   "chat_background": {
     "image": "/static/dana/brand/backgrounds/ics-pdf-chat-bg-1280.png",
-    "gif": "/static/dana/brand/backgrounds/ics-white-logo-chat.gif",
-    "webm": "/static/dana/brand/motion/ics-white-logo-hor.webm",
-    "still": "/static/dana/brand/backgrounds/ics-white-logo-still.png"
+    "gif": "/static/dana/brand/motion/web/ICS_white-Logo_Hor-still.png",
+    "webm": "/static/dana/brand/motion/web/ICS_white-Logo_Hor.webm",
+    "still": "/static/dana/brand/motion/web/ICS_white-Logo_Hor-still.png"
   },
   "copy": {
     "product_name": "دانا",
@@ -55,35 +60,60 @@
   "prompt_suggestions": [
     {
       "id": "dana-credit-score",
-      "title": ["رتبه اعتباری", "معنای نمره و بازه‌ها"],
+      "title": [
+        "رتبه اعتباری",
+        "معنای نمره و بازه‌ها"
+      ],
       "content": "رتبه اعتباری چیست و بازه‌های نمره اعتباری چگونه تفسیر می‌شوند؟"
     },
     {
       "id": "dana-report-howto",
-      "title": ["گزارش اعتباری", "چگونه دریافت کنم؟"],
+      "title": [
+        "گزارش اعتباری",
+        "چگونه دریافت کنم؟"
+      ],
       "content": "چگونه می‌توانم گزارش اعتباری خود را از شرکت اعتبارسنجی ایران دریافت کنم؟"
     },
     {
       "id": "dana-company-check",
-      "title": ["استعلام شرکت", "وضعیت و سوابق"],
+      "title": [
+        "استعلام شرکت",
+        "وضعیت و سوابق"
+      ],
       "content": "چگونه وضعیت اعتباری و سوابق یک شرکت را بررسی کنم؟"
     },
     {
       "id": "dana-improve-score",
-      "title": ["بهبود رتبه", "اقدامات مؤثر"],
+      "title": [
+        "بهبود رتبه",
+        "اقدامات مؤثر"
+      ],
       "content": "چه اقداماتی برای بهبود رتبه اعتباری مؤثر است؟"
     },
     {
       "id": "dana-dispute",
-      "title": ["اعتراض به گزارش", "فرآیند اصلاح"],
+      "title": [
+        "اعتراض به گزارش",
+        "فرآیند اصلاح"
+      ],
       "content": "در صورت وجود خطا در گزارش اعتباری، فرآیند اعتراض و اصلاح چگونه است؟"
     },
     {
       "id": "dana-loan-eligibility",
-      "title": ["وام و تسهیلات", "نقش رتبه اعتباری"],
+      "title": [
+        "وام و تسهیلات",
+        "نقش رتبه اعتباری"
+      ],
       "content": "رتبه اعتباری چه نقشی در دریافت وام و تسهیلات بانکی دارد؟"
     }
   ],
+  "magic_variants": {
+    "gauge": "ring",
+    "timeline": "vertical",
+    "table": "striped",
+    "list": "accordion",
+    "logo": "white"
+  },
   "component_tokens": {
     "input_radius": "1rem",
     "button_radius": "9999px",

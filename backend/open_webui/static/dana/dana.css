@@ -474,3 +474,194 @@ html.dana-theme[data-dana-theme='ics-dark'] #chat-container {
 html.dana-theme[data-dana-theme='ics-dark'] #splash-screen.dana-splash {
   background: var(--dana-splash-bg, #8f0046) !important;
 }
+
+/* ===== Magic variants + extended shells (brand pack v2) ===== */
+html.dana-theme[data-dana-theme='ics-gauge'],
+html.dana-theme[data-dana-theme='ics-stair'],
+html.dana-theme[data-dana-theme='ics-mono'] {
+  color-scheme: dark;
+  background-color: var(--dana-bg, #2c0015);
+}
+html.dana-theme[data-dana-theme='ics-gauge'] body,
+html.dana-theme[data-dana-theme='ics-stair'] body,
+html.dana-theme[data-dana-theme='ics-mono'] body,
+html.dana-theme[data-dana-theme='ics-gauge'] #chat-container,
+html.dana-theme[data-dana-theme='ics-stair'] #chat-container,
+html.dana-theme[data-dana-theme='ics-mono'] #chat-container {
+  background-color: transparent !important;
+  color: var(--dana-fg, #fff);
+}
+
+.dana-score-gauge--hero {
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+}
+.dana-score-gauge__score--xl {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.dana-score-gauge__bar {
+  margin-top: 0.75rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.18);
+  overflow: hidden;
+}
+.dana-score-gauge__bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--dana-gauge-red,#FF5252), var(--dana-gauge-yellow,#FFD600), var(--dana-gauge-green,#00C853));
+  transition: width 1s cubic-bezier(0.16,1,0.3,1);
+}
+.dana-score-gauge--arc {
+  flex-wrap: wrap;
+}
+.dana-score-gauge__arcbar {
+  position: relative;
+  width: min(100%, 220px);
+}
+.dana-score-gauge__arc-svg { width: 100%; height: auto; display: block; }
+.dana-score-gauge__arc-center {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0.2rem;
+  text-align: center;
+}
+
+.dana-timeline--horizontal .dana-timeline__rail {
+  display: flex;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0 0;
+  overflow-x: auto;
+  border: 0;
+}
+.dana-timeline--horizontal .dana-timeline__rail-item {
+  flex: 0 0 8.5rem;
+  position: relative;
+  padding-top: 1.1rem;
+  border-top: 2px solid rgba(255,255,255,0.28);
+}
+.dana-timeline--horizontal .dana-timeline__dot {
+  top: -0.4rem;
+  inset-inline-start: 0;
+}
+.dana-timeline--compact .dana-timeline__compact {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+.dana-timeline--compact .dana-timeline__compact li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.65rem;
+  background: rgba(255,255,255,0.08);
+}
+.dana-timeline--compact .is-active {
+  outline: 1px solid rgba(255,255,255,0.45);
+}
+.dana-timeline__compact-date {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  min-width: 3rem;
+}
+
+.dana-table__title, .dana-list__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+.dana-table, .dana-list, .dana-anim-logo {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--dana-glass-bg, rgba(255,255,255,0.14));
+  border: 1px solid var(--dana-glass-border, rgba(255,255,255,0.28));
+  backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--dana-glass-blur, 18px)) saturate(140%);
+}
+.dana-table__scroll { overflow: auto; }
+.dana-table__grid {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.dana-table__grid th, .dana-table__grid td {
+  padding: 0.55rem 0.65rem;
+  text-align: start;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+}
+.dana-table--striped tbody tr:nth-child(odd) { background: rgba(255,255,255,0.06); }
+.dana-table--dense .dana-table__grid th,
+.dana-table--dense .dana-table__grid td { padding: 0.3rem 0.45rem; font-size: 0.8rem; }
+.dana-table__cards { display: grid; gap: 0.65rem; }
+.dana-table__card {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.dana-table__card-row { display: flex; justify-content: space-between; gap: 0.75rem; margin: 0.2rem 0; }
+.dana-table__card-key { opacity: 0.75; font-size: 0.8rem; }
+
+.dana-list__accordion { list-style: none; margin: 0; padding: 0; }
+.dana-list__accordion li { border-bottom: 1px solid rgba(255,255,255,0.14); }
+.dana-list__head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+.dana-list__body { padding: 0 0 0.85rem; font-size: 0.9rem; line-height: 1.75; opacity: 0.92; }
+.dana-list__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.65rem;
+}
+.dana-list__tile {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.dana-list__tile p { margin: 0.35rem 0 0; font-size: 0.85rem; opacity: 0.9; }
+.dana-list__tag {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--dana-primary,#8f0046) 70%, white);
+}
+.dana-list__chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.dana-list__chip {
+  padding: 0.4rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  font-size: 0.85rem;
+}
+
+.dana-anim-logo { text-align: center; }
+.dana-anim-logo__media {
+  width: min(100%, 280px);
+  height: auto;
+  margin-inline: auto;
+  display: block;
+  border-radius: 0.75rem;
+  background: rgba(0,0,0,0.2);
+}
+.dana-anim-logo__label { margin: 0.65rem 0 0; font-size: 0.9rem; opacity: 0.9; }
