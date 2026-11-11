@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dana magic shots</title>
+  <link rel="stylesheet" href="/static/dana/dana.css" />
+  <link rel="stylesheet" href="/static/dana/brand/fonts/ray.css" />
+  <style>
+    body { margin: 0; background: #8F0046; color: #fff; font-family: RAY, Vazirmatn, sans-serif; }
+    .shot { width: 720px; min-height: 420px; padding: 28px; box-sizing: border-box; }
+    .shot--light { background: #fff; color: #1a1a1a; }
+    .bubble { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28); border-radius: 1.25rem; padding: 1.1rem 1.2rem; backdrop-filter: blur(16px); }
+    .shot--light .bubble { background: #f7f2f5; border-color: #e7d5de; }
+    h1 { margin: 0 0 .75rem; font-size: 1.05rem; opacity: .9; }
+  </style>
+</head>
+<body>
+  <section class="shot" id="DATA_TABLE">
+    <div class="bubble">
+      <h1>DATA_TABLE · striped</h1>
+      <div class="dana-magic-root dana-table dana-table--striped" dir="rtl">
+        <h3 class="dana-table__title">نمونه گزارش</h3>
+        <table class="dana-table__grid">
+          <thead><tr><th>عنوان</th><th>وضعیت</th><th>امتیاز</th></tr></thead>
+          <tbody>
+            <tr><td>اعتبارسنجی حقیقی</td><td>فعال</td><td>۷۲۰</td></tr>
+            <tr><td>اعتبارسنجی حقوقی</td><td>فعال</td><td>۶۸۰</td></tr>
+            <tr><td>گزارش تسهیلات</td><td>در صف</td><td>۶۴۰</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="shot" id="COLLAPSE_LIST">
+    <div class="bubble">
+      <h1>COLLAPSE_LIST · accordion</h1>
+      <div class="dana-magic-root dana-list dana-list--accordion" dir="rtl">
+        <h3 class="dana-list__title">سوالات متداول</h3>
+        <details class="dana-list__item" open>
+          <summary>رتبه اعتباری چیست؟</summary>
+          <p>شاخصی عددی از رفتار اعتباری فرد یا شرکت.</p>
+        </details>
+        <details class="dana-list__item">
+          <summary>چگونه گزارش بگیرم؟</summary>
+          <p>از درگاه شرکت اعتبارسنجی ایران یا بانک طرف‌حساب.</p>
+        </details>
+        <details class="dana-list__item">
+          <summary>اعتراض چگونه است؟</summary>
+          <p>از طریق سامانه ثبت درخواست اصلاح اطلاعات.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="shot" id="ANIMATED_LOGO">
+    <div class="bubble">
+      <h1>ANIMATED_LOGO · white</h1>
+      <div class="dana-magic-root dana-anim-logo" dir="rtl">
+        <img class="dana-anim-logo__media" src="/static/dana/brand/motion/web/ICS_white-Logo_Hor-still.png" alt="ICS" style="max-width:100%;border-radius:12px" />
+        <p class="dana-anim-logo__label">شرکت اعتبارسنجی ایران</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="shot" id="ux-preview">
+    <div class="bubble">
+      <h1>واریانت‌ها · gauge / table / list / logo</h1>
+      <div class="dana-magic-root dana-score-gauge dana-score-gauge--hero" dir="rtl" style="margin-bottom:1rem">
+        <div class="dana-score-gauge__hero">
+          <span class="dana-score-gauge__score dana-score-gauge__score--xl">۷۲۰</span>
+          <p class="dana-score-gauge__label">امتیاز اعتباری</p>
+          <p class="dana-score-gauge__band">خوب</p>
+          <div class="dana-score-gauge__bar"><span style="width:80%;display:block;height:8px;background:#fff;border-radius:99px"></span></div>
+        </div>
+      </div>
+      <div class="dana-magic-root dana-table dana-table--cards" dir="rtl" style="margin-bottom:1rem">
+        <h3 class="dana-table__title">نمونه گزارش</h3>
+        <div class="dana-table__cards">
+          <article class="dana-table__card" style="background:rgba(255,255,255,.12);padding:.75rem;border-radius:12px;margin-bottom:.5rem">
+            <div><strong>عنوان</strong> اعتبارسنجی حقیقی</div>
+            <div><strong>امتیاز</strong> ۷۲۰</div>
+          </article>
+        </div>
+      </div>
+      <div class="dana-magic-root dana-list dana-list--chips" dir="rtl">
+        <div class="dana-list__chips" style="display:flex;gap:.4rem;flex-wrap:wrap">
+          <span class="dana-list__chip" style="padding:.35rem .7rem;border-radius:999px;background:rgba(255,255,255,.18)">رتبه</span>
+          <span class="dana-list__chip" style="padding:.35rem .7rem;border-radius:999px;background:rgba(255,255,255,.18)">گزارش</span>
+          <span class="dana-list__chip" style="padding:.35rem .7rem;border-radius:999px;background:rgba(255,255,255,.18)">اعتراض</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

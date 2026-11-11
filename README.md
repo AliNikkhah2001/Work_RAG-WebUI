@@ -3,6 +3,7 @@
 ICS fork of Open WebUI for the Persian credit-scoring assistant **دانا**.
 
 - Brand / themes / magic widgets: **[DANA.md](DANA.md)**
+- Theme screenshots: ![gallery](docs/dana/themes/gallery.png)
 - Magic token screenshots:
 
 | Token | Preview |
@@ -12,6 +13,11 @@ ICS fork of Open WebUI for the Persian credit-scoring assistant **دانا**.
 | `COMPANY_TIMELINE` | ![timeline](docs/dana/magic/COMPANY_TIMELINE.png) |
 | `INFO_BANNER` | ![banner](docs/dana/magic/INFO_BANNER.png) |
 | `BIRTHDAY` | ![birthday](docs/dana/magic/BIRTHDAY.png) |
+| `DATA_TABLE` | ![table](docs/dana/magic/DATA_TABLE.png) |
+| `COLLAPSE_LIST` | ![list](docs/dana/magic/COLLAPSE_LIST.png) |
+| `ANIMATED_LOGO` | ![logo](docs/dana/magic/ANIMATED_LOGO.png) |
+
+Live gallery: [`static/dana/design-gallery.html`](static/dana/design-gallery.html) · widgets: [`static/dana/ux-preview.html`](static/dana/ux-preview.html)
 
 ---
 
@@ -170,24 +176,29 @@ Figma: [Dana ICS Chat — 5 Themes + Magic Variants](https://www.figma.com/desig
 
 ### Magic tokens (3+ variants each)
 
-| Token | Variants | Notes |
+| Token | Variants | Preview |
 |---|---|---|
-| `CREDIT_SCORE_GAUGE` | `ring` · `arc` · `hero` | Foundation gauge colors |
-| `COMPANY_TIMELINE` | `vertical` · `horizontal` · `compact` | RTL history |
-| `DATA_TABLE` | `striped` · `cards` · `dense` | Persian digits |
-| `COLLAPSE_LIST` | `accordion` · `grid` · `chips` | FAQ / tags |
-| `ANIMATED_LOGO` | `white` · `maroon` · `gauge` | Brand motion webm |
-| (+ bands, banner, birthday) | — | existing |
+| `CREDIT_SCORE_GAUGE` | `ring` · `arc` · `hero` | ![gauge](docs/dana/magic/CREDIT_SCORE_GAUGE.png) |
+| `CREDIT_SCORE_BANDS` | — | ![bands](docs/dana/magic/CREDIT_SCORE_BANDS.png) |
+| `COMPANY_TIMELINE` | `vertical` · `horizontal` · `compact` | ![timeline](docs/dana/magic/COMPANY_TIMELINE.png) |
+| `INFO_BANNER` | — | ![banner](docs/dana/magic/INFO_BANNER.png) |
+| `BIRTHDAY` | — | ![birthday](docs/dana/magic/BIRTHDAY.png) |
+| `DATA_TABLE` | `striped` · `cards` · `dense` | ![table](docs/dana/magic/DATA_TABLE.png) |
+| `COLLAPSE_LIST` | `accordion` · `grid` · `chips` | ![list](docs/dana/magic/COLLAPSE_LIST.png) |
+| `ANIMATED_LOGO` | `white` · `maroon` · `gauge` | ![logo](docs/dana/magic/ANIMATED_LOGO.png) |
+
+Montage: ![ux-preview](docs/dana/magic/ux-preview.png)
 
 Catalog: [`static/dana/magic-tokens.json`](static/dana/magic-tokens.json) · variants: [`static/dana/magic-variants.json`](static/dana/magic-variants.json) · live: [`ux-preview.html`](static/dana/ux-preview.html)
 
 ### Config / env
 
-See [`.env.dana.example`](.env.dana.example):
+See [`docs/dana/env.dana.example`](docs/dana/env.dana.example):
 
 - `DANA_THEME_ID=ics-dark|ics-maroon|ics-gauge|ics-stair|ics-mono`
 - `DANA_MAGIC_GAUGE` / `_TIMELINE` / `_TABLE` / `_LIST` / `_LOGO`
 - or `DEFAULT_INTERFACE_SETTINGS` JSON with `dana_theme_id` + `dana_magic_variants`
+- Chat quick-switch: `/?dana_theme=ics-maroon` (persists in `localStorage`)
 
 Brand manifest: [`static/dana/brand/manifest.json`](static/dana/brand/manifest.json)
 

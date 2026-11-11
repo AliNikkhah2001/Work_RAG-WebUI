@@ -62,20 +62,40 @@ export function resolveInitialDanaThemeId(): DanaThemeId {
 		cfg?.ui?.dana_theme_id ||
 		(typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_DANA_THEME_ID);
 
+	let fromQuery: string | null = null;
+	try {
+		if (typeof location !== 'undefined') {
+			fromQuery = new URLSearchParams(location.search).get('dana_theme');
+		}
+	} catch {
+		/* non-browser */
+	}
+
 	// Migrate browsers when product default theme set changes
 	try {
 		if (localStorage.getItem(DANA_DEFAULT_VERSION_KEY) !== DANA_DEFAULT_VERSION) {
 			localStorage.setItem(DANA_DEFAULT_VERSION_KEY, DANA_DEFAULT_VERSION);
-			if (!fromConfig) {
+			if (!fromConfig && !fromQuery) {
 				localStorage.setItem(DANA_STORAGE_KEY, DANA_DEFAULT_THEME);
 			}
+		}
+		// Explicit ?dana_theme= sticks for subsequent visits
+		if (fromQuery) {
+			localStorage.setItem(DANA_STORAGE_KEY, fromQuery);
 		}
 	} catch {
 		/* private mode */
 	}
 
-	const fromStorage = localStorage.getItem(DANA_STORAGE_KEY);
-	const raw = (fromConfig || fromStorage || DANA_DEFAULT_THEME) as string;
+	const fromStorage = (() => {
+		try {
+			return localStorage.getItem(DANA_STORAGE_KEY);
+		} catch {
+			return null;
+		}
+	})();
+	// Prefer query/storage so gallery switcher can override container DEFAULT_INTERFACE_SETTINGS
+	const raw = (fromQuery || fromStorage || fromConfig || DANA_DEFAULT_THEME) as string;
 	const candidate = DANA_THEME_ALIASES[raw] || raw;
 	return (DANA_THEME_IDS as readonly string[]).includes(candidate)
 		? (candidate as DanaThemeId)
