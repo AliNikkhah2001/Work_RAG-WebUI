@@ -188,31 +188,49 @@
 				></video>
 				<img
 					id="dana-splash-gif"
-					alt="دانا"
+					alt="دستیار اعتباری نوین ایران"
 					style="display: none; width: min(22rem, 80vw); height: auto"
 					loading="eager"
 				/>
 				<script>
 					(() => {
 						try {
-							const rawTheme = localStorage.getItem('dana.theme_id') || 'ics-dark';
+							const CAPTION = 'دستیار اعتباری نوین ایران';
+							const rawTheme = localStorage.getItem('dana.theme_id') || 'ics-maroon';
 							const themeId = rawTheme === 'ics-gauge' ? 'ics-dark' : rawTheme;
 							if (!themeId || themeId === 'vanilla') return;
 							const splash = document.getElementById('splash-screen');
-							const isDark = themeId === 'ics-dark';
+							const splashBg =
+								themeId === 'ics-maroon'
+									? '#ffffff'
+									: themeId === 'ics-mono'
+										? '#000000'
+										: themeId === 'ics-dark'
+											? '#8F0046'
+											: '#2C0015';
 							if (splash) {
 								splash.classList.add('dana-splash');
-								splash.style.background = isDark ? '#8F0046' : '#2C0015';
+								splash.style.background = splashBg;
 							}
 							const video = document.getElementById('dana-splash-video');
 							const gif = document.getElementById('dana-splash-gif');
 							const her = document.getElementById('logo-her');
-							const motion = isDark
-								? '/static/dana/brand/motion/ics-white-logo-hor.webm'
-								: '/static/dana/brand/motion/ics-maroon-logo-hor.webm';
-							const gifSrc = isDark
-								? '/static/dana/brand/motion/ics-white-logo-hor.gif'
-								: '/static/dana/brand/motion/ics-maroon-logo-hor.gif';
+							const motionByTheme = {
+								'ics-maroon': '/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor.webm',
+								'ics-dark': '/static/dana/brand/motion/web/ICS_white-Logo_Hor.webm',
+								'ics-mono': '/static/dana/brand/motion/web/ICS_Mono-Color-Logo_Hor.webm',
+								'ics-stair': '/static/dana/brand/motion/web/ICS_Stair_Transparent_V02_Hor.webm',
+								'ics-gauge': '/static/dana/brand/motion/web/ICS_Gauge-Color-Logo_Hor.webm'
+							};
+							const stillByTheme = {
+								'ics-maroon': '/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor-still.png',
+								'ics-dark': '/static/dana/brand/motion/web/ICS_white-Logo_Hor-still.png',
+								'ics-mono': '/static/dana/brand/motion/web/ICS_Mono-Color-Logo_Hor-still.png',
+								'ics-stair': '/static/dana/brand/motion/web/ICS_Stair_Transparent_V02_Hor-still.png',
+								'ics-gauge': '/static/dana/brand/motion/web/ICS_Gauge-Color-Logo_Hor-still.png'
+							};
+							const motion = motionByTheme[themeId] || motionByTheme['ics-maroon'];
+							const gifSrc = stillByTheme[themeId] || stillByTheme['ics-maroon'];
 							if (video) {
 								video.src = motion;
 								video.style.display = 'block';
@@ -222,7 +240,7 @@
 								gif.style.display = 'block';
 								if (her) her.style.display = 'none';
 							}
-							document.title = 'دانا';
+							document.title = CAPTION;
 						} catch (_) {}
 					})();
 				</script>
