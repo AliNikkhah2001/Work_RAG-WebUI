@@ -6,7 +6,7 @@ Live preview (local):
 
 - Themes gallery: http://127.0.0.1:13000/static/dana/design-gallery.html
 - Widgets: http://127.0.0.1:13000/static/dana/ux-preview.html
-- Quick switch: http://127.0.0.1:13000/?dana_theme=ics-dark
+- Quick switch: http://127.0.0.1:13000/?dana_theme=ics-maroon
 
 ## Themes
 
@@ -14,8 +14,8 @@ Live preview (local):
 
 | Id | Role | Preview |
 | --- | --- | --- |
-| `ics-dark` | Default dark-red brand BG + motion chat background | ![dark](docs/dana/themes/ics-dark.png) |
-| `ics-maroon` | Light ICS maroon shell | ![maroon](docs/dana/themes/ics-maroon.png) |
+| `ics-maroon` | **Default** — white / light ICS maroon shell | ![maroon](docs/dana/themes/ics-maroon.png) |
+| `ics-dark` | Dark-red brand BG + motion chat background | ![dark](docs/dana/themes/ics-dark.png) |
 | `ics-gauge` | Gauge-color motion / accents | ![gauge](docs/dana/themes/ics-gauge.png) |
 | `ics-stair` | Stair transparent motion pack | ![stair](docs/dana/themes/ics-stair.png) |
 | `ics-mono` | Mono logo pack | ![mono](docs/dana/themes/ics-mono.png) |

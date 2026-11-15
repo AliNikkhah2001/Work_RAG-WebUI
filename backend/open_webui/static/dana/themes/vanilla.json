@@ -10,7 +10,10 @@
   "favicon": null,
   "keyvisual": null,
   "splash": null,
-  "copy": {},
+  "copy": {
+    "product_name": "دستیار اعتباری نوین ایران",
+    "empty_title": "دستیار اعتباری نوین ایران"
+  },
   "component_tokens": {},
   "feedback": {
     "show_useful": true,

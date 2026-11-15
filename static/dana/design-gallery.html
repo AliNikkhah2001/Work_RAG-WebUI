@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>دانا — گالری تم و جادو</title>
+  <title>دستیار اعتباری نوین ایران — گالری تم</title>
   <link rel="stylesheet" href="/static/dana/brand/fonts/ray.css" />
   <link rel="stylesheet" href="/static/dana/dana.css" />
   <style>
@@ -34,13 +34,13 @@
     .hint { opacity: .75; font-size: .85rem; margin: .35rem 0 0; line-height: 1.6; }
   </style>
 </head>
-<body class="dana-theme" data-dana-theme="ics-dark">
+<body class="dana-theme" data-dana-theme="ics-maroon">
   <header>
     <h1>گالری طراحی دانا — ۵ تم</h1>
     <p class="hint">یک تم را انتخاب کنید، سپس «باز کردن چت با این تم» را بزنید تا روی <code>:13000</code> اعمال شود.</p>
     <div class="bar" id="theme-bar"></div>
     <div class="bar">
-      <a class="btn primary" id="open-chat" href="/?dana_theme=ics-dark">باز کردن چت با این تم</a>
+      <a class="btn primary" id="open-chat" href="/?dana_theme=ics-maroon">باز کردن چت با این تم</a>
       <a class="btn" href="/static/dana/ux-preview.html">پیش‌نمایش ویجت‌ها</a>
       <span class="hint" id="status">بارگذاری…</span>
     </div>
@@ -51,9 +51,9 @@
     <video class="media" id="preview-video" autoplay muted loop playsinline hidden></video>
     <div class="veil"></div>
     <div class="copy">
-      <h2 id="preview-title">دانا</h2>
+      <h2 id="preview-title">دستیار اعتباری نوین ایران</h2>
       <p id="preview-sub" class="hint">سؤال اعتبارسنجی خود را بپرسید</p>
-      <code id="preview-id">ics-dark</code>
+      <code id="preview-id">ics-maroon</code>
     </div>
   </div>
 
@@ -65,15 +65,15 @@
 
   <script>
     const THEMES = [
+      ['ics-maroon', 'مارون روشن (سفید)'],
       ['ics-dark', 'قرمز تیره'],
-      ['ics-maroon', 'مارون روشن'],
       ['ics-gauge', 'گیج رنگی'],
       ['ics-stair', 'پله شفاف'],
       ['ics-mono', 'مونو'],
     ];
     const STORAGE = 'dana.theme_id';
     const VER = 'dana.theme_default_ver';
-    let current = localStorage.getItem(STORAGE) || 'ics-dark';
+    let current = localStorage.getItem(STORAGE) || 'ics-maroon';
 
     const bar = document.getElementById('theme-bar');
     const status = document.getElementById('status');
@@ -165,7 +165,7 @@
       mg.insertAdjacentHTML('beforeend', `<article class="card"><video autoplay muted loop playsinline poster="/static/dana/brand/motion/web/${base}-still.png"><source src="/static/dana/brand/motion/web/${base}.webm" type="video/webm"/></video><div class="meta"><code>${base}</code></div></article>`);
     });
 
-    applyTheme(current).catch(() => applyTheme('ics-dark'));
+    applyTheme(current).catch(() => applyTheme('ics-maroon'));
   </script>
 </body>
 </html>
