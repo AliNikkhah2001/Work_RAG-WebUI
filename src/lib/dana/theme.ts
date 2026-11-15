@@ -12,11 +12,11 @@ export const DANA_THEME_IDS = [
 	'ics-mono',
 	'vanilla'
 ] as const;
-export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-dark';
+export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-maroon';
 export const DANA_STORAGE_KEY = 'dana.theme_id';
 export const DANA_DEFAULT_VERSION_KEY = 'dana.theme_default_ver';
 /** Bump when shipping a new product default so stale localStorage is migrated once. */
-export const DANA_DEFAULT_VERSION = '3-five-themes';
+export const DANA_DEFAULT_VERSION = '5-maroon-white-default';
 const DANA_THEME_ALIASES: Record<string, DanaThemeId> = {};
 
 export const danaThemeId = writable<DanaThemeId>(DANA_DEFAULT_THEME);

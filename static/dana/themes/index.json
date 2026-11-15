@@ -1,8 +1,8 @@
 {
-  "default": "ics-dark",
+  "default": "ics-maroon",
   "themes": [
-    "ics-dark",
     "ics-maroon",
+    "ics-dark",
     "ics-gauge",
     "ics-stair",
     "ics-mono",
