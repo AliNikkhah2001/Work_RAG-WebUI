@@ -1,6 +1,13 @@
 export type CreditModel = 'cheque' | 'person' | 'legal';
 
-export type ScoreBand = { label: string; min: number; max: number; color: string };
+export type ScoreBand = {
+	label: string;
+	min: number;
+	max: number;
+	color: string;
+	code?: string;
+	codes?: string[];
+};
 
 export const MODEL_BADGE: Record<CreditModel, string> = {
 	cheque: 'چک',
@@ -15,46 +22,38 @@ export const MODEL_LABEL: Record<CreditModel, string> = {
 };
 
 const DEFAULT_BANDS: ScoreBand[] = [
-	{ label: 'ضعیف', min: 0, max: 299, color: '#E53935' },
-	{ label: 'متوسط', min: 300, max: 499, color: '#FB8C00' },
-	{ label: 'قابل قبول', min: 500, max: 649, color: '#FDD835' },
-	{ label: 'خوب', min: 650, max: 749, color: '#43A047' },
-	{ label: 'عالی', min: 750, max: 900, color: '#26C6DA' }
+	{ label: 'ضعیف', min: 0, max: 299, color: '#E53935', code: 'E', codes: ['E1', 'E2', 'E3'] },
+	{ label: 'متوسط', min: 300, max: 499, color: '#FB8C00', code: 'D', codes: ['D1', 'D2', 'D3'] },
+	{ label: 'قابل قبول', min: 500, max: 649, color: '#FDD835', code: 'C', codes: ['C1', 'C2', 'C3'] },
+	{ label: 'خوب', min: 650, max: 749, color: '#43A047', code: 'B', codes: ['B1', 'B2', 'B3'] },
+	{ label: 'عالی', min: 750, max: 900, color: '#26C6DA', code: 'A', codes: ['A1', 'A2', 'A3'] }
 ];
 
 /** ICS person colour groups (250–900). */
 const PERSON_BANDS: ScoreBand[] = [
-	{ label: 'قرمز', min: 250, max: 459, color: '#E53935' },
-	{ label: 'نارنجی', min: 460, max: 519, color: '#FB8C00' },
-	{ label: 'زرد', min: 520, max: 579, color: '#FDD835' },
-	{ label: 'سبز', min: 580, max: 639, color: '#43A047' },
-	{ label: 'آبی', min: 640, max: 900, color: '#26C6DA' }
+	{ label: 'قرمز', min: 250, max: 459, color: '#E53935', code: 'E', codes: ['E1', 'E2', 'E3'] },
+	{ label: 'نارنجی', min: 460, max: 519, color: '#FB8C00', code: 'D', codes: ['D1', 'D2', 'D3'] },
+	{ label: 'زرد', min: 520, max: 579, color: '#FDD835', code: 'C', codes: ['C1', 'C2', 'C3'] },
+	{ label: 'سبز', min: 580, max: 639, color: '#43A047', code: 'B', codes: ['B1', 'B2', 'B3'] },
+	{ label: 'آبی', min: 640, max: 900, color: '#26C6DA', code: 'A', codes: ['A1', 'A2', 'A3'] }
 ];
 
 /** ICS legal colour groups (250–900; آبی from 620). */
 const LEGAL_BANDS: ScoreBand[] = [
-	{ label: 'قرمز', min: 250, max: 459, color: '#E53935' },
-	{ label: 'نارنجی', min: 460, max: 519, color: '#FB8C00' },
-	{ label: 'زرد', min: 520, max: 574, color: '#FDD835' },
-	{ label: 'سبز', min: 575, max: 619, color: '#43A047' },
-	{ label: 'آبی', min: 620, max: 900, color: '#26C6DA' }
+	{ label: 'قرمز', min: 250, max: 459, color: '#E53935', code: 'E', codes: ['E1', 'E2', 'E3'] },
+	{ label: 'نارنجی', min: 460, max: 519, color: '#FB8C00', code: 'D', codes: ['D1', 'D2', 'D3'] },
+	{ label: 'زرد', min: 520, max: 574, color: '#FDD835', code: 'C', codes: ['C1', 'C2', 'C3'] },
+	{ label: 'سبز', min: 575, max: 619, color: '#43A047', code: 'B', codes: ['B1', 'B2', 'B3'] },
+	{ label: 'آبی', min: 620, max: 900, color: '#26C6DA', code: 'A', codes: ['A1', 'A2', 'A3'] }
 ];
 
 /** ICS cheque colour groups (1–100). */
 const CHEQUE_BANDS: ScoreBand[] = [
-	{ label: 'قرمز', min: 1, max: 40, color: '#E53935' },
-	{ label: 'نارنجی', min: 40, max: 55, color: '#FB8C00' },
-	{ label: 'زرد', min: 55, max: 70, color: '#FDD835' },
-	{ label: 'سبز', min: 70, max: 85, color: '#43A047' },
-	{ label: 'آبی', min: 85, max: 100, color: '#26C6DA' }
-];
-
-const GENERIC_GRADIENT: ScoreBand[] = [
-	{ label: '', min: 0, max: 33, color: '#E53935' },
-	{ label: '', min: 34, max: 55, color: '#FB8C00' },
-	{ label: '', min: 56, max: 72, color: '#FDD835' },
-	{ label: '', min: 73, max: 88, color: '#43A047' },
-	{ label: '', min: 89, max: 100, color: '#26C6DA' }
+	{ label: 'قرمز', min: 1, max: 40, color: '#E53935', code: 'E', codes: ['E1', 'E2', 'E3'] },
+	{ label: 'نارنجی', min: 40, max: 55, color: '#FB8C00', code: 'D', codes: ['D1', 'D2', 'D3'] },
+	{ label: 'زرد', min: 55, max: 70, color: '#FDD835', code: 'C', codes: ['C1', 'C2', 'C3'] },
+	{ label: 'سبز', min: 70, max: 85, color: '#43A047', code: 'B', codes: ['B1', 'B2', 'B3'] },
+	{ label: 'آبی', min: 85, max: 100, color: '#26C6DA', code: 'A', codes: ['A1', 'A2', 'A3'] }
 ];
 
 export function parseCreditModel(raw: unknown): CreditModel | null {
@@ -91,6 +90,14 @@ export function bandLabelForScore(score: number, bands: ScoreBand[]): string {
 	return bands.find((b) => score >= b.min && score <= b.max)?.label ?? '';
 }
 
+export function bandCodesForScore(score: number, bands: ScoreBand[]): string[] {
+	const hit = bands.find((b) => score >= b.min && score <= b.max);
+	if (!hit) return [];
+	if (Array.isArray(hit.codes) && hit.codes.length) return hit.codes.map(String);
+	if (hit.code) return [String(hit.code)];
+	return [];
+}
+
 export function genericScoreColor(pct: number): string {
 	if (pct < 33) return '#E53935';
 	if (pct < 55) return '#FB8C00';
@@ -110,18 +117,44 @@ export function accentFromScore(
 	return genericScoreColor(pct);
 }
 
+/** Discrete stepped stops for SVG arcs (hard edges at band boundaries). */
+export function steppedStops(
+	bands: ScoreBand[],
+	min: number,
+	max: number
+): { offset: number; color: string }[] {
+	const span = Math.max(1, max - min);
+	const sorted = [...bands].sort((a, b) => a.min - b.min);
+	const stops: { offset: number; color: string }[] = [];
+	for (const b of sorted) {
+		const start = Math.max(0, Math.min(100, ((b.min - min) / span) * 100));
+		const end = Math.max(0, Math.min(100, ((b.max - min) / span) * 100));
+		stops.push({ offset: start, color: b.color });
+		stops.push({ offset: end, color: b.color });
+	}
+	return stops;
+}
+
+/** @deprecated Prefer steppedStops — kept for callers that still import gradientStops. */
 export function gradientStops(
 	bands: ScoreBand[],
 	min: number,
 	max: number,
-	customBands: boolean
+	_customBands: boolean
 ): { offset: number; color: string }[] {
-	const source = customBands ? bands : GENERIC_GRADIENT;
+	return steppedStops(bands, min, max);
+}
+
+/** Width % of each band within [min,max] for stepped bar rendering (LTR). */
+export function bandWidths(
+	bands: ScoreBand[],
+	min: number,
+	max: number
+): { band: ScoreBand; widthPct: number }[] {
 	const span = Math.max(1, max - min);
-	const stops = source.map((b) => {
-		const mid = (b.min + b.max) / 2;
-		const offset = Math.max(0, Math.min(100, ((mid - min) / span) * 100));
-		return { offset, color: b.color };
-	});
-	return stops.sort((a, b) => a.offset - b.offset);
+	const sorted = [...bands].sort((a, b) => a.min - b.min);
+	return sorted.map((b) => ({
+		band: b,
+		widthPct: Math.max(0, ((Math.min(b.max, max) - Math.max(b.min, min)) / span) * 100)
+	}));
 }

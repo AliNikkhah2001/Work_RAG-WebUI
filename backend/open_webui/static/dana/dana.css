@@ -431,21 +431,50 @@ html.dana-theme #splash-screen.dana-splash {
   border-radius: 999px;
 }
 
+.dana-score-gauge__htrack--ltr {
+  direction: ltr;
+}
+
 .dana-score-gauge__htrack-rail {
   position: absolute;
   inset: 0;
   border-radius: 999px;
   background: #eceff1;
   border: 1px solid #dde3e8;
+  overflow: hidden;
+}
+
+.dana-score-gauge__htrack-rail--stepped {
+  display: flex;
+  flex-direction: row;
+  background: transparent;
+  border: 1px solid #dde3e8;
+}
+
+.dana-score-gauge__step {
+  display: block;
+  min-width: 0;
+  height: 100%;
+}
+
+.dana-score-gauge__step--v {
+  width: 100%;
 }
 
 .dana-score-gauge__htrack-fill {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: 0;
+  left: 0;
   border-radius: 999px;
-  transition: width 1.15s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+  /* Animation driven by JS shownPct — no CSS transition (was fighting RAF). */
+  background: rgba(38, 50, 56, 0.18);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.dana-score-gauge__htrack-fill--ltr {
+  left: 0;
+  right: auto;
 }
 
 .dana-score-gauge__htrack-tip {
@@ -457,10 +486,72 @@ html.dana-theme #splash-screen.dana-splash {
   border-radius: 999px;
   border: 3px solid #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  transition:
-    inset-inline-start 1.15s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.25s ease,
-    border-color 0.25s ease;
+  z-index: 2;
+}
+
+.dana-score-gauge__htrack-tip--ltr {
+  /* left set inline from shownPct; LTR growth */
+}
+
+.dana-score-gauge__codes {
+  margin-inline-start: 0.35rem;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.92;
+}
+
+.dana-score-gauge__code-row {
+  display: flex;
+  direction: ltr;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  color: #546e7a;
+  font-weight: 600;
+}
+
+.dana-score-gauge__code-cell {
+  text-align: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dana-score-gauge__bar--stepped {
+  position: relative;
+  display: flex;
+  direction: ltr;
+  height: 0.85rem;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dana-score-gauge__bar-mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.72);
+  pointer-events: none;
+}
+
+.dana-score-gauge__vrail--stepped {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dana-score-gauge--linear .dana-score-gauge__htrack-fill {
+  display: none;
+}
+
+.dana-score-band__code,
+.dana-ladder__code {
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
 }
 
 .dana-score-gauge__hfoot {

@@ -6,11 +6,13 @@
 		MODEL_BADGE,
 		MODEL_LABEL,
 		accentFromScore,
+		bandCodesForScore,
 		bandLabelForScore,
-		gradientStops,
+		bandWidths,
 		parseCreditModel,
 		resolveBands,
 		resolveScoreRange,
+		steppedStops,
 		type ScoreBand
 	} from '$lib/dana/creditScoreModel';
 
@@ -32,9 +34,16 @@
 	$: band =
 		(params.band as string) ||
 		(customBands || model ? bandLabelForScore(score, bands) : '');
+	$: activeCodes =
+		(Array.isArray(params.codes) && (params.codes as string[]).length
+			? (params.codes as string[])
+			: null) ||
+		(typeof params.code === 'string' && params.code ? [params.code as string] : null) ||
+		bandCodesForScore(score, bands);
 	$: pct = Math.max(0, Math.min(100, ((score - min) / Math.max(1, max - min)) * 100));
 	$: variant = resolveMagicVariant('gauge', params, 'ring');
-	$: stops = gradientStops(bands, min, max, customBands);
+	$: stops = steppedStops(bands, min, max);
+	$: widths = bandWidths(bands, min, max);
 	$: gradId = `dana-g-${model ?? 'x'}-${variant}-${score}`;
 	$: modelClass = model ? `dana-score-gauge--model-${model}` : '';
 	$: compactClass = model === 'cheque' ? 'dana-score-gauge--compact' : '';
@@ -47,6 +56,7 @@
 	let bandVisible = false;
 	let mounted = false;
 	let raf = 0;
+	let lastAnimKey = '';
 
 	$: accent = accentFromScore(score, bands, pct, customBands);
 
@@ -55,8 +65,12 @@
 		raf = 0;
 	}
 
-	function animateTo(targetPct: number, targetScore: number) {
+	function animateTo(targetPct: number, targetScore: number, key: string) {
+		if (key === lastAnimKey && shownPct > 0) return;
+		lastAnimKey = key;
 		cancelAnim();
+		shownPct = 0;
+		shownScore = 0;
 		bandVisible = false;
 		if (reduced) {
 			shownPct = targetPct;
@@ -74,6 +88,8 @@
 			if (p < 1) {
 				raf = requestAnimationFrame(tick);
 			} else {
+				shownPct = targetPct;
+				shownScore = targetScore;
 				bandVisible = Boolean(band);
 			}
 		};
@@ -86,7 +102,7 @@
 		return () => cancelAnim();
 	});
 
-	$: if (mounted) animateTo(pct, score);
+	$: if (mounted) animateTo(pct, score, `${variant}:${score}:${min}:${max}`);
 
 	$: dotAngle = Math.PI - (Math.PI * shownPct) / 100;
 	$: dotX = 100 + 80 * Math.cos(dotAngle);
@@ -117,18 +133,24 @@
 					class:is-visible={bandVisible}
 					style="background:{accent}"
 				>
-					{band}
+					{band}{#if activeCodes.length}
+						<span class="dana-score-gauge__codes">{activeCodes.join(' · ')}</span>{/if}
 				</p>
 			{/if}
-			<div class="dana-score-gauge__bar" aria-hidden="true">
-				<span style="width:{shownPct}%;background:{accent}"></span>
+			<div class="dana-score-gauge__bar dana-score-gauge__bar--stepped" dir="ltr" aria-hidden="true">
+				{#each widths as w}
+					<span class="dana-score-gauge__step" style="flex:{w.widthPct};background:{w.band.color}"
+					></span>
+				{/each}
+				<span class="dana-score-gauge__bar-mask" style="width:{100 - shownPct}%"></span>
 			</div>
 			<p class="dana-score-gauge__range">بازه {faNumber(min)} تا {faNumber(max)}</p>
 		</div>
 	</div>
-{:else if variant === 'horizontal'}
+{:else if variant === 'horizontal' || variant === 'linear'}
 	<div
 		class="dana-magic-root dana-score-gauge dana-score-gauge--horizontal dana-score-gauge--solid {modelClass} {compactClass}"
+		class:dana-score-gauge--linear={variant === 'linear'}
 		dir="rtl"
 		role="img"
 		aria-label="{label}: {faNumber(score)}"
@@ -143,35 +165,53 @@
 			<span class="dana-score-gauge__score tabular-nums">{faNumber(shownScore)}</span>
 		</div>
 		<div
-			class="dana-score-gauge__htrack"
+			class="dana-score-gauge__htrack dana-score-gauge__htrack--ltr"
+			dir="ltr"
 			role="progressbar"
 			aria-valuenow={score}
 			aria-valuemin={min}
 			aria-valuemax={max}
 		>
-			<span class="dana-score-gauge__htrack-rail" aria-hidden="true"></span>
+			<span class="dana-score-gauge__htrack-rail dana-score-gauge__htrack-rail--stepped" aria-hidden="true">
+				{#each widths as w}
+					<span class="dana-score-gauge__step" style="flex:{w.widthPct};background:{w.band.color}"
+					></span>
+				{/each}
+			</span>
+			{#if variant === 'horizontal'}
+				<span
+					class="dana-score-gauge__htrack-fill dana-score-gauge__htrack-fill--ltr"
+					style="width:{shownPct}%"
+					aria-hidden="true"
+				></span>
+			{/if}
 			<span
-				class="dana-score-gauge__htrack-fill"
-				style="width:{shownPct}%;background:linear-gradient(90deg,{stops
-					.map((s) => `${s.color} ${s.offset}%`)
-					.join(',')})"
-				aria-hidden="true"
-			></span>
-			<span
-				class="dana-score-gauge__htrack-tip"
-				style="inset-inline-start:calc({shownPct}% - 9px);border-color:{tipColor};background:{tipColor}"
+				class="dana-score-gauge__htrack-tip dana-score-gauge__htrack-tip--ltr"
+				style="left:calc({shownPct}% - 9px);border-color:{tipColor};background:{tipColor}"
 				aria-hidden="true"
 			></span>
 		</div>
-		<div class="dana-score-gauge__hfoot">
+		<div class="dana-score-gauge__hfoot" dir="ltr">
 			<span class="dana-score-gauge__range tabular-nums">{faNumber(min)}</span>
 			{#if band}
 				<span class="dana-score-gauge__band" class:is-visible={bandVisible} style="background:{accent}"
-					>{band}</span
+					>{band}{#if activeCodes.length}
+						<span class="dana-score-gauge__codes">{activeCodes.join(' · ')}</span>{/if}</span
 				>
 			{/if}
 			<span class="dana-score-gauge__range tabular-nums">{faNumber(max)}</span>
 		</div>
+		{#if variant === 'linear'}
+			<div class="dana-score-gauge__code-row" dir="ltr">
+				{#each widths as w}
+					<span class="dana-score-gauge__code-cell" style="flex:{w.widthPct}">
+						{#if w.band.code || (w.band.codes && w.band.codes[0])}
+							{w.band.code || w.band.codes?.[0]}
+						{/if}
+					</span>
+				{/each}
+			</div>
+		{/if}
 	</div>
 {:else if variant === 'vertical'}
 	<div
@@ -190,13 +230,13 @@
 			aria-valuemax={max}
 		>
 			<div class="dana-score-gauge__vtrack" aria-hidden="true">
-				<span class="dana-score-gauge__vrail"></span>
-				<span
-					class="dana-score-gauge__vfill"
-					style="height:{shownPct}%;background:linear-gradient(0deg,{stops
-						.map((s) => `${s.color} ${100 - s.offset}%`)
-						.join(',')})"
-				></span>
+				<span class="dana-score-gauge__vrail dana-score-gauge__vrail--stepped">
+					{#each [...widths].reverse() as w}
+						<span class="dana-score-gauge__step dana-score-gauge__step--v" style="flex:{w.widthPct};background:{w.band.color}"
+						></span>
+					{/each}
+				</span>
+				<span class="dana-score-gauge__vfill" style="height:{shownPct}%"></span>
 				<span class="dana-score-gauge__vbulb" style="border-color:{tipColor}"></span>
 			</div>
 			<span class="dana-score-gauge__vmax tabular-nums">{faNumber(max)}</span>
@@ -210,7 +250,8 @@
 			<p class="dana-score-gauge__label">{label}</p>
 			{#if band}
 				<p class="dana-score-gauge__band" class:is-visible={bandVisible} style="background:{accent}">
-					{band}
+					{band}{#if activeCodes.length}
+						<span class="dana-score-gauge__codes">{activeCodes.join(' · ')}</span>{/if}
 				</p>
 			{/if}
 		</div>
@@ -268,7 +309,8 @@
 			<p class="dana-score-gauge__label">{label}</p>
 			{#if band}
 				<p class="dana-score-gauge__band" class:is-visible={bandVisible} style="background:{accent}">
-					{band}
+					{band}{#if activeCodes.length}
+						<span class="dana-score-gauge__codes">{activeCodes.join(' · ')}</span>{/if}
 				</p>
 			{/if}
 		</div>
@@ -327,7 +369,8 @@
 			<p class="dana-score-gauge__label">{label}</p>
 			{#if band}
 				<p class="dana-score-gauge__band" class:is-visible={bandVisible} style="background:{accent}">
-					{band}
+					{band}{#if activeCodes.length}
+						<span class="dana-score-gauge__codes">{activeCodes.join(' · ')}</span>{/if}
 				</p>
 			{/if}
 			<p class="dana-score-gauge__range">بازه {faNumber(min)} تا {faNumber(max)}</p>

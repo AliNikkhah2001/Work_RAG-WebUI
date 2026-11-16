@@ -1725,6 +1725,13 @@
 					if (shouldAutoScrollResponse()) {
 						scrollToBottom('smooth');
 					}
+				} else if (type === 'chat:message:magic') {
+					message.magic = data.magic || [];
+					history.messages[message.id] = message;
+					history = history;
+					if (shouldAutoScrollResponse()) {
+						scrollToBottom('smooth');
+					}
 				} else if (type === 'chat:outlet') {
 					// Outlet filter ran on backend — sync in-memory state
 					const outletMessages = data.messages ?? [];

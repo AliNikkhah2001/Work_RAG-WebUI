@@ -30,6 +30,11 @@
 	$: bandCount = bands.length;
 	$: modelClass = model ? `dana-ladder--model-${model}` : '';
 
+	function bandCodeText(band: ScoreBand): string {
+		if (Array.isArray(band.codes) && band.codes.length) return band.codes.join(' · ');
+		return band.code ? String(band.code) : '';
+	}
+
 	let needlePct = 0;
 	let reduced = false;
 	let entered = false;
@@ -97,7 +102,7 @@
 				{MODEL_LABEL[model]}
 			</p>
 		{/if}
-		<div class="dana-score-bands dana-score-bands--pills" role="list">
+		<div class="dana-score-bands dana-score-bands--pills" role="list" dir="ltr">
 			{#each bands as band, i}
 				<span
 					class="dana-score-band dana-magic-stagger-item"
@@ -107,6 +112,9 @@
 					title="{faNumber(band.min)}–{faNumber(band.max)}"
 				>
 					<span class="dana-score-band__label">{band.label}</span>
+					{#if bandCodeText(band)}
+						<span class="dana-score-band__code">{bandCodeText(band)}</span>
+					{/if}
 					<span class="dana-score-band__range tabular-nums"
 						>{faNumber(band.min)}–{faNumber(band.max)}</span
 					>
@@ -147,6 +155,9 @@
 				{#each [...bands].reverse() as band, i}
 					<li class="dana-magic-stagger-item" style="--i:{i}">
 						<span class="dana-ladder__name">{band.label}</span>
+						{#if bandCodeText(band)}
+							<span class="dana-ladder__code">{bandCodeText(band)}</span>
+						{/if}
 						<span class="dana-ladder__range tabular-nums"
 							>{faNumber(band.min)}–{faNumber(band.max)}</span
 						>

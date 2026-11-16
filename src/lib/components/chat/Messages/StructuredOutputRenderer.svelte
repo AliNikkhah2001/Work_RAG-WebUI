@@ -13,7 +13,13 @@
 	import ConsecutiveDetailsGroup from './Markdown/ConsecutiveDetailsGroup.svelte';
 	import ContextCompactionLabel from './ContextCompactionLabel.svelte';
 	import MagicRenderer from '$lib/components/dana/magic/MagicRenderer.svelte';
-	import { getMagicDefs, loadMagicCatalog, parseMagicSegments } from '$lib/dana/magic';
+	import {
+		getMagicDefs,
+		loadMagicCatalog,
+		mergeMagicSegments,
+		parseMagicSegments,
+		segmentsFromMagicPayload
+	} from '$lib/dana/magic';
 	import type { MagicSegment, MagicTokenDef } from '$lib/dana/types';
 	import {
 		buildOutputDisplayItems,
@@ -26,6 +32,8 @@
 	export let chatId = '';
 	export let messageId = '';
 	export let output: OutputItem[] = [];
+	/** Post-hoc Dana magic from ``rag.magic`` (outside message body). */
+	export let magic: Array<{ name?: string; params?: Record<string, unknown> }> = [];
 	export let done = true;
 	export let model = null;
 	export let save = false;
@@ -61,9 +69,17 @@
 	$: magicByItem = (() => {
 		/** @type {Record<string, MagicSegment[]>} */
 		const next: Record<string, MagicSegment[]> = {};
+		const payloadSegs = segmentsFromMagicPayload(magic, magicDefs);
+		let payloadAttached = false;
 		for (const item of displayItems) {
 			if (item.type !== 'message' || !item.text) continue;
-			next[item.id] = parseMagicSegments(formatMessageContent(item.text), magicDefs);
+			const fromBody = parseMagicSegments(formatMessageContent(item.text), magicDefs);
+			if (!payloadAttached && payloadSegs.length) {
+				next[item.id] = mergeMagicSegments(fromBody, payloadSegs);
+				payloadAttached = true;
+			} else {
+				next[item.id] = fromBody;
+			}
 		}
 		return next;
 	})();
