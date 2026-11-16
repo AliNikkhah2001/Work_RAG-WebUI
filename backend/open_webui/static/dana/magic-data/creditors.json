@@ -1,0 +1,337 @@
+{
+  "title": "تأمین‌کنندگان داده‌های شرکت اعتبارسنجی ایران",
+  "tabs": [
+    {
+      "id": "banks",
+      "label": "بانک ها"
+    },
+    {
+      "id": "orgs",
+      "label": "سازمان ها"
+    },
+    {
+      "id": "insurance",
+      "label": "بیمه ها"
+    },
+    {
+      "id": "leasing",
+      "label": "لیزینگ ها"
+    },
+    {
+      "id": "lendtech",
+      "label": "لندتک ها"
+    }
+  ],
+  "groups": {
+    "banks": [
+      {
+        "id": "3204",
+        "name": "بلوبانک",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3204.png"
+      },
+      {
+        "id": "3193",
+        "name": "موسسه مالی اعتباری ملل",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3193.png"
+      },
+      {
+        "id": "3188",
+        "name": "بانک پارسیان",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3188.png"
+      },
+      {
+        "id": "3197",
+        "name": "بانک توسعه تعاون",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3197.png"
+      },
+      {
+        "id": "3199",
+        "name": "بانک ملی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3199.png"
+      },
+      {
+        "id": "3189",
+        "name": "بانک توسعه صادرات",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3189.png"
+      },
+      {
+        "id": "3200",
+        "name": "بانک تجارت",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3200.png"
+      },
+      {
+        "id": "3198",
+        "name": "بانک سینا",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3198.png"
+      },
+      {
+        "id": "3194",
+        "name": "بانک قرض الحسنه مهر",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3194.png"
+      },
+      {
+        "id": "3178",
+        "name": "بانک شهر",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3178.png"
+      },
+      {
+        "id": "2603",
+        "name": "بانک آینده",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/2603.png"
+      },
+      {
+        "id": "3181",
+        "name": "بانک سپه",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3181.png"
+      },
+      {
+        "id": "3180",
+        "name": "بانک دی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3180.png"
+      },
+      {
+        "id": "3191",
+        "name": "بانک سرمایه",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3191.png"
+      },
+      {
+        "id": "3185",
+        "name": "بانک اقتصاد نوین",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3185.png"
+      },
+      {
+        "id": "3192",
+        "name": "بانک صنعت و معدن",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3192.png"
+      },
+      {
+        "id": "3183",
+        "name": "بانک گردشگری",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3183.png"
+      },
+      {
+        "id": "3190",
+        "name": "بانک سامان",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3190.png"
+      },
+      {
+        "id": "3186",
+        "name": "بانک ایران زمین",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3186.png"
+      },
+      {
+        "id": "3202",
+        "name": "بانک صادرات",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3202.png"
+      },
+      {
+        "id": "3182",
+        "name": "بانک کارآفرین",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3182.png"
+      },
+      {
+        "id": "3175",
+        "name": "بانک رسالت",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3175.png"
+      },
+      {
+        "id": "3187",
+        "name": "بانک ایران ونزوئلا",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3187.png"
+      },
+      {
+        "id": "3224",
+        "name": "بانک رفاه کارگران",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3224.png"
+      },
+      {
+        "id": "3203",
+        "name": "بانک کشاورزی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3203.png"
+      },
+      {
+        "id": "3196",
+        "name": "پست بانک",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3196.png"
+      },
+      {
+        "id": "3179",
+        "name": "بانک خاورمیانه",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3179.png"
+      },
+      {
+        "id": "3195",
+        "name": "بانک پاسارگاد",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3195.png"
+      },
+      {
+        "id": "3176",
+        "name": "بانک مسکن",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3176.png"
+      },
+      {
+        "id": "3177",
+        "name": "بانک ملت",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3177.png"
+      }
+    ],
+    "orgs": [
+      {
+        "id": "3211",
+        "name": "صندوق دانشجویی وزارت بهداشت",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3211.png"
+      },
+      {
+        "id": "3212",
+        "name": "صندوق امداد ولایت",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3212.png"
+      },
+      {
+        "id": "3046",
+        "name": "صندوق تامین خسارت‌های بدنی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3046.png"
+      },
+      {
+        "id": "3055",
+        "name": "صندوق حمایت از صنایع کوچک",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3055.png"
+      },
+      {
+        "id": "3099",
+        "name": "صندوق کارآفرینی امید",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3099.png"
+      },
+      {
+        "id": "3047",
+        "name": "صندوق صنعت ماشین سازی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3047.png"
+      },
+      {
+        "id": "3074",
+        "name": "صندوق برکت",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3074.png"
+      },
+      {
+        "id": "3210",
+        "name": "صندوق دانشجویی وزارت علوم",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3210.png"
+      }
+    ],
+    "insurance": [
+      {
+        "id": "2692",
+        "name": "کاریزما بیمه",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/2692.png"
+      },
+      {
+        "id": "2693",
+        "name": "بیمه دال",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/2693.png"
+      },
+      {
+        "id": "2694",
+        "name": "بیمه دات کام",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/2694.png"
+      }
+    ],
+    "leasing": [
+      {
+        "id": "3049",
+        "name": "لیزینگ ایران و شرق",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3049.png"
+      },
+      {
+        "id": "2035",
+        "name": "لیزینگ آرتین",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/2035.png"
+      },
+      {
+        "id": "3075",
+        "name": "لیزینگ خودرو غدیر",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3075.png"
+      },
+      {
+        "id": "3100",
+        "name": "لیزینگ صنعت ومعدن",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3100.png"
+      },
+      {
+        "id": "2710",
+        "name": "لیزینگ رازی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/2710.png"
+      },
+      {
+        "id": "2713",
+        "name": "بهمن لیزینگ",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/2713.png"
+      }
+    ],
+    "lendtech": [
+      {
+        "id": "3218",
+        "name": "تاپلند",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3218.png"
+      },
+      {
+        "id": "3219",
+        "name": "ونسی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3219.png"
+      },
+      {
+        "id": "3107",
+        "name": "راهبرد ایده آل امین (نسیبا)",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3107.png"
+      },
+      {
+        "id": "3106",
+        "name": "ایرانسل",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3106.png"
+      },
+      {
+        "id": "3220",
+        "name": "دیجی پی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3220.png"
+      },
+      {
+        "id": "3221",
+        "name": "یکتاپی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3221.png"
+      },
+      {
+        "id": "3112",
+        "name": "زرین پلاس",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3112.png"
+      },
+      {
+        "id": "3227",
+        "name": "قسطا",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3227.png"
+      },
+      {
+        "id": "3213",
+        "name": "لندو",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3213.png"
+      },
+      {
+        "id": "3214",
+        "name": "تارا",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3214.png"
+      },
+      {
+        "id": "3215",
+        "name": "ستاره اول",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3215.png"
+      },
+      {
+        "id": "3216",
+        "name": "ایزی پی",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3216.png"
+      },
+      {
+        "id": "3217",
+        "name": "افراسرمایه دیجیتال",
+        "logo": "/static/dana/brand/icons/magic/ics24/creditors/3217.png"
+      }
+    ]
+  }
+}

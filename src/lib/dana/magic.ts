@@ -24,6 +24,8 @@ const BLOCK_RE = /<<<MAGIC:([A-Z][A-Z0-9_]*)\s*([\s\S]*?)>>>/g;
 /** Prefer richer visuals when multiple magic tokens appear in one reply. */
 const MAGIC_PRIORITY: Record<string, number> = {
 	CREDIT_SCORE_GAUGE: 100,
+	SHAREHOLDERS: 90,
+	CREDITORS: 88,
 	COMPANY_TIMELINE: 80,
 	CREDIT_SCORE_BANDS: 60,
 	INFO_BANNER: 40,
