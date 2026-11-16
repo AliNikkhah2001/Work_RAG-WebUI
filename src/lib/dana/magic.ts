@@ -3,11 +3,11 @@ import type { MagicSegment, MagicTokenDef } from './types';
 let catalog: Record<string, MagicTokenDef> | null = null;
 
 export async function loadMagicCatalog(): Promise<Record<string, MagicTokenDef>> {
-	if (catalog) return catalog;
+	if (catalog && Object.keys(catalog).length) return catalog;
 	const res = await fetch('/static/dana/magic-tokens.json', { cache: 'no-cache' });
 	if (!res.ok) {
-		catalog = {};
-		return catalog;
+		// Do not cache failures — allow a later retry once static assets are ready.
+		return catalog ?? {};
 	}
 	catalog = (await res.json()) as Record<string, MagicTokenDef>;
 	return catalog;
