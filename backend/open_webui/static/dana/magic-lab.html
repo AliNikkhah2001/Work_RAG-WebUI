@@ -139,13 +139,15 @@
 				<img src="/static/dana/brand/icons/dana-app-icon.png" alt="Dana" />
 				<div>
 					<h1>آزمایش ویجت‌های جادویی دانا</h1>
-					<p>گیج · کارت‌های ICS · تاریخچه · سهامداران · تأمین‌کنندگان</p>
+					<p>گیج چک / حقیقی / حقوقی · نردبان · کارت‌های ICS</p>
 				</div>
 			</header>
 
 			<div class="toolbar">
-				<button type="button" data-demo="a">گیج A</button>
-				<button type="button" data-demo="b">گیج B</button>
+				<button type="button" data-demo="cheque-ring">چک · حلقه</button>
+				<button type="button" data-demo="person-bar">حقیقی · افقی</button>
+				<button type="button" data-demo="legal-thermo">حقوقی · عمودی</button>
+				<button type="button" data-demo="bands-h">نردبان افقی</button>
 				<button type="button" data-demo="clarify">شفاف‌سازی</button>
 				<button type="button" data-demo="timeline">تاریخچه</button>
 				<button type="button" data-demo="shareholders">سهامداران</button>
@@ -154,10 +156,14 @@
 				<button type="button" id="replay">پخش دوباره</button>
 			</div>
 
-			<p class="snap">Gauge A — نردبان</p>
+			<p class="snap">چک — حلقه (۱–۱۰۰)</p>
 			<section class="bubble" id="mount-a"></section>
-			<p class="snap">Gauge B — حلقه</p>
+			<p class="snap">حقیقی — نوار افقی (۲۵۰–۹۰۰)</p>
 			<section class="bubble" id="mount-b"></section>
+			<p class="snap">حقوقی — دماسنج عمودی</p>
+			<section class="bubble" id="mount-g"></section>
+			<p class="snap">نردبان افقی — حقیقی</p>
+			<section class="bubble" id="mount-h"></section>
 			<p class="snap">شفاف‌سازی — کارت‌های ICS</p>
 			<section class="bubble" id="mount-c"></section>
 			<p class="snap">تاریخچه شرکت — خط زمان متحرک</p>
@@ -191,6 +197,42 @@
 				{ label: "خوب", min: 650, max: 749, color: "#43A047" },
 				{ label: "عالی", min: 750, max: 900, color: "#26C6DA" }
 			];
+
+			const CHEQUE_BANDS = [
+				{ label: "ضعیف", min: 1, max: 35, color: "#E53935" },
+				{ label: "متوسط", min: 36, max: 55, color: "#FB8C00" },
+				{ label: "قابل قبول", min: 56, max: 70, color: "#FDD835" },
+				{ label: "خوب", min: 71, max: 85, color: "#43A047" },
+				{ label: "عالی", min: 86, max: 100, color: "#26C6DA" }
+			];
+
+			const PERSON_BANDS = [
+				{ label: "ضعیف", min: 250, max: 449, color: "#E53935" },
+				{ label: "متوسط", min: 450, max: 549, color: "#FB8C00" },
+				{ label: "قابل قبول", min: 550, max: 649, color: "#FDD835" },
+				{ label: "خوب", min: 650, max: 749, color: "#43A047" },
+				{ label: "عالی", min: 750, max: 900, color: "#26C6DA" }
+			];
+
+			const MODEL_BADGE = { cheque: "چک", person: "حقیقی", legal: "حقوقی" };
+
+			function bandForScore(score, bands) {
+				return bands.find((b) => score >= b.min && score <= b.max)?.label || "";
+			}
+
+			function gradStops(bands, min, max) {
+				const span = Math.max(1, max - min);
+				return bands
+					.map((b) => {
+						const mid = (b.min + b.max) / 2;
+						return { offset: Math.max(0, Math.min(100, ((mid - min) / span) * 100)), color: b.color };
+					})
+					.sort((a, b) => a.offset - b.offset);
+			}
+
+			function bandAccent(score, bands) {
+				return bands.find((b) => score >= b.min && score <= b.max)?.color || "#43A047";
+			}
 
 			const CLARIFY = [
 				{
@@ -243,15 +285,11 @@
 				requestAnimationFrame(tick);
 			}
 
-			function bandFor(score) {
-				return BANDS.find((b) => score >= b.min && score <= b.max)?.label || "";
-			}
-
-			function scoreToLadderPct(score) {
-				const n = BANDS.length;
-				let idx = BANDS.findIndex((b) => score >= b.min && score <= b.max);
-				if (idx < 0) idx = score < BANDS[0].min ? 0 : n - 1;
-				const b = BANDS[idx];
+			function scoreToLadderPct(score, bands = BANDS) {
+				const n = bands.length;
+				let idx = bands.findIndex((b) => score >= b.min && score <= b.max);
+				if (idx < 0) idx = score < bands[0].min ? 0 : n - 1;
+				const b = bands[idx];
 				const frac = Math.max(0, Math.min(1, (score - b.min) / Math.max(1, b.max - b.min)));
 				return ((idx + frac) / n) * 100;
 			}
@@ -293,25 +331,25 @@
 				});
 			}
 
-			function renderRing(el, score) {
-				const min = 0,
-					max = 900;
+			function renderRing(el, score, opts = {}) {
+				const model = opts.model || "person";
+				const bands = opts.bands || PERSON_BANDS;
+				const min = opts.min ?? 250;
+				const max = opts.max ?? 900;
+				const label = opts.label || "امتیاز اعتباری";
 				const pct = Math.max(0, Math.min(100, ((score - min) / (max - min)) * 100));
+				const stops = gradStops(bands, min, max)
+					.map((s) => `<stop offset="${s.offset}%" stop-color="${s.color}"/>`)
+					.join("");
 				const uid = "g" + Math.random().toString(36).slice(2, 8);
+				const modelClass = `dana-score-gauge--model-${model}`;
+				const compact = model === "cheque" ? "dana-score-gauge--compact" : "";
 				el.innerHTML = `
-					<p>امتیاز اعتباری شما:</p>
-					<div class="dana-magic-root dana-score-gauge dana-score-gauge--ring dana-score-gauge--solid" dir="rtl">
+					<p>امتیاز ${MODEL_BADGE[model] || ""}:</p>
+					<div class="dana-magic-root dana-score-gauge dana-score-gauge--ring dana-score-gauge--solid ${modelClass} ${compact}" dir="rtl" data-model="${model}">
 						<div class="dana-score-gauge__arcbar dana-score-gauge__arcbar--ring" role="progressbar" aria-valuenow="${score}">
 							<svg viewBox="0 0 200 124" class="dana-score-gauge__arc-svg" aria-hidden="true">
-								<defs>
-									<linearGradient id="${uid}" x1="0%" y1="0%" x2="100%" y2="0%">
-										<stop offset="0%" stop-color="#E53935"/>
-										<stop offset="35%" stop-color="#FB8C00"/>
-										<stop offset="55%" stop-color="#FDD835"/>
-										<stop offset="80%" stop-color="#43A047"/>
-										<stop offset="100%" stop-color="#26C6DA"/>
-									</linearGradient>
-								</defs>
+								<defs><linearGradient id="${uid}" x1="0%" y1="0%" x2="100%" y2="0%">${stops}</linearGradient></defs>
 								<path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#ECEFF1" stroke-width="16" stroke-linecap="round"/>
 								<path id="${uid}-arc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="url(#${uid})" stroke-width="16" stroke-linecap="round" stroke-dasharray="${ARC}" stroke-dashoffset="${ARC}" class="dana-score-gauge__arc"/>
 								<circle id="${uid}-dot" cx="20" cy="100" r="8" fill="#fff" stroke="#37474F" stroke-width="2.5"/>
@@ -321,8 +359,9 @@
 							</div>
 						</div>
 						<div class="dana-score-gauge__copy">
-							<p class="dana-score-gauge__label">امتیاز اعتباری</p>
-							<p class="dana-score-gauge__band">${bandFor(score)}</p>
+							<span class="dana-score-gauge__model-badge">${MODEL_BADGE[model]}</span>
+							<p class="dana-score-gauge__label">${label}</p>
+							<p class="dana-score-gauge__band is-visible" style="background:${bandAccent(score, bands)}">${bandForScore(score, bands)}</p>
 							<p class="dana-score-gauge__range">بازه ${faNumber(min)} تا ${faNumber(max)}</p>
 						</div>
 					</div>`;
@@ -338,10 +377,113 @@
 				});
 			}
 
+			function renderHorizontal(el, score, opts = {}) {
+				const model = opts.model || "person";
+				const bands = opts.bands || PERSON_BANDS;
+				const min = opts.min ?? 250;
+				const max = opts.max ?? 900;
+				const label = opts.label || "امتیاز اعتباری حقیقی";
+				const pct = Math.max(0, Math.min(100, ((score - min) / (max - min)) * 100));
+				const grad = gradStops(bands, min, max)
+					.map((s) => `${s.color} ${s.offset}%`)
+					.join(",");
+				const uid = "h" + Math.random().toString(36).slice(2, 8);
+				el.innerHTML = `
+					<p>نوار افقی — ${MODEL_BADGE[model]}:</p>
+					<div class="dana-magic-root dana-score-gauge dana-score-gauge--horizontal dana-score-gauge--solid dana-score-gauge--model-${model}" dir="rtl" data-model="${model}">
+						<div class="dana-score-gauge__hhead">
+							<div class="dana-score-gauge__hmeta">
+								<span class="dana-score-gauge__model-badge">${MODEL_BADGE[model]}</span>
+								<p class="dana-score-gauge__label">${label}</p>
+							</div>
+							<span class="dana-score-gauge__score tabular-nums" id="${uid}-num">${faNumber(0)}</span>
+						</div>
+						<div class="dana-score-gauge__htrack" role="progressbar">
+							<span class="dana-score-gauge__htrack-rail"></span>
+							<span class="dana-score-gauge__htrack-fill" id="${uid}-fill" style="width:0%;background:linear-gradient(90deg,${grad})"></span>
+							<span class="dana-score-gauge__htrack-tip" id="${uid}-tip" style="inset-inline-start:calc(0% - 9px);background:${bandAccent(score, bands)};border-color:${bandAccent(score, bands)}"></span>
+						</div>
+						<div class="dana-score-gauge__hfoot">
+							<span class="dana-score-gauge__range tabular-nums">${faNumber(min)}</span>
+							<span class="dana-score-gauge__band is-visible" style="background:${bandAccent(score, bands)}">${bandForScore(score, bands)}</span>
+							<span class="dana-score-gauge__range tabular-nums">${faNumber(max)}</span>
+						</div>
+					</div>`;
+				const fill = el.querySelector("#" + uid + "-fill");
+				const tip = el.querySelector("#" + uid + "-tip");
+				const num = el.querySelector("#" + uid + "-num");
+				animate(0, pct, 1200, (v) => {
+					fill.style.width = v + "%";
+					tip.style.insetInlineStart = `calc(${v}% - 9px)`;
+					num.textContent = faNumber(Math.round(score * (pct ? v / pct : 0)));
+				});
+			}
+
+			function renderVertical(el, score, opts = {}) {
+				const model = opts.model || "legal";
+				const bands = opts.bands || PERSON_BANDS;
+				const min = opts.min ?? 250;
+				const max = opts.max ?? 900;
+				const label = opts.label || "امتیاز اعتباری حقوقی";
+				const pct = Math.max(0, Math.min(100, ((score - min) / (max - min)) * 100));
+				const grad = gradStops(bands, min, max)
+					.map((s) => `${s.color} ${100 - s.offset}%`)
+					.join(",");
+				const uid = "v" + Math.random().toString(36).slice(2, 8);
+				const accent = bandAccent(score, bands);
+				el.innerHTML = `
+					<p>دماسنج عمودی — ${MODEL_BADGE[model]}:</p>
+					<div class="dana-magic-root dana-score-gauge dana-score-gauge--vertical dana-score-gauge--solid dana-score-gauge--model-${model}" dir="rtl" data-model="${model}">
+						<div class="dana-score-gauge__vtrack-wrap" role="progressbar">
+							<span class="dana-score-gauge__vmax tabular-nums">${faNumber(max)}</span>
+							<div class="dana-score-gauge__vtrack">
+								<span class="dana-score-gauge__vrail"></span>
+								<span class="dana-score-gauge__vfill" id="${uid}-fill" style="height:0%;background:linear-gradient(0deg,${grad})"></span>
+								<span class="dana-score-gauge__vbulb" style="border-color:${accent}"></span>
+							</div>
+							<span class="dana-score-gauge__vmin tabular-nums">${faNumber(min)}</span>
+						</div>
+						<div class="dana-score-gauge__copy">
+							<span class="dana-score-gauge__model-badge">${MODEL_BADGE[model]}</span>
+							<span class="dana-score-gauge__score dana-score-gauge__score--lg tabular-nums" id="${uid}-num">${faNumber(0)}</span>
+							<p class="dana-score-gauge__label">${label}</p>
+							<p class="dana-score-gauge__band is-visible" style="background:${accent}">${bandForScore(score, bands)}</p>
+						</div>
+					</div>`;
+				const fill = el.querySelector("#" + uid + "-fill");
+				const num = el.querySelector("#" + uid + "-num");
+				animate(0, pct, 1200, (v) => {
+					fill.style.height = v + "%";
+					num.textContent = faNumber(Math.round(score * (pct ? v / pct : 0)));
+				});
+			}
+
+			function renderBandsHorizontal(el, score) {
+				el.innerHTML = `
+					<p>نردبان افقی — حقیقی:</p>
+					<div class="dana-magic-root dana-score-bands-wrap dana-magic-enter is-entered" dir="rtl" data-model="person">
+						<p class="dana-score-bands__model">
+							<span class="dana-score-gauge__model-badge">${MODEL_BADGE.person}</span>
+							امتیاز اعتباری حقیقی
+						</p>
+						<div class="dana-score-bands dana-score-bands--pills" role="list">
+							${PERSON_BANDS.map(
+								(band, i) => `
+								<span class="dana-score-band dana-magic-stagger-item${score >= band.min && score <= band.max ? " is-active" : ""}" role="listitem" style="--band:${band.color};--i:${i}">
+									<span class="dana-score-band__label">${band.label}</span>
+									<span class="dana-score-band__range tabular-nums">${faNumber(band.min)}–${faNumber(band.max)}</span>
+								</span>`
+							).join("")}
+						</div>
+						<p class="dana-score-bands__current">امتیاز فعلی: <strong class="tabular-nums">${faNumber(score)}</strong>
+							<span class="dana-score-bands__bounds tabular-nums">(۲۵۰–۹۰۰)</span></p>
+					</div>`;
+			}
+
 			function renderClarify(el) {
 				el.innerHTML = `
 					<p>سؤال شما مبهم است. یکی از گزینه‌ها را انتخاب کنید:</p>
-					<div class="dana-magic-root dana-clarify dana-clarify--ics" dir="rtl">
+					<div class="dana-magic-root dana-clarify dana-clarify--ics dana-magic-enter is-entered" dir="rtl">
 						<p class="dana-clarify__title">لطفاً نوع گزارش را انتخاب کنید</p>
 						<div class="dana-clarify__grid" role="group">
 							${CLARIFY.map(
@@ -368,7 +510,7 @@
 			function renderTimeline(el) {
 				el.innerHTML = `
 					<p>تاریخچه شرکت اعتبارسنجی ایران:</p>
-					<div class="dana-magic-root dana-timeline dana-timeline--vertical dana-timeline--solid" dir="rtl">
+					<div class="dana-magic-root dana-timeline dana-timeline--vertical dana-timeline--solid dana-magic-enter is-entered" dir="rtl">
 						<h3 class="dana-timeline__title">تاریخچه شرکت اعتبارسنجی ایران</h3>
 						<div class="dana-timeline__spine" style="--line:0%"></div>
 						<ol class="dana-timeline__zigzag">
@@ -427,7 +569,7 @@
 					const h = items[active];
 					el.innerHTML = `
 						<p>سهامداران شرکت اعتبارسنجی ایران:</p>
-						<div class="dana-magic-root dana-holders dana-holders--solid" dir="rtl">
+						<div class="dana-magic-root dana-holders dana-holders--solid dana-magic-enter is-entered" dir="rtl">
 							<h3 class="dana-holders__title">${data.title || "سهامداران"}</h3>
 							<div class="dana-holders__row">
 								<div class="dana-holders__chart">
@@ -479,7 +621,7 @@
 						const items = groups[active] || [];
 						el.innerHTML = `
 							<p>تأمین‌کنندگان داده‌ها:</p>
-							<div class="dana-magic-root dana-creditors dana-creditors--solid" dir="rtl">
+							<div class="dana-magic-root dana-creditors dana-creditors--solid dana-magic-enter is-entered" dir="rtl">
 								<h3 class="dana-creditors__title">${data.title || ""}</h3>
 								<div class="dana-creditors__tabs" role="tablist">
 									${tabs
@@ -517,27 +659,39 @@
 
 			function showTokens(kind) {
 				const samples = {
-					a: `<<<MAGIC:CREDIT_SCORE_BANDS {"score":610,"variant":"vertical"}>>>`,
-					b: `<<<MAGIC:CREDIT_SCORE_GAUGE {"score":720,"band":"خوب","variant":"ring"}>>>`,
+					"cheque-ring": `<<<MAGIC:CREDIT_SCORE_GAUGE {"model":"cheque","score":78,"variant":"ring"}>>>`,
+					"person-bar": `<<<MAGIC:CREDIT_SCORE_GAUGE {"model":"person","score":680,"variant":"horizontal"}>>>`,
+					"legal-thermo": `<<<MAGIC:CREDIT_SCORE_GAUGE {"model":"legal","score":710,"variant":"vertical"}>>>`,
+					"bands-h": `<<<MAGIC:CREDIT_SCORE_BANDS {"model":"person","score":680,"variant":"horizontal"}>>>`,
 					clarify: `<<<MAGIC:CLARIFY_OPTIONS {"title":"لطفاً نوع گزارش را انتخاب کنید"}>>>`,
 					timeline: `<<<MAGIC:COMPANY_TIMELINE {"variant":"vertical"}>>>`,
 					shareholders: `<<<MAGIC:SHAREHOLDERS {}>>>`,
 					creditors: `<<<MAGIC:CREDITORS {}>>>`,
-					pair: `امتیاز شما محاسبه شد.\n<<<MAGIC:CREDIT_SCORE_GAUGE {"score":610,"variant":"ring"}>>>\n<<<MAGIC:CLARIFY_OPTIONS {}>>>`
+					pair: `امتیاز شما محاسبه شد.\n<<<MAGIC:CREDIT_SCORE_GAUGE {"model":"person","score":680,"variant":"horizontal"}>>>\n<<<MAGIC:CLARIFY_OPTIONS {}>>>`
 				};
-				tokenOut.textContent = samples[kind] || samples.a;
+				tokenOut.textContent = samples[kind] || samples["cheque-ring"];
 			}
 
 			const mountA = document.getElementById("mount-a");
 			const mountB = document.getElementById("mount-b");
+			const mountG = document.getElementById("mount-g");
+			const mountH = document.getElementById("mount-h");
 			const mountC = document.getElementById("mount-c");
 			const mountT = document.getElementById("mount-t");
 			const mountS = document.getElementById("mount-s");
 			const mountR = document.getElementById("mount-r");
 
 			async function boot() {
-				renderLadder(mountA, 610);
-				renderRing(mountB, 720);
+				renderRing(mountA, 78, {
+					model: "cheque",
+					bands: CHEQUE_BANDS,
+					min: 1,
+					max: 100,
+					label: "امتیاز اعتبار چک"
+				});
+				renderHorizontal(mountB, 680, { model: "person", bands: PERSON_BANDS, label: "امتیاز اعتباری حقیقی" });
+				renderVertical(mountG, 710, { model: "legal", bands: PERSON_BANDS, label: "امتیاز اعتباری حقوقی" });
+				renderBandsHorizontal(mountH, 680);
 				renderClarify(mountC);
 				renderTimeline(mountT);
 				await renderShareholders(mountS);
@@ -548,12 +702,24 @@
 			document.querySelectorAll("[data-demo]").forEach((btn) => {
 				btn.addEventListener("click", async () => {
 					const kind = btn.getAttribute("data-demo");
-					if (kind === "a") {
-						renderLadder(mountA, 610);
-						showTokens("a");
-					} else if (kind === "b") {
-						renderRing(mountB, 720);
-						showTokens("b");
+					if (kind === "cheque-ring") {
+						renderRing(mountA, 78, {
+							model: "cheque",
+							bands: CHEQUE_BANDS,
+							min: 1,
+							max: 100,
+							label: "امتیاز اعتبار چک"
+						});
+						showTokens("cheque-ring");
+					} else if (kind === "person-bar") {
+						renderHorizontal(mountB, 680, { model: "person", bands: PERSON_BANDS, label: "امتیاز اعتباری حقیقی" });
+						showTokens("person-bar");
+					} else if (kind === "legal-thermo") {
+						renderVertical(mountG, 710, { model: "legal", bands: PERSON_BANDS, label: "امتیاز اعتباری حقوقی" });
+						showTokens("legal-thermo");
+					} else if (kind === "bands-h") {
+						renderBandsHorizontal(mountH, 680);
+						showTokens("bands-h");
 					} else if (kind === "clarify") {
 						renderClarify(mountC);
 						showTokens("clarify");

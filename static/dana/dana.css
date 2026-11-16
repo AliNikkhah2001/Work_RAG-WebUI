@@ -158,7 +158,7 @@ html.dana-theme #splash-screen.dana-splash {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(var(--band-count, 5), 1fr);
 }
 
 .dana-ladder__labels li {
@@ -187,7 +187,7 @@ html.dana-theme #splash-screen.dana-splash {
 .dana-ladder__track {
   position: relative;
   display: grid;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(var(--band-count, 5), 1fr);
   border-radius: 0.55rem;
   overflow: hidden;
   border: 1px solid #d9d9d9;
@@ -321,6 +321,288 @@ html.dana-theme #splash-screen.dana-splash {
   color: #fff;
   font-size: 0.78rem;
   font-weight: 650;
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.dana-score-gauge__band.is-visible {
+  animation: dana-band-in 0.5s ease 0.15s both;
+}
+
+@keyframes dana-band-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dana-score-gauge__model-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.65rem;
+  padding: 0.1rem 0.55rem;
+  margin-bottom: 0.35rem;
+  border-radius: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  background: #f3f3f5;
+  color: #444;
+  border: 1px solid #e0e0e0;
+}
+
+.dana-score-gauge--model-cheque {
+  border-inline-start: 4px solid #5c6bc0;
+}
+
+.dana-score-gauge--model-person {
+  border-inline-start: 4px solid var(--dana-primary, #ba0c54);
+}
+
+.dana-score-gauge--model-legal {
+  border-inline-start: 4px solid #1565c0;
+}
+
+.dana-score-gauge--compact {
+  max-width: 26rem;
+}
+
+.dana-ladder--model-cheque {
+  border-inline-start: 4px solid #5c6bc0;
+}
+
+.dana-ladder--model-person {
+  border-inline-start: 4px solid var(--dana-primary, #ba0c54);
+}
+
+.dana-ladder--model-legal {
+  border-inline-start: 4px solid #1565c0;
+}
+
+.dana-ladder__head-copy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dana-score-bands__model {
+  margin: 0 0 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.dana-score-bands__bounds {
+  margin-inline-start: 0.35rem;
+  font-size: 0.82rem;
+  opacity: 0.65;
+  font-weight: 500;
+}
+
+.dana-score-gauge--horizontal {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.65rem;
+}
+
+.dana-score-gauge__hhead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.dana-score-gauge__hmeta {
+  min-width: 0;
+}
+
+.dana-score-gauge__htrack {
+  position: relative;
+  height: 1.15rem;
+  border-radius: 999px;
+}
+
+.dana-score-gauge__htrack-rail {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #eceff1;
+  border: 1px solid #dde3e8;
+}
+
+.dana-score-gauge__htrack-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  border-radius: 999px;
+  transition: width 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.dana-score-gauge__htrack-tip {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  border-radius: 999px;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  transition:
+    inset-inline-start 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.dana-score-gauge__hfoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.dana-score-gauge--vertical {
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.dana-score-gauge__vtrack-wrap {
+  position: relative;
+  flex: 0 0 3.25rem;
+  min-height: 12.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dana-score-gauge__vtrack {
+  position: relative;
+  flex: 1;
+  width: 1.35rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+.dana-score-gauge__vrail {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #eceff1;
+  border: 1px solid #dde3e8;
+}
+
+.dana-score-gauge__vfill {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  border-radius: 0 0 999px 999px;
+  transition: height 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dana-score-gauge__vbulb {
+  position: absolute;
+  left: 50%;
+  bottom: -0.55rem;
+  width: 2.05rem;
+  height: 2.05rem;
+  margin-left: -1.025rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 4px solid var(--dana-primary, #ba0c54);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.dana-score-gauge__vmax,
+.dana-score-gauge__vmin {
+  font-size: 0.7rem;
+  opacity: 0.65;
+  line-height: 1;
+}
+
+.dana-ladder__needle {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.dana-ladder__needle.is-visible {
+  animation: dana-needle-in 0.55s ease 0.2s both;
+}
+
+@keyframes dana-needle-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dana-fade-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dana-magic-enter .dana-magic-stagger-item {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.dana-magic-enter.is-entered .dana-magic-stagger-item {
+  animation: dana-fade-slide-in 0.45s ease both;
+  animation-delay: calc(var(--i, 0) * 0.07s);
+}
+
+.dana-magic-enter .dana-clarify__card {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.dana-magic-enter.is-entered .dana-clarify__card,
+.dana-clarify--ics .dana-clarify__card {
+  animation: dana-fade-slide-in 0.48s ease both;
+  animation-delay: calc(var(--i, 0) * 0.08s);
+}
+
+.dana-clarify__card {
+  --i: 0;
+}
+
+.dana-clarify__grid .dana-clarify__card:nth-child(1) {
+  --i: 0;
+}
+.dana-clarify__grid .dana-clarify__card:nth-child(2) {
+  --i: 1;
+}
+.dana-clarify__grid .dana-clarify__card:nth-child(3) {
+  --i: 2;
+}
+
+.dana-holders.is-entered .dana-holders__card,
+.dana-holders.is-entered .dana-holders__seg {
+  animation: dana-fade-slide-in 0.5s ease both;
+}
+
+.dana-timeline--solid.is-entered .dana-timeline__zitem {
+  animation: dana-fade-slide-in 0.48s ease both;
+  animation-delay: calc(var(--i, 0) * 0.06s);
 }
 
 .dana-score-gauge__range {
@@ -407,6 +689,17 @@ html.dana-theme #splash-screen.dana-splash {
   transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
   font: inherit;
   color: inherit;
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  animation: dana-clarify-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@keyframes dana-clarify-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .dana-clarify__card:hover,
@@ -587,6 +880,36 @@ html.dana-theme #splash-screen.dana-splash {
   transform: none;
 }
 
+.dana-timeline__zitem--start.is-on .dana-timeline__card {
+  animation: dana-slide-start 0.5s ease both;
+}
+
+.dana-timeline__zitem--end.is-on .dana-timeline__card {
+  animation: dana-slide-end 0.5s ease both;
+}
+
+@keyframes dana-slide-start {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dana-slide-end {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .dana-timeline__year {
   grid-column: 2;
   grid-row: 1;
@@ -667,6 +990,41 @@ html.dana-theme #splash-screen.dana-splash {
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  animation: dana-holders-in 0.55s ease both;
+}
+
+@keyframes dana-holders-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dana-holders__seg {
+  transition: stroke 0.35s ease, stroke-width 0.35s ease, filter 0.35s ease;
+}
+
+.dana-holders__logo {
+  animation: dana-logo-pop 0.45s ease both;
+}
+
+@keyframes dana-logo-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dana-holders__pct {
+  transition: transform 0.25s ease;
 }
 
 .dana-holders__chart {
@@ -916,12 +1274,20 @@ html.dana-theme #splash-screen.dana-splash {
 
 @media (prefers-reduced-motion: reduce) {
   .dana-score-gauge__arc,
+  .dana-score-gauge__htrack-fill,
+  .dana-score-gauge__htrack-tip,
+  .dana-score-gauge__vfill,
   .dana-ladder__needle,
   .dana-clarify__card,
   .dana-timeline__zitem,
   .dana-creditors__card,
-  .dana-holders__card {
+  .dana-holders__card,
+  .dana-magic-stagger-item,
+  .dana-score-gauge__band {
     transition: none;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
   .dana-creditors__grid {
     animation: none;

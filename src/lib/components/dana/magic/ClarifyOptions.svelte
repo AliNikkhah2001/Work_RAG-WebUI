@@ -53,9 +53,19 @@
 	function iconSrc(item: ClarifyItem): string {
 		const key = (item.icon || item.id || 'search').replace(/[^a-z0-9_-]/gi, '');
 		if (key === 'person' || key === 'legal' || key === 'cheque') {
+			// Prefer ICS24 white-bg PNGs; fall back to legacy magic icons.
 			return `${ICS_CLARIFY}/${key}.png`;
 		}
 		return `${ICON_BASE}/${key}.png`;
+	}
+
+	function onImgError(ev: Event, item: ClarifyItem) {
+		const img = ev.currentTarget as HTMLImageElement;
+		const key = (item.icon || item.id || '').replace(/[^a-z0-9_-]/gi, '');
+		const fallback = `${ICON_BASE}/${key}.png`;
+		if (img && img.src && !img.src.endsWith(fallback)) {
+			img.src = fallback;
+		}
 	}
 
 	function choose(item: ClarifyItem) {
@@ -74,11 +84,21 @@
 			<button
 				type="button"
 				class="dana-clarify__card"
+				style={`--i:${i}`}
 				on:click={() => choose(item)}
 				aria-label={item.label}
 			>
 				<span class="dana-clarify__icon-wrap">
-					<img class="dana-clarify__icon" src={iconSrc(item)} alt="" width="120" height="120" />
+					<img
+						class="dana-clarify__icon"
+						src={iconSrc(item)}
+						alt=""
+						width="120"
+						height="120"
+						loading="eager"
+						decoding="async"
+						on:error={(e) => onImgError(e, item)}
+					/>
 				</span>
 				<span class="dana-clarify__label">{item.label}</span>
 				{#if item.subtitle}
