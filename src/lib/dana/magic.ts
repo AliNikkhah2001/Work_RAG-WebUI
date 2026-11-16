@@ -1,16 +1,38 @@
 import type { MagicSegment, MagicTokenDef } from './types';
 
+/** Always-on allowlist so widgets compile even if magic-tokens.json is late/missing. */
+export const BUILTIN_MAGIC_DEFS: Record<string, MagicTokenDef> = {
+	CREDIT_SCORE_GAUGE: { renderer: 'CreditScoreGauge' },
+	CREDIT_SCORE_BANDS: { renderer: 'CreditScoreBands' },
+	CLARIFY_OPTIONS: { renderer: 'ClarifyOptions' },
+	COMPANY_TIMELINE: { renderer: 'CompanyTimeline' },
+	SHAREHOLDERS: { renderer: 'ShareholdersRing' },
+	CREDITORS: { renderer: 'CreditorsGrid' },
+	INFO_BANNER: { renderer: 'InfoBanner' },
+	DATA_TABLE: { renderer: 'DataTable' },
+	COLLAPSE_LIST: { renderer: 'CollapseList' },
+	ANIMATED_LOGO: { renderer: 'AnimatedLogo' },
+	BIRTHDAY: { renderer: 'BirthdayCake' }
+};
+
 let catalog: Record<string, MagicTokenDef> | null = null;
 
+export function getMagicDefs(
+	extra: Record<string, MagicTokenDef> | null | undefined = catalog
+): Record<string, MagicTokenDef> {
+	return { ...BUILTIN_MAGIC_DEFS, ...(extra || {}) };
+}
+
 export async function loadMagicCatalog(): Promise<Record<string, MagicTokenDef>> {
-	if (catalog && Object.keys(catalog).length) return catalog;
-	const res = await fetch('/static/dana/magic-tokens.json', { cache: 'no-cache' });
-	if (!res.ok) {
-		// Do not cache failures — allow a later retry once static assets are ready.
-		return catalog ?? {};
+	if (catalog && Object.keys(catalog).length) return getMagicDefs(catalog);
+	try {
+		const res = await fetch('/static/dana/magic-tokens.json', { cache: 'no-cache' });
+		if (!res.ok) return getMagicDefs(catalog);
+		catalog = (await res.json()) as Record<string, MagicTokenDef>;
+		return getMagicDefs(catalog);
+	} catch {
+		return getMagicDefs(catalog);
 	}
-	catalog = (await res.json()) as Record<string, MagicTokenDef>;
-	return catalog;
 }
 
 /** Reset cache (tests / hot-reload of catalog). */
@@ -54,27 +76,28 @@ function magicPriority(token: string): number {
 /** Split assistant content into text + allowlisted magic widget segments. */
 export function parseMagicSegments(
 	content: string,
-	defs: Record<string, MagicTokenDef>
+	defs: Record<string, MagicTokenDef> = {}
 ): MagicSegment[] {
 	if (!content) return [];
+	const resolved = getMagicDefs(defs);
 
 	const marks: { start: number; end: number; token: string; params: Record<string, unknown> }[] =
 		[];
 
 	for (const match of content.matchAll(BLOCK_RE)) {
 		const token = match[1];
-		if (!defs[token]) continue;
+		if (!resolved[token]) continue;
 		marks.push({
 			start: match.index ?? 0,
 			end: (match.index ?? 0) + match[0].length,
 			token,
-			params: { ...(defs[token].params || {}), ...safeParams(match[2] || '') }
+			params: { ...(resolved[token].params || {}), ...safeParams(match[2] || '') }
 		});
 	}
 
 	for (const match of content.matchAll(SIMPLE_RE)) {
 		const token = match[1];
-		if (!defs[token]) continue;
+		if (!resolved[token]) continue;
 		const start = match.index ?? 0;
 		const end = start + match[0].length;
 		if (marks.some((m) => start >= m.start && end <= m.end)) continue;
@@ -82,7 +105,7 @@ export function parseMagicSegments(
 			start,
 			end,
 			token,
-			params: { ...(defs[token].params || {}) }
+			params: { ...(resolved[token].params || {}) }
 		});
 	}
 
@@ -130,7 +153,7 @@ export function parseMagicSegments(
 				type: 'magic',
 				token: mark.token,
 				params: mark.params,
-				renderer: defs[mark.token].renderer
+				renderer: resolved[mark.token].renderer
 			});
 		}
 		// Extra magic tokens are stripped (not shown as raw markup).

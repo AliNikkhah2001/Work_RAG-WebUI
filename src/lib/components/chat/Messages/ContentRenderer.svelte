@@ -125,17 +125,19 @@
 	let magicCatalogReady = false;
 
 	onMount(async () => {
+		// Builtin defs compile immediately; remote catalog only overlays extras.
+		magicCatalogReady = true;
+		magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), {});
 		try {
 			const catalog = await loadMagicCatalog();
-			magicCatalogReady = true;
 			magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), catalog);
 		} catch (e) {
 			console.warn('Dana magic catalog failed', e);
-			magicSegments = [{ type: 'text', value: formatMessageContent(content ?? '') }];
 		}
 	});
 
 	$: if (magicCatalogReady) {
+		magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), {});
 		loadMagicCatalog().then((catalog) => {
 			magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), catalog);
 		});

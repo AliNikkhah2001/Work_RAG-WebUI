@@ -13,8 +13,8 @@
 	import ConsecutiveDetailsGroup from './Markdown/ConsecutiveDetailsGroup.svelte';
 	import ContextCompactionLabel from './ContextCompactionLabel.svelte';
 	import MagicRenderer from '$lib/components/dana/magic/MagicRenderer.svelte';
-	import { loadMagicCatalog, parseMagicSegments } from '$lib/dana/magic';
-	import type { MagicSegment } from '$lib/dana/types';
+	import { getMagicDefs, loadMagicCatalog, parseMagicSegments } from '$lib/dana/magic';
+	import type { MagicSegment, MagicTokenDef } from '$lib/dana/types';
 	import {
 		buildOutputDisplayItems,
 		type OutputDetailToken,
@@ -52,27 +52,29 @@
 	const getDetailAttributes = (detailToken: OutputDetailToken): any => detailToken.attributes;
 	let resolvingCallId = '';
 
-	/** @type {Record<string, MagicSegment[]>} */
-	let magicByItem: Record<string, MagicSegment[]> = {};
-
+	/** Remote catalog overlays builtins; builtins alone are enough to compile widgets. */
+	let remoteCatalog: Record<string, MagicTokenDef> = {};
+	$: magicDefs = getMagicDefs(remoteCatalog);
 	$: displayItems = buildOutputDisplayItems(output) as OutputDisplayItem[];
 
-	async function refreshMagicSegments(items: OutputDisplayItem[]) {
-		try {
-			const catalog = await loadMagicCatalog();
-			const next: Record<string, MagicSegment[]> = {};
-			for (const item of items) {
-				if (item.type !== 'message' || !item.text) continue;
-				next[item.id] = parseMagicSegments(formatMessageContent(item.text), catalog);
-			}
-			magicByItem = next;
-		} catch (e) {
-			console.warn('Dana magic catalog failed (structured output)', e);
-			magicByItem = {};
+	/** Sync parse — do not wait on fetch or MAGIC tokens stay visible as raw text. */
+	$: magicByItem = (() => {
+		/** @type {Record<string, MagicSegment[]>} */
+		const next: Record<string, MagicSegment[]> = {};
+		for (const item of displayItems) {
+			if (item.type !== 'message' || !item.text) continue;
+			next[item.id] = parseMagicSegments(formatMessageContent(item.text), magicDefs);
 		}
-	}
+		return next;
+	})();
 
-	$: displayItems, formatMessageContent, void refreshMagicSegments(displayItems);
+	$: if (typeof window !== 'undefined') {
+		loadMagicCatalog()
+			.then((defs) => {
+				remoteCatalog = defs;
+			})
+			.catch(() => {});
+	}
 
 	const resolveToolCall = async (callId: string, approved: boolean) => {
 		if (!chatId || !messageId || !callId || resolvingCallId) {
