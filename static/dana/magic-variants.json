@@ -1,5 +1,5 @@
 {
-  "gauge": ["ring", "arc", "hero"],
+  "gauge": ["ring", "arc", "hero", "horizontal", "vertical"],
   "bands": ["vertical", "horizontal"],
   "timeline": ["vertical", "horizontal", "compact"],
   "table": ["striped", "cards", "dense"],
