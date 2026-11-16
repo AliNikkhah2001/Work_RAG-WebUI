@@ -24,25 +24,40 @@ Live preview (local):
 
 Admin: Settings → General → دانا / ICS Brand. Env: `DANA_THEME_ID` (see [`docs/dana/env.dana.example`](docs/dana/env.dana.example)).
 
-## Magic tokens
+## Magic widgets (post-hoc `rag.magic`)
 
-Assistant messages may emit allowlisted tokens. Unknown tokens are ignored (fail closed).
+**Production path:** the orchestrator returns widgets on `rag.magic` as
+`[{ "name": "TOKEN", "params": {…} }]` **after** the answer is final. Assistant
+`content` stays plain Persian — it does **not** contain `<<<MAGIC:…>>>`.
 
-| Token | Renderer | Usage |
+WebUI flow:
+
+1. Final SSE / non-stream chunk includes `rag.magic`
+2. Middleware persists `message.magic` and emits `chat:message:magic`
+3. `ContentRenderer` / `StructuredOutputRenderer` render via `MagicRenderer`
+4. Legacy in-body `<<<MAGIC:…>>>` is still parsed as a fallback for old chats
+
+Unknown token names are ignored (fail closed). Allowlist:
+[`static/dana/magic-tokens.json`](static/dana/magic-tokens.json).
+
+| Token | Renderer | Typical `params` |
 | --- | --- | --- |
-| `BIRTHDAY` | `BirthdayCake` | `<BIRTHDAY>` |
-| `CREDIT_SCORE_BANDS` | `CreditScoreBands` | Gauge A ladder: `<<<MAGIC:CREDIT_SCORE_BANDS {"score":610,"variant":"vertical"}>>>` |
-| `CREDIT_SCORE_GAUGE` | `CreditScoreGauge` | Gauge B ring: `<<<MAGIC:CREDIT_SCORE_GAUGE {"score":610,"band":"خوب","variant":"ring"}>>>` |
-| `CLARIFY_OPTIONS` | `ClarifyOptions` | ICS white report cards (حقیقی/حقوقی/چک) → fills composer |
-| `COMPANY_TIMELINE` | `CompanyTimeline` | Animated ICS history: `<<<MAGIC:COMPANY_TIMELINE {"variant":"vertical"}>>>` |
-| `SHAREHOLDERS` | `ShareholdersRing` | Donut + % card: `<<<MAGIC:SHAREHOLDERS {}>>>` |
-| `CREDITORS` | `CreditorsGrid` | Multi-tab providers: `<<<MAGIC:CREDITORS {}>>>` |
-| `INFO_BANNER` | `InfoBanner` | `<<<MAGIC:INFO_BANNER {"title":"اطلاعیه","body":"…"}>>>` |
-| `DATA_TABLE` | `DataTable` | `<<<MAGIC:DATA_TABLE {"variant":"striped",…}>>>` |
-| `COLLAPSE_LIST` | `CollapseList` | `<<<MAGIC:COLLAPSE_LIST {"variant":"accordion",…}>>>` |
-| `ANIMATED_LOGO` | `AnimatedLogo` | `<<<MAGIC:ANIMATED_LOGO {"variant":"white"}>>>` |
+| `CREDIT_SCORE_GAUGE` | `CreditScoreGauge` | `score`, `min`/`max`, `model` (`cheque`\|`person`\|`legal`), `variant` (`ring`\|`horizontal`\|`linear`\|`vertical`\|`arc`\|`hero`), `bands[]` with `color`/`code`/`codes`, `color_mode: "stepped"` |
+| `CREDIT_SCORE_BANDS` | `CreditScoreBands` | ladder; `variant` `vertical`\|`horizontal` |
+| `CLARIFY_OPTIONS` | `ClarifyOptions` | ICS report cards (حقیقی/حقوقی/چک) → fills composer |
+| `COMPANY_TIMELINE` | `CompanyTimeline` | `{ "variant": "vertical" }` |
+| `SHAREHOLDERS` | `ShareholdersRing` | ICS company stakeholders only |
+| `CREDITORS` | `CreditorsGrid` | ICS data providers only |
+| `INFO_BANNER` | `InfoBanner` | `{ title, body }` |
+| `DATA_TABLE` | `DataTable` | `{ variant, … }` |
+| `COLLAPSE_LIST` | `CollapseList` | `{ variant, … }` |
+| `ANIMATED_LOGO` | `AnimatedLogo` | `{ variant }` |
+| `BIRTHDAY` | `BirthdayCake` | (simple / legacy) |
 
-Catalog source: [`static/dana/magic-tokens.json`](static/dana/magic-tokens.json) · variants: [`static/dana/magic-variants.json`](static/dana/magic-variants.json)
+Catalog: [`static/dana/magic-tokens.json`](static/dana/magic-tokens.json) · variants: [`static/dana/magic-variants.json`](static/dana/magic-variants.json)
+
+> Lab / docs may still show `<<<MAGIC:…>>>` strings for manual preview in
+> `magic-lab.html`. Chat completions from the orchestrator use `rag.magic` only.
 
 ### CREDIT_SCORE_GAUGE (B — ring)
 
@@ -63,16 +78,16 @@ Variants: `vertical` (default) · `horizontal`
 ICS24 white report cards (حقیقی / حقوقی / چک) with title, subtitle, and «توضیحات بیشتر». Companion token — can appear alongside one visual gauge.
 Assets: `static/dana/brand/icons/magic/ics24/clarify/{person,legal,cheque}.png`
 
-```text
-<<<MAGIC:CLARIFY_OPTIONS {"title":"لطفاً نوع گزارش را انتخاب کنید"}>>>
+```json
+{ "name": "CLARIFY_OPTIONS", "params": { "title": "لطفاً نوع گزارش را انتخاب کنید", "items": [] } }
 ```
 
 ### COMPANY_TIMELINE
 
 Animated zigzag history (۱۳۸۵→۱۴۰۳). Variants: `vertical` · `horizontal` · `compact`. Default items match ics24.ir about/history.
 
-```text
-<<<MAGIC:COMPANY_TIMELINE {"variant":"vertical"}>>>
+```json
+{ "name": "COMPANY_TIMELINE", "params": { "variant": "vertical" } }
 ```
 
 ![COMPANY_TIMELINE](docs/dana/magic/COMPANY_TIMELINE.png)
@@ -81,16 +96,16 @@ Animated zigzag history (۱۳۸۵→۱۴۰۳). Variants: `vertical` · `horizont
 
 Animated donut + percent card (autoplay). Catalog: `static/dana/magic-data/shareholders.json` (logos under `brand/icons/magic/ics24/shareholders/`).
 
-```text
-<<<MAGIC:SHAREHOLDERS {}>>>
+```json
+{ "name": "SHAREHOLDERS", "params": { "title": "سهامداران شرکت اعتبارسنجی ایران" } }
 ```
 
 ### CREDITORS
 
 Multi-tab grid (بانک ها / سازمان ها / بیمه ها / لیزینگ ها / لندتک ها). Catalog: `static/dana/magic-data/creditors.json`.
 
-```text
-<<<MAGIC:CREDITORS {}>>>
+```json
+{ "name": "CREDITORS", "params": { "title": "تأمین‌کنندگان داده‌های شرکت اعتبارسنجی ایران" } }
 ```
 
 ### INFO_BANNER
