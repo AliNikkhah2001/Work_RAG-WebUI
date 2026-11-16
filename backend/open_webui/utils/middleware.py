@@ -4229,6 +4229,10 @@ async def non_streaming_chat_response_handler(response, ctx):
                             (ctx.get('assistant_message') or {}).get('usage'), usage or {'incomplete': True}
                         )
                     finish_reason = choices[0].get('finish_reason') if choices else None
+                    rag_magic_ns = None
+                    rag_meta_ns = response_data.get('rag') if isinstance(response_data, dict) else None
+                    if isinstance(rag_meta_ns, dict) and rag_meta_ns.get('magic'):
+                        rag_magic_ns = rag_meta_ns.get('magic')
 
                     if save_to_chat:
                         await Chats.upsert_message_to_chat_by_id_and_message_id(
@@ -4240,7 +4244,16 @@ async def non_streaming_chat_response_handler(response, ctx):
                                 'role': 'assistant',
                                 'output': response_output,
                                 **({'usage': usage} if usage else {}),
+                                **({'magic': rag_magic_ns} if rag_magic_ns else {}),
                             },
+                        )
+
+                    if rag_magic_ns:
+                        await event_emitter(
+                            {
+                                'type': 'chat:message:magic',
+                                'data': {'magic': rag_magic_ns},
+                            }
                         )
 
                     await publish_chat_finished_event(request, user, metadata, title, content, response_output)
@@ -4676,6 +4689,7 @@ async def streaming_chat_response_handler(response, ctx):
 
             usage = normalize_usage((message or {}).get('usage') or {}) if existing_output else None
             finish_reason = None
+            rag_magic = None  # post-hoc Dana widgets from orchestrator rag.magic
             last_response_id = None
 
             def is_message_continuation() -> bool:
@@ -4818,6 +4832,7 @@ async def streaming_chat_response_handler(response, ctx):
                     nonlocal usage
                     nonlocal current_usage
                     nonlocal finish_reason
+                    nonlocal rag_magic
                     nonlocal output
                     nonlocal prior_output
                     nonlocal last_response_id
@@ -5141,6 +5156,11 @@ async def streaming_chat_response_handler(response, ctx):
 
                                     if choices[0].get('finish_reason'):
                                         finish_reason = choices[0]['finish_reason']
+
+                                    # Post-hoc Dana magic widgets (outside message body)
+                                    rag_meta = data.get('rag') if isinstance(data, dict) else None
+                                    if isinstance(rag_meta, dict) and rag_meta.get('magic'):
+                                        rag_magic = rag_meta.get('magic')
 
                                     delta = choices[0].get('delta', {})
                                     delta_type = 'content'
@@ -6526,7 +6546,16 @@ async def streaming_chat_response_handler(response, ctx):
                             'meta': {'response_ended_at': time.time()},
                             'output': current_output,
                             **({'usage': usage} if usage else {}),
+                            **({'magic': rag_magic} if rag_magic else {}),
                         },
+                    )
+
+                if rag_magic:
+                    await event_emitter(
+                        {
+                            'type': 'chat:message:magic',
+                            'data': {'magic': rag_magic},
+                        }
                     )
 
                 await clear_response_stream(request.app.state.redis, response_stream_task_id)

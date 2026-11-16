@@ -892,6 +892,7 @@
 									messageId={message.id}
 									content={message.content}
 									output={message.output}
+									magic={message.magic || []}
 									sources={message.sources}
 									floatingButtons={message?.done &&
 										!readOnly &&

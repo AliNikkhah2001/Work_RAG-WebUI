@@ -73,6 +73,46 @@ function magicPriority(token: string): number {
 	return MAGIC_PRIORITY[token] ?? 10;
 }
 
+/** Convert post-hoc ``rag.magic`` payload items into renderable segments. */
+export function segmentsFromMagicPayload(
+	items: Array<{ name?: string; params?: Record<string, unknown> }> | null | undefined,
+	defs: Record<string, MagicTokenDef> = {}
+): MagicSegment[] {
+	if (!items?.length) return [];
+	const resolved = getMagicDefs(defs);
+	const out: MagicSegment[] = [];
+	for (const item of items) {
+		const token = String(item?.name || '').trim();
+		if (!token || !resolved[token]) continue;
+		out.push({
+			type: 'magic',
+			token,
+			params: { ...(resolved[token].params || {}), ...(item.params || {}) },
+			renderer: resolved[token].renderer
+		});
+	}
+	return out;
+}
+
+/** Merge body-parsed MAGIC with post-hoc rag.magic (payload wins on same token). */
+export function mergeMagicSegments(
+	fromContent: MagicSegment[],
+	fromPayload: MagicSegment[]
+): MagicSegment[] {
+	if (!fromPayload.length) return fromContent;
+	if (!fromContent.length) return fromPayload;
+	const payloadTokens = new Set(
+		fromPayload.filter((s) => s.type === 'magic').map((s) => (s as Extract<MagicSegment, { type: 'magic' }>).token)
+	);
+	const kept = fromContent.filter(
+		(s) => s.type !== 'magic' || !payloadTokens.has((s as Extract<MagicSegment, { type: 'magic' }>).token)
+	);
+	// Keep text from content; append payload widgets after text blocks.
+	const text = kept.filter((s) => s.type === 'text');
+	const contentMagic = kept.filter((s) => s.type === 'magic');
+	return [...text, ...fromPayload, ...contentMagic];
+}
+
 /** Split assistant content into text + allowlisted magic widget segments. */
 export function parseMagicSegments(
 	content: string,

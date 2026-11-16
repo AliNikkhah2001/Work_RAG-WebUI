@@ -23,7 +23,12 @@
 	import StructuredOutputRenderer from './StructuredOutputRenderer.svelte';
 	import FloatingButtons from '../ContentRenderer/FloatingButtons.svelte';
 	import { createMessagesList, replaceOutsideCode } from '$lib/utils';
-	import { loadMagicCatalog, parseMagicSegments } from '$lib/dana/magic';
+	import {
+		loadMagicCatalog,
+		mergeMagicSegments,
+		parseMagicSegments,
+		segmentsFromMagicPayload
+	} from '$lib/dana/magic';
 	import MagicRenderer from '$lib/components/dana/magic/MagicRenderer.svelte';
 
 	/**
@@ -82,6 +87,8 @@
 	export let content;
 	/** @type {import('./structuredOutput').OutputItem[]} */
 	export let output = [];
+	/** Post-hoc Dana magic from ``rag.magic`` (outside message body). */
+	export let magic = [];
 
 	export let history;
 	export let messageId;
@@ -124,24 +131,32 @@
 	let magicSegments = [];
 	let magicCatalogReady = false;
 
+	function rebuildMagicSegments(defs = {}) {
+		const fromBody = parseMagicSegments(formatMessageContent(content ?? ''), defs);
+		const fromPayload = segmentsFromMagicPayload(magic, defs);
+		magicSegments = mergeMagicSegments(fromBody, fromPayload);
+	}
+
 	onMount(async () => {
 		// Builtin defs compile immediately; remote catalog only overlays extras.
 		magicCatalogReady = true;
-		magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), {});
+		rebuildMagicSegments({});
 		try {
 			const catalog = await loadMagicCatalog();
-			magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), catalog);
+			rebuildMagicSegments(catalog);
 		} catch (e) {
 			console.warn('Dana magic catalog failed', e);
 		}
 	});
 
 	$: if (magicCatalogReady) {
-		magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), {});
+		rebuildMagicSegments({});
 		loadMagicCatalog().then((catalog) => {
-			magicSegments = parseMagicSegments(formatMessageContent(content ?? ''), catalog);
+			rebuildMagicSegments(catalog);
 		});
 	}
+
+	$: magic, content, rebuildMagicSegments({});
 
 	const getSourceIds = (sources) => {
 		const result = [];
@@ -318,6 +333,7 @@
 			{chatId}
 			{messageId}
 			{output}
+			{magic}
 			{model}
 			{save}
 			{preview}
