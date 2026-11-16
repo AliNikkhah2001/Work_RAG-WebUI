@@ -7,9 +7,11 @@
 	import DataTable from './DataTable.svelte';
 	import CollapseList from './CollapseList.svelte';
 	import AnimatedLogo from './AnimatedLogo.svelte';
+	import ClarifyOptions from './ClarifyOptions.svelte';
 
 	export let renderer: string;
 	export let params: Record<string, unknown> = {};
+	export let onSelect: (text: string) => void = () => {};
 
 	const registry: Record<string, any> = {
 		BirthdayCake,
@@ -19,14 +21,19 @@
 		InfoBanner,
 		DataTable,
 		CollapseList,
-		AnimatedLogo
+		AnimatedLogo,
+		ClarifyOptions
 	};
 
 	$: Comp = registry[renderer];
 </script>
 
 {#if Comp}
-	<svelte:component this={Comp} {params} />
+	{#if renderer === 'ClarifyOptions'}
+		<svelte:component this={Comp} {params} {onSelect} />
+	{:else}
+		<svelte:component this={Comp} {params} />
+	{/if}
 {:else}
 	<!-- Unknown renderer: fail closed (show nothing interactive) -->
 	<code class="text-xs opacity-60">&lt;{renderer}&gt;</code>

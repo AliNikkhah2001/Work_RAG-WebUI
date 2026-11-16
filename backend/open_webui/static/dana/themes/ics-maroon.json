@@ -102,11 +102,13 @@
     }
   ],
   "magic_variants": {
-    "gauge": "arc",
+    "gauge": "ring",
+    "bands": "vertical",
     "timeline": "horizontal",
     "table": "cards",
     "list": "chips",
-    "logo": "maroon"
+    "logo": "maroon",
+    "clarify": "icons"
   },
   "component_tokens": {
     "input_radius": "1rem",

@@ -13,6 +13,11 @@ export async function loadMagicCatalog(): Promise<Record<string, MagicTokenDef>>
 	return catalog;
 }
 
+/** Reset cache (tests / hot-reload of catalog). */
+export function resetMagicCatalog(): void {
+	catalog = null;
+}
+
 const SIMPLE_RE = /<([A-Z][A-Z0-9_]*)>/g;
 const BLOCK_RE = /<<<MAGIC:([A-Z][A-Z0-9_]*)\s*([\s\S]*?)>>>/g;
 
@@ -22,8 +27,12 @@ const MAGIC_PRIORITY: Record<string, number> = {
 	COMPANY_TIMELINE: 80,
 	CREDIT_SCORE_BANDS: 60,
 	INFO_BANNER: 40,
-	BIRTHDAY: 20
+	BIRTHDAY: 20,
+	CLARIFY_OPTIONS: 15
 };
+
+/** Tokens allowed alongside the single winning visual (clarify chips). */
+const COMPANION_TOKENS = new Set(['CLARIFY_OPTIONS']);
 
 function safeParams(raw: string): Record<string, unknown> {
 	const trimmed = raw.trim();
@@ -77,17 +86,33 @@ export function parseMagicSegments(
 
 	marks.sort((a, b) => a.start - b.start);
 
-	// One magic widget per assistant reply — pick highest-priority mark.
+	// One visual magic widget per reply + optional companion clarify chips.
 	let keepIdx = -1;
+	const companions: number[] = [];
 	if (marks.length > 0) {
-		keepIdx = 0;
-		for (let i = 1; i < marks.length; i++) {
+		for (let i = 0; i < marks.length; i++) {
+			if (COMPANION_TOKENS.has(marks[i].token)) {
+				companions.push(i);
+				continue;
+			}
+			if (keepIdx < 0) {
+				keepIdx = i;
+				continue;
+			}
 			const keep = marks[keepIdx];
 			const cand = marks[i];
 			const kp = magicPriority(keep.token);
 			const cp = magicPriority(cand.token);
 			if (cp > kp || (cp === kp && cand.start < keep.start)) keepIdx = i;
 		}
+		// If only companions exist, keep the first companion as primary.
+		if (keepIdx < 0 && companions.length) keepIdx = companions[0];
+	}
+
+	const keepSet = new Set<number>();
+	if (keepIdx >= 0) keepSet.add(keepIdx);
+	for (const i of companions) {
+		if (i !== keepIdx) keepSet.add(i);
 	}
 
 	const segments: MagicSegment[] = [];
@@ -98,7 +123,7 @@ export function parseMagicSegments(
 		if (mark.start > cursor) {
 			segments.push({ type: 'text', value: content.slice(cursor, mark.start) });
 		}
-		if (i === keepIdx) {
+		if (keepSet.has(i)) {
 			segments.push({
 				type: 'magic',
 				token: mark.token,
