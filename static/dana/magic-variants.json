@@ -1,27 +1,9 @@
 {
-  "gauge": [
-    "ring",
-    "arc",
-    "hero"
-  ],
-  "timeline": [
-    "vertical",
-    "horizontal",
-    "compact"
-  ],
-  "table": [
-    "striped",
-    "cards",
-    "dense"
-  ],
-  "list": [
-    "accordion",
-    "grid",
-    "chips"
-  ],
-  "logo": [
-    "white",
-    "maroon",
-    "gauge"
-  ]
+  "gauge": ["ring", "arc", "hero"],
+  "bands": ["vertical", "horizontal"],
+  "timeline": ["vertical", "horizontal", "compact"],
+  "table": ["striped", "cards", "dense"],
+  "list": ["accordion", "grid", "chips"],
+  "logo": ["white", "maroon", "gauge"],
+  "clarify": ["icons"]
 }

@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { danaThemePack } from './theme';
 
-export type MagicKind = 'gauge' | 'timeline' | 'table' | 'list' | 'logo';
+export type MagicKind = 'gauge' | 'bands' | 'timeline' | 'table' | 'list' | 'logo' | 'clarify';
 
 /** Resolve magic skin: per-token params.variant > theme pack > DOM data attr > default. */
 export function resolveMagicVariant(

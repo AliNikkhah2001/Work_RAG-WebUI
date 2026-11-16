@@ -6,6 +6,7 @@ Live preview (local):
 
 - Themes gallery: http://127.0.0.1:13000/static/dana/design-gallery.html
 - Widgets: http://127.0.0.1:13000/static/dana/ux-preview.html
+- **Magic lab (animated gauges + clarify):** http://127.0.0.1:13000/static/dana/magic-lab.html
 - Quick switch: http://127.0.0.1:13000/?dana_theme=ics-maroon
 
 ## Themes
@@ -30,8 +31,9 @@ Assistant messages may emit allowlisted tokens. Unknown tokens are ignored (fail
 | Token | Renderer | Usage |
 | --- | --- | --- |
 | `BIRTHDAY` | `BirthdayCake` | `<BIRTHDAY>` |
-| `CREDIT_SCORE_BANDS` | `CreditScoreBands` | `<CREDIT_SCORE_BANDS>` or `<<<MAGIC:CREDIT_SCORE_BANDS {…}>>>` |
-| `CREDIT_SCORE_GAUGE` | `CreditScoreGauge` | `<<<MAGIC:CREDIT_SCORE_GAUGE {"score":720,"band":"خوب","variant":"ring"}>>>` |
+| `CREDIT_SCORE_BANDS` | `CreditScoreBands` | Gauge A ladder: `<<<MAGIC:CREDIT_SCORE_BANDS {"score":610,"variant":"vertical"}>>>` |
+| `CREDIT_SCORE_GAUGE` | `CreditScoreGauge` | Gauge B ring: `<<<MAGIC:CREDIT_SCORE_GAUGE {"score":610,"band":"خوب","variant":"ring"}>>>` |
+| `CLARIFY_OPTIONS` | `ClarifyOptions` | Clickable حقیقی/حقوقی/چک icons → fills composer |
 | `COMPANY_TIMELINE` | `CompanyTimeline` | `<<<MAGIC:COMPANY_TIMELINE {"items":[…],"variant":"vertical"}>>>` |
 | `INFO_BANNER` | `InfoBanner` | `<<<MAGIC:INFO_BANNER {"title":"اطلاعیه","body":"…"}>>>` |
 | `DATA_TABLE` | `DataTable` | `<<<MAGIC:DATA_TABLE {"variant":"striped",…}>>>` |
@@ -40,17 +42,28 @@ Assistant messages may emit allowlisted tokens. Unknown tokens are ignored (fail
 
 Catalog source: [`static/dana/magic-tokens.json`](static/dana/magic-tokens.json) · variants: [`static/dana/magic-variants.json`](static/dana/magic-variants.json)
 
-### CREDIT_SCORE_GAUGE
+### CREDIT_SCORE_GAUGE (B — ring)
 
-Variants: `ring` · `arc` · `hero`
+Solid white card (no glass). Semicircle red→green gradient, animated fill + count-up, tip dot.
+Variants: `ring` (default) · `arc` · `hero`
 
 ![CREDIT_SCORE_GAUGE](docs/dana/magic/CREDIT_SCORE_GAUGE.png)
 
-### CREDIT_SCORE_BANDS
+### CREDIT_SCORE_BANDS (A — ladder)
 
-Colored score-range pills with Persian digits; active band outlined.
+Solid vertical color ladder with sliding black needle (+ optional `horizontal` pills).
+Variants: `vertical` (default) · `horizontal`
 
 ![CREDIT_SCORE_BANDS](docs/dana/magic/CREDIT_SCORE_BANDS.png)
+
+### CLARIFY_OPTIONS
+
+Clickable 3D icons (حقیقی / حقوقی / چک / عمومی). Companion token — can appear alongside one visual gauge.
+Icons: `static/dana/brand/icons/magic/{person,legal,cheque,research}.png`
+
+```text
+<<<MAGIC:CLARIFY_OPTIONS {"title":"لطفاً نوع گزارش را انتخاب کنید"}>>>
+```
 
 ### COMPANY_TIMELINE
 

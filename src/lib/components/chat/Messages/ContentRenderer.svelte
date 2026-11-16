@@ -351,7 +351,11 @@
 		>
 			{#each magicSegments.length ? magicSegments : [{ type: 'text', value: formatMessageContent(content) }] as segment, sIdx}
 				{#if segment.type === 'magic'}
-					<MagicRenderer renderer={segment.renderer} params={segment.params} />
+					<MagicRenderer
+						renderer={segment.renderer}
+						params={segment.params}
+						onSelect={onSetInputText}
+					/>
 				{:else if segment.value}
 					<Markdown
 						id={`${id}-m${sIdx}`}

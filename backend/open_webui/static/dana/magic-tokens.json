@@ -6,28 +6,72 @@
   },
   "CREDIT_SCORE_BANDS": {
     "renderer": "CreditScoreBands",
-    "description": "Colored credit-score range tags with Persian digits",
+    "description": "Gauge A — vertical score ladder with sliding needle (variants: vertical | horizontal)",
     "paramsSchema": "credit_score_bands",
     "params": {
+      "score": 610,
+      "min": 0,
+      "max": 900,
+      "label": "سطح امتیاز",
+      "variant": "vertical",
       "bands": [
-        { "label": "ضعیف", "min": 0, "max": 499, "color": "#FF5252" },
-        { "label": "متوسط", "min": 500, "max": 649, "color": "#FFAB00" },
-        { "label": "خوب", "min": 650, "max": 749, "color": "#FFD600" },
-        { "label": "عالی", "min": 750, "max": 900, "color": "#00C853" }
+        { "label": "ضعیف", "min": 0, "max": 299, "color": "#E53935" },
+        { "label": "متوسط", "min": 300, "max": 499, "color": "#FB8C00" },
+        { "label": "قابل قبول", "min": 500, "max": 649, "color": "#FDD835" },
+        { "label": "خوب", "min": 650, "max": 749, "color": "#43A047" },
+        { "label": "عالی", "min": 750, "max": 900, "color": "#26C6DA" }
       ]
     }
   },
   "CREDIT_SCORE_GAUGE": {
     "renderer": "CreditScoreGauge",
-    "description": "Credit-score gauge (variants: ring | arc | hero)",
+    "description": "Gauge B — animated semicircle ring (variants: ring | arc | hero)",
     "paramsSchema": "credit_score_gauge",
     "params": {
-      "score": 720,
+      "score": 610,
       "min": 0,
       "max": 900,
       "label": "امتیاز اعتباری",
       "band": "خوب",
       "variant": "ring"
+    }
+  },
+  "CLARIFY_OPTIONS": {
+    "renderer": "ClarifyOptions",
+    "description": "Clickable clarification icons (حقیقی / حقوقی / چک / …) that fill the composer",
+    "paramsSchema": "clarify_options",
+    "params": {
+      "title": "لطفاً نوع گزارش را انتخاب کنید",
+      "items": [
+        {
+          "id": "person",
+          "label": "حقیقی",
+          "prompt": "گزارش تسهیلات اشخاص حقیقی",
+          "icon": "person",
+          "subspace": "facilities_person"
+        },
+        {
+          "id": "legal",
+          "label": "حقوقی",
+          "prompt": "گزارش تسهیلات اشخاص حقوقی / شرکت‌ها",
+          "icon": "legal",
+          "subspace": "facilities_company"
+        },
+        {
+          "id": "cheque",
+          "label": "چک",
+          "prompt": "گزارش چک",
+          "icon": "cheque",
+          "subspace": "cheque"
+        },
+        {
+          "id": "research",
+          "label": "عمومی",
+          "prompt": "سؤال عمومی درباره اعتبارسنجی",
+          "icon": "research",
+          "subspace": "general"
+        }
+      ]
     }
   },
   "COMPANY_TIMELINE": {
