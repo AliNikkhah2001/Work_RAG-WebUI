@@ -334,6 +334,7 @@
 			{onSave}
 			onUpdate={markdownUpdateHandler}
 			onPreview={previewHandler}
+			onSetInputText={onSetInputText}
 		/>
 	{:else if $settings?.renderMarkdownInAssistantMessages ?? true}
 		<div

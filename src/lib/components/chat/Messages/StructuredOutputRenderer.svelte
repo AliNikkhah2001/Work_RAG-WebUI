@@ -12,6 +12,9 @@
 	import Markdown from './Markdown.svelte';
 	import ConsecutiveDetailsGroup from './Markdown/ConsecutiveDetailsGroup.svelte';
 	import ContextCompactionLabel from './ContextCompactionLabel.svelte';
+	import MagicRenderer from '$lib/components/dana/magic/MagicRenderer.svelte';
+	import { loadMagicCatalog, parseMagicSegments } from '$lib/dana/magic';
+	import type { MagicSegment } from '$lib/dana/types';
 	import {
 		buildOutputDisplayItems,
 		type OutputDetailToken,
@@ -42,11 +45,34 @@
 	export let onUpdate: any = () => {};
 	export let onPreview: any = () => {};
 	export let onToolCallResolved: any = () => {};
+	export let onSetInputText: (text: string) => void = () => {};
 
 	const i18n = getContext<typeof import('$lib/i18n').default>('i18n');
 	const getDetailTitle = (detailToken: OutputDetailToken): any => detailToken.summary;
 	const getDetailAttributes = (detailToken: OutputDetailToken): any => detailToken.attributes;
 	let resolvingCallId = '';
+
+	/** @type {Record<string, MagicSegment[]>} */
+	let magicByItem: Record<string, MagicSegment[]> = {};
+
+	$: displayItems = buildOutputDisplayItems(output) as OutputDisplayItem[];
+
+	async function refreshMagicSegments(items: OutputDisplayItem[]) {
+		try {
+			const catalog = await loadMagicCatalog();
+			const next: Record<string, MagicSegment[]> = {};
+			for (const item of items) {
+				if (item.type !== 'message' || !item.text) continue;
+				next[item.id] = parseMagicSegments(formatMessageContent(item.text), catalog);
+			}
+			magicByItem = next;
+		} catch (e) {
+			console.warn('Dana magic catalog failed (structured output)', e);
+			magicByItem = {};
+		}
+	}
+
+	$: displayItems, formatMessageContent, void refreshMagicSegments(displayItems);
 
 	const resolveToolCall = async (callId: string, approved: boolean) => {
 		if (!chatId || !messageId || !callId || resolvingCallId) {
@@ -73,8 +99,6 @@
 	$: detailButtonClassName = `py-0.5 ${
 		compactPreview ? 'text-xs' : 'text-[0.90625rem]'
 	} text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition`;
-
-	$: displayItems = buildOutputDisplayItems(output) as OutputDisplayItem[];
 </script>
 
 {#each displayItems as displayItem (displayItem.id)}
@@ -93,27 +117,39 @@
 					toolbar_id: commentToolbarId
 				}}
 			>
-				<Markdown
-					id={`${id}-${displayItem.id}`}
-					{chatId}
-					{messageId}
-					content={formatMessageContent(displayItem.text)}
-					{model}
-					{save}
-					{preview}
-					{compactPreview}
-					{done}
-					{allowEmbeds}
-					{editCodeBlock}
-					{topPadding}
-					{sourceIds}
-					{onSourceClick}
-					{onTaskClick}
-					{onToolCallResolved}
-					{onSave}
-					{onUpdate}
-					{onPreview}
-				/>
+				{#each (magicByItem[displayItem.id]?.length
+					? magicByItem[displayItem.id]
+					: [{ type: 'text', value: formatMessageContent(displayItem.text) }]) as segment, sIdx}
+					{#if segment.type === 'magic'}
+						<MagicRenderer
+							renderer={segment.renderer}
+							params={segment.params}
+							onSelect={onSetInputText}
+						/>
+					{:else if segment.value}
+						<Markdown
+							id={`${id}-${displayItem.id}-m${sIdx}`}
+							{chatId}
+							{messageId}
+							content={segment.value}
+							{model}
+							{save}
+							{preview}
+							{compactPreview}
+							{done}
+							{allowEmbeds}
+							{editCodeBlock}
+							{topPadding}
+							{sourceIds}
+							{onSourceClick}
+							{onTaskClick}
+							{onToolCallResolved}
+							{onSave}
+							{onUpdate}
+							{onPreview}
+						/>
+					{/if}
+				{/each}
 			</div>
 		{:else}
 			<div
