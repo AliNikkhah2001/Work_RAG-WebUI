@@ -8,6 +8,8 @@
 	import CollapseList from './CollapseList.svelte';
 	import AnimatedLogo from './AnimatedLogo.svelte';
 	import ClarifyOptions from './ClarifyOptions.svelte';
+	import ShareholdersRing from './ShareholdersRing.svelte';
+	import CreditorsGrid from './CreditorsGrid.svelte';
 
 	export let renderer: string;
 	export let params: Record<string, unknown> = {};
@@ -22,7 +24,9 @@
 		DataTable,
 		CollapseList,
 		AnimatedLogo,
-		ClarifyOptions
+		ClarifyOptions,
+		ShareholdersRing,
+		CreditorsGrid
 	};
 
 	$: Comp = registry[renderer];

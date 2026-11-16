@@ -6,7 +6,7 @@ Live preview (local):
 
 - Themes gallery: http://127.0.0.1:13000/static/dana/design-gallery.html
 - Widgets: http://127.0.0.1:13000/static/dana/ux-preview.html
-- **Magic lab (animated gauges + clarify):** http://127.0.0.1:13000/static/dana/magic-lab.html
+- **Magic lab (gauges + ICS cards + timeline + shareholders + creditors):** http://127.0.0.1:13000/static/dana/magic-lab.html
 - Quick switch: http://127.0.0.1:13000/?dana_theme=ics-maroon
 
 ## Themes
@@ -33,8 +33,10 @@ Assistant messages may emit allowlisted tokens. Unknown tokens are ignored (fail
 | `BIRTHDAY` | `BirthdayCake` | `<BIRTHDAY>` |
 | `CREDIT_SCORE_BANDS` | `CreditScoreBands` | Gauge A ladder: `<<<MAGIC:CREDIT_SCORE_BANDS {"score":610,"variant":"vertical"}>>>` |
 | `CREDIT_SCORE_GAUGE` | `CreditScoreGauge` | Gauge B ring: `<<<MAGIC:CREDIT_SCORE_GAUGE {"score":610,"band":"خوب","variant":"ring"}>>>` |
-| `CLARIFY_OPTIONS` | `ClarifyOptions` | Clickable حقیقی/حقوقی/چک icons → fills composer |
-| `COMPANY_TIMELINE` | `CompanyTimeline` | `<<<MAGIC:COMPANY_TIMELINE {"items":[…],"variant":"vertical"}>>>` |
+| `CLARIFY_OPTIONS` | `ClarifyOptions` | ICS white report cards (حقیقی/حقوقی/چک) → fills composer |
+| `COMPANY_TIMELINE` | `CompanyTimeline` | Animated ICS history: `<<<MAGIC:COMPANY_TIMELINE {"variant":"vertical"}>>>` |
+| `SHAREHOLDERS` | `ShareholdersRing` | Donut + % card: `<<<MAGIC:SHAREHOLDERS {}>>>` |
+| `CREDITORS` | `CreditorsGrid` | Multi-tab providers: `<<<MAGIC:CREDITORS {}>>>` |
 | `INFO_BANNER` | `InfoBanner` | `<<<MAGIC:INFO_BANNER {"title":"اطلاعیه","body":"…"}>>>` |
 | `DATA_TABLE` | `DataTable` | `<<<MAGIC:DATA_TABLE {"variant":"striped",…}>>>` |
 | `COLLAPSE_LIST` | `CollapseList` | `<<<MAGIC:COLLAPSE_LIST {"variant":"accordion",…}>>>` |
@@ -58,8 +60,8 @@ Variants: `vertical` (default) · `horizontal`
 
 ### CLARIFY_OPTIONS
 
-Clickable 3D icons (حقیقی / حقوقی / چک / عمومی). Companion token — can appear alongside one visual gauge.
-Icons: `static/dana/brand/icons/magic/{person,legal,cheque,research}.png`
+ICS24 white report cards (حقیقی / حقوقی / چک) with title, subtitle, and «توضیحات بیشتر». Companion token — can appear alongside one visual gauge.
+Assets: `static/dana/brand/icons/magic/ics24/clarify/{person,legal,cheque}.png`
 
 ```text
 <<<MAGIC:CLARIFY_OPTIONS {"title":"لطفاً نوع گزارش را انتخاب کنید"}>>>
@@ -67,9 +69,29 @@ Icons: `static/dana/brand/icons/magic/{person,legal,cheque,research}.png`
 
 ### COMPANY_TIMELINE
 
-Variants: `vertical` · `horizontal` · `compact`
+Animated zigzag history (۱۳۸۵→۱۴۰۳). Variants: `vertical` · `horizontal` · `compact`. Default items match ics24.ir about/history.
+
+```text
+<<<MAGIC:COMPANY_TIMELINE {"variant":"vertical"}>>>
+```
 
 ![COMPANY_TIMELINE](docs/dana/magic/COMPANY_TIMELINE.png)
+
+### SHAREHOLDERS
+
+Animated donut + percent card (autoplay). Catalog: `static/dana/magic-data/shareholders.json` (logos under `brand/icons/magic/ics24/shareholders/`).
+
+```text
+<<<MAGIC:SHAREHOLDERS {}>>>
+```
+
+### CREDITORS
+
+Multi-tab grid (بانک ها / سازمان ها / بیمه ها / لیزینگ ها / لندتک ها). Catalog: `static/dana/magic-data/creditors.json`.
+
+```text
+<<<MAGIC:CREDITORS {}>>>
+```
 
 ### INFO_BANNER
 

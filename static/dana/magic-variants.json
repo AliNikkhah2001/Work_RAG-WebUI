@@ -5,5 +5,7 @@
   "table": ["striped", "cards", "dense"],
   "list": ["accordion", "grid", "chips"],
   "logo": ["white", "maroon", "gauge"],
-  "clarify": ["icons"]
+  "clarify": ["cards", "icons"],
+  "shareholders": ["ring"],
+  "creditors": ["tabs"]
 }

@@ -38,72 +38,105 @@
   },
   "CLARIFY_OPTIONS": {
     "renderer": "ClarifyOptions",
-    "description": "Clickable clarification icons (حقیقی / حقوقی / چک / …) that fill the composer",
+    "description": "ICS white report cards (حقیقی / حقوقی / چک) that fill the composer",
     "paramsSchema": "clarify_options",
     "params": {
       "title": "لطفاً نوع گزارش را انتخاب کنید",
       "items": [
         {
           "id": "person",
-          "label": "حقیقی",
+          "label": "گزارش اعتبارسنجی اشخاص حقیقی",
+          "subtitle": "اعتبارسنجی وضعیت مالی و اعتباری افراد حقیقی",
           "prompt": "گزارش تسهیلات اشخاص حقیقی",
           "icon": "person",
           "subspace": "facilities_person"
         },
         {
           "id": "legal",
-          "label": "حقوقی",
+          "label": "گزارش اعتبارسنجی اشخاص حقوقی",
+          "subtitle": "اعتبارسنجی وضعیت مالی اشخاص حقوقی",
           "prompt": "گزارش تسهیلات اشخاص حقوقی / شرکت‌ها",
           "icon": "legal",
           "subspace": "facilities_company"
         },
         {
           "id": "cheque",
-          "label": "چک",
+          "label": "گزارش اعتبارسنجی چک",
+          "subtitle": "ارائه گزارش اعتبارسنجی از سوابق چک افراد",
           "prompt": "گزارش چک",
           "icon": "cheque",
           "subspace": "cheque"
-        },
-        {
-          "id": "research",
-          "label": "عمومی",
-          "prompt": "سؤال عمومی درباره اعتبارسنجی",
-          "icon": "research",
-          "subspace": "general"
         }
       ]
     }
   },
   "COMPANY_TIMELINE": {
     "renderer": "CompanyTimeline",
-    "description": "Company history timeline (variants: vertical | horizontal | compact)",
+    "description": "Animated ICS company history timeline (variants: vertical | horizontal | compact)",
     "paramsSchema": "company_timeline",
     "params": {
       "title": "تاریخچه شرکت اعتبارسنجی ایران",
-      "activeIndex": 3,
+      "activeIndex": 7,
       "variant": "vertical",
       "items": [
         {
-          "date": "1385",
-          "title": "تأسیس",
-          "description": "آغاز فعالیت شرکت اعتبارسنجی ایران."
+          "date": "۱۳۸۵",
+          "title": "تأسیس شرکت",
+          "description": "شروع فرایند اعتبار سنجی در ایران و تاسیس شرکت اعتبار سنجی ایران"
         },
         {
-          "date": "1390",
-          "title": "گسترش گزارش اعتباری",
-          "description": "توسعه پوشش گزارش‌های اعتباری اشخاص حقیقی و حقوقی."
+          "date": "۱۳۸۸",
+          "title": "الزام بانک‌ها",
+          "description": "آغاز فرآیند اعتبار سنجی تسهیلات گیرندگان صدور بخشنامه بانک مرکزی و الزام بانک‌ها به استفاده از گزارشات شرکت"
         },
         {
-          "date": "1396",
-          "title": "سامانه‌های آنلاین",
-          "description": "ارائه خدمات آنلاین استعلام و گزارش به نهادهای مالی."
+          "date": "۱۳۸۹",
+          "title": "آیین‌نامه سنجش اعتبار",
+          "description": "تصویب آیین نامه نظام سنجش اعتبار"
         },
         {
-          "date": "1403",
-          "title": "دستیار دانا",
-          "description": "راه‌اندازی دستیار هوشمند فارسی برای پاسخ‌گویی به پرسش‌های اعتباری."
+          "date": "۱۳۹۴",
+          "title": "اولین مدل امتیاز",
+          "description": "ارائه اولین مدل امتیاز اعتباری در کشور عقد قرارداد با نمایندگان فروش جهت توسعه بازار اعتبارسنجی"
+        },
+        {
+          "date": "۱۳۹۸",
+          "title": "بومی‌سازی سامانه",
+          "description": "شروع پروژه بومی سازی سامانه اعتبار سنجی"
+        },
+        {
+          "date": "۱۴۰۰",
+          "title": "کالیبراسیون و BNPL",
+          "description": "کالیبراسیون و به روزرسانی مدل امتیاز اعتباری راه اندازی سامانه رسیدگی به اعتراضات و واحد ارتباط با مشتریان شروع همکاری با شرکت‌های ارائه دهنده BNPL"
+        },
+        {
+          "date": "۱۴۰۲",
+          "title": "مدل‌های ویژه بانک‌ها",
+          "description": "شروع همکاری با بانک‌ها جهت ساخت مدل امتیاز اعتباری ویژه بانک‌های صادرات، رفاه، تجارت و مهر"
+        },
+        {
+          "date": "۱۴۰۳",
+          "title": "مدل هوش مصنوعی",
+          "description": "راه اندازی مدل جدید مبتنی بر هوش مصنوعی با جامعیت و کارایی بالاتر"
         }
       ]
+    }
+  },
+  "SHAREHOLDERS": {
+    "renderer": "ShareholdersRing",
+    "description": "Animated shareholders donut + percent card (loads /static/dana/magic-data/shareholders.json)",
+    "paramsSchema": "shareholders",
+    "params": {
+      "title": "سهامداران شرکت اعتبارسنجی ایران",
+      "autoplay": true
+    }
+  },
+  "CREDITORS": {
+    "renderer": "CreditorsGrid",
+    "description": "Multi-tab data providers grid — بانک‌ها / سازمان‌ها / بیمه‌ها / لیزینگ‌ها / لندتک‌ها",
+    "paramsSchema": "creditors",
+    "params": {
+      "title": "تأمین‌کنندگان داده‌های شرکت اعتبارسنجی ایران"
     }
   },
   "INFO_BANNER": {

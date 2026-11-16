@@ -2,8 +2,10 @@
 	type ClarifyItem = {
 		id?: string;
 		label: string;
+		subtitle?: string;
 		prompt?: string;
 		icon?: string;
+		moreLabel?: string;
 		subspace?: string;
 	};
 
@@ -12,35 +14,32 @@
 	export let onSelect: (text: string) => void = () => {};
 
 	const ICON_BASE = '/static/dana/brand/icons/magic';
+	const ICS_CLARIFY = '/static/dana/brand/icons/magic/ics24/clarify';
 
 	const DEFAULT_ITEMS: ClarifyItem[] = [
 		{
 			id: 'person',
-			label: 'حقیقی',
+			label: 'گزارش اعتبارسنجی اشخاص حقیقی',
+			subtitle: 'اعتبارسنجی وضعیت مالی و اعتباری افراد حقیقی',
 			prompt: 'گزارش تسهیلات اشخاص حقیقی',
 			icon: 'person',
 			subspace: 'facilities_person'
 		},
 		{
 			id: 'legal',
-			label: 'حقوقی',
+			label: 'گزارش اعتبارسنجی اشخاص حقوقی',
+			subtitle: 'اعتبارسنجی وضعیت مالی اشخاص حقوقی',
 			prompt: 'گزارش تسهیلات اشخاص حقوقی / شرکت‌ها',
 			icon: 'legal',
 			subspace: 'facilities_company'
 		},
 		{
 			id: 'cheque',
-			label: 'چک',
+			label: 'گزارش اعتبارسنجی چک',
+			subtitle: 'ارائه گزارش اعتبارسنجی از سوابق چک افراد',
 			prompt: 'گزارش چک',
 			icon: 'cheque',
 			subspace: 'cheque'
-		},
-		{
-			id: 'research',
-			label: 'عمومی',
-			prompt: 'سؤال عمومی درباره اعتبارسنجی',
-			icon: 'research',
-			subspace: 'general'
 		}
 	];
 
@@ -53,6 +52,9 @@
 
 	function iconSrc(item: ClarifyItem): string {
 		const key = (item.icon || item.id || 'search').replace(/[^a-z0-9_-]/gi, '');
+		if (key === 'person' || key === 'legal' || key === 'cheque') {
+			return `${ICS_CLARIFY}/${key}.png`;
+		}
 		return `${ICON_BASE}/${key}.png`;
 	}
 
@@ -63,7 +65,7 @@
 	}
 </script>
 
-<div class="dana-magic-root dana-clarify" dir="rtl" data-variant="icons">
+<div class="dana-magic-root dana-clarify dana-clarify--ics" dir="rtl" data-variant="cards">
 	{#if title}
 		<p class="dana-clarify__title">{title}</p>
 	{/if}
@@ -76,9 +78,13 @@
 				aria-label={item.label}
 			>
 				<span class="dana-clarify__icon-wrap">
-					<img class="dana-clarify__icon" src={iconSrc(item)} alt="" width="56" height="56" />
+					<img class="dana-clarify__icon" src={iconSrc(item)} alt="" width="120" height="120" />
 				</span>
 				<span class="dana-clarify__label">{item.label}</span>
+				{#if item.subtitle}
+					<span class="dana-clarify__subtitle">{item.subtitle}</span>
+				{/if}
+				<span class="dana-clarify__more">{item.moreLabel || 'توضیحات بیشتر'}</span>
 			</button>
 		{/each}
 	</div>

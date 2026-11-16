@@ -27,7 +27,7 @@
 				background: #f4f4f5;
 			}
 			.shell {
-				max-width: 820px;
+				max-width: 920px;
 				margin: 0 auto;
 				padding: 1.25rem 1rem 3rem;
 			}
@@ -131,16 +131,6 @@
 				opacity: 0.55;
 				margin: 1.25rem 0 0.4rem;
 			}
-			.grid-2 {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 0.85rem;
-			}
-			@media (max-width: 720px) {
-				.grid-2 {
-					grid-template-columns: 1fr;
-				}
-			}
 		</style>
 	</head>
 	<body>
@@ -149,28 +139,35 @@
 				<img src="/static/dana/brand/icons/dana-app-icon.png" alt="Dana" />
 				<div>
 					<h1>آزمایش ویجت‌های جادویی دانا</h1>
-					<p>گیج A (نردبان) · گیج B (حلقه) · گزینه‌های شفاف‌سازی — بدون شیشه</p>
+					<p>گیج · کارت‌های ICS · تاریخچه · سهامداران · تأمین‌کنندگان</p>
 				</div>
 			</header>
 
 			<div class="toolbar">
-				<button type="button" data-demo="a">نمونه گیج A · ۶۱۰</button>
-				<button type="button" data-demo="b">نمونه گیج B · ۷۲۰</button>
+				<button type="button" data-demo="a">گیج A</button>
+				<button type="button" data-demo="b">گیج B</button>
 				<button type="button" data-demo="clarify">شفاف‌سازی</button>
+				<button type="button" data-demo="timeline">تاریخچه</button>
+				<button type="button" data-demo="shareholders">سهامداران</button>
+				<button type="button" data-demo="creditors">تأمین‌کنندگان</button>
 				<button type="button" data-demo="pair">گیج + شفاف‌سازی</button>
-				<button type="button" id="replay">پخش دوباره انیمیشن</button>
+				<button type="button" id="replay">پخش دوباره</button>
 			</div>
 
-			<p class="snap">Gauge A — نردبان عمودی با عقربه</p>
+			<p class="snap">Gauge A — نردبان</p>
 			<section class="bubble" id="mount-a"></section>
-
-			<p class="snap">Gauge B — حلقه نیم‌دایره</p>
+			<p class="snap">Gauge B — حلقه</p>
 			<section class="bubble" id="mount-b"></section>
-
-			<p class="snap">شفاف‌سازی — حقیقی / حقوقی / چک</p>
+			<p class="snap">شفاف‌سازی — کارت‌های ICS</p>
 			<section class="bubble" id="mount-c"></section>
+			<p class="snap">تاریخچه شرکت — خط زمان متحرک</p>
+			<section class="bubble" id="mount-t"></section>
+			<p class="snap">سهامداران — دونات</p>
+			<section class="bubble" id="mount-s"></section>
+			<p class="snap">تأمین‌کنندگان — تب‌ها</p>
+			<section class="bubble" id="mount-r"></section>
 
-			<p class="snap">نمونه توکن‌های نمونه (برای بک‌اند بعدی)</p>
+			<p class="snap">نمونه توکن</p>
 			<section class="bubble">
 				<p>مدل می‌تواند این توکن‌ها را در پاسخ بنویسد؛ فرانت آن‌ها را به ویجت تبدیل می‌کند.</p>
 				<pre class="token" id="token-out"></pre>
@@ -196,10 +193,35 @@
 			];
 
 			const CLARIFY = [
-				{ id: "person", label: "حقیقی", prompt: "گزارش تسهیلات اشخاص حقیقی", icon: "person" },
-				{ id: "legal", label: "حقوقی", prompt: "گزارش تسهیلات اشخاص حقوقی / شرکت‌ها", icon: "legal" },
-				{ id: "cheque", label: "چک", prompt: "گزارش چک", icon: "cheque" },
-				{ id: "research", label: "عمومی", prompt: "سؤال عمومی درباره اعتبارسنجی", icon: "research" }
+				{
+					id: "person",
+					label: "گزارش اعتبارسنجی اشخاص حقیقی",
+					subtitle: "اعتبارسنجی وضعیت مالی و اعتباری افراد حقیقی",
+					prompt: "گزارش تسهیلات اشخاص حقیقی"
+				},
+				{
+					id: "legal",
+					label: "گزارش اعتبارسنجی اشخاص حقوقی",
+					subtitle: "اعتبارسنجی وضعیت مالی اشخاص حقوقی",
+					prompt: "گزارش تسهیلات اشخاص حقوقی / شرکت‌ها"
+				},
+				{
+					id: "cheque",
+					label: "گزارش اعتبارسنجی چک",
+					subtitle: "ارائه گزارش اعتبارسنجی از سوابق چک افراد",
+					prompt: "گزارش چک"
+				}
+			];
+
+			const TIMELINE = [
+				{ date: "۱۳۸۵", title: "تأسیس شرکت", description: "شروع فرایند اعتبار سنجی در ایران و تاسیس شرکت اعتبار سنجی ایران" },
+				{ date: "۱۳۸۸", title: "الزام بانک‌ها", description: "آغاز فرآیند اعتبار سنجی تسهیلات گیرندگان صدور بخشنامه بانک مرکزی و الزام بانک‌ها به استفاده از گزارشات شرکت" },
+				{ date: "۱۳۸۹", title: "آیین‌نامه سنجش اعتبار", description: "تصویب آیین نامه نظام سنجش اعتبار" },
+				{ date: "۱۳۹۴", title: "اولین مدل امتیاز", description: "ارائه اولین مدل امتیاز اعتباری در کشور عقد قرارداد با نمایندگان فروش جهت توسعه بازار اعتبارسنجی" },
+				{ date: "۱۳۹۸", title: "بومی‌سازی سامانه", description: "شروع پروژه بومی سازی سامانه اعتبار سنجی" },
+				{ date: "۱۴۰۰", title: "کالیبراسیون و BNPL", description: "کالیبراسیون و به روزرسانی مدل امتیاز اعتباری راه اندازی سامانه رسیدگی به اعتراضات و واحد ارتباط با مشتریان شروع همکاری با شرکت‌های ارائه دهنده BNPL" },
+				{ date: "۱۴۰۲", title: "مدل‌های ویژه بانک‌ها", description: "شروع همکاری با بانک‌ها جهت ساخت مدل امتیاز اعتباری ویژه بانک‌های صادرات، رفاه، تجارت و مهر" },
+				{ date: "۱۴۰۳", title: "مدل هوش مصنوعی", description: "راه اندازی مدل جدید مبتنی بر هوش مصنوعی با جامعیت و کارایی بالاتر" }
 			];
 
 			const composer = document.getElementById("composer");
@@ -319,16 +341,18 @@
 			function renderClarify(el) {
 				el.innerHTML = `
 					<p>سؤال شما مبهم است. یکی از گزینه‌ها را انتخاب کنید:</p>
-					<div class="dana-magic-root dana-clarify" dir="rtl">
+					<div class="dana-magic-root dana-clarify dana-clarify--ics" dir="rtl">
 						<p class="dana-clarify__title">لطفاً نوع گزارش را انتخاب کنید</p>
 						<div class="dana-clarify__grid" role="group">
 							${CLARIFY.map(
 								(item) => `
 								<button type="button" class="dana-clarify__card" data-prompt="${item.prompt}">
 									<span class="dana-clarify__icon-wrap">
-										<img class="dana-clarify__icon" src="/static/dana/brand/icons/magic/${item.icon}.png" alt="" width="56" height="56"/>
+										<img class="dana-clarify__icon" src="/static/dana/brand/icons/magic/ics24/clarify/${item.id}.png" alt="" width="120" height="120"/>
 									</span>
 									<span class="dana-clarify__label">${item.label}</span>
+									<span class="dana-clarify__subtitle">${item.subtitle}</span>
+									<span class="dana-clarify__more">توضیحات بیشتر</span>
 								</button>`
 							).join("")}
 						</div>
@@ -341,11 +365,164 @@
 				});
 			}
 
+			function renderTimeline(el) {
+				el.innerHTML = `
+					<p>تاریخچه شرکت اعتبارسنجی ایران:</p>
+					<div class="dana-magic-root dana-timeline dana-timeline--vertical dana-timeline--solid" dir="rtl">
+						<h3 class="dana-timeline__title">تاریخچه شرکت اعتبارسنجی ایران</h3>
+						<div class="dana-timeline__spine" style="--line:0%"></div>
+						<ol class="dana-timeline__zigzag">
+							${TIMELINE.map(
+								(item, i) => `
+								<li class="dana-timeline__zitem dana-timeline__zitem--${i % 2 ? "end" : "start"}" style="--i:${i}">
+									<span class="dana-timeline__year">${item.date}</span>
+									<div class="dana-timeline__card">
+										<p class="dana-timeline__item-title">${item.title}</p>
+										<p class="dana-timeline__desc">${item.description}</p>
+									</div>
+								</li>`
+							).join("")}
+						</ol>
+					</div>`;
+				const spine = el.querySelector(".dana-timeline__spine");
+				const items = [...el.querySelectorAll(".dana-timeline__zitem")];
+				animate(0, 100, 1800, (v) => {
+					spine.style.setProperty("--line", v + "%");
+					const n = Math.min(items.length, Math.ceil((items.length * v) / 100));
+					items.forEach((li, i) => li.classList.toggle("is-on", i < n));
+				});
+			}
+
+			async function renderShareholders(el) {
+				el.innerHTML = `<p>سهامداران:</p><div class="dana-magic-root dana-holders" dir="rtl"><p class="dana-holders__empty">بارگذاری…</p></div>`;
+				const res = await fetch("/static/dana/magic-data/shareholders.json");
+				const data = await res.json();
+				const items = data.items || [];
+				let active = 0;
+				const ACCENT = "#C48A9A";
+				const MUTED = "#D9D9D9";
+				const total = items.reduce((s, h) => s + h.percent, 0) || 100;
+
+				function slices() {
+					const r = 42,
+						cx = 50,
+						cy = 50;
+					let angle = -Math.PI / 2;
+					return items.map((h, i) => {
+						const sweep = (h.percent / total) * Math.PI * 2;
+						const a0 = angle;
+						const a1 = angle + Math.max(sweep, 0.01);
+						const x0 = cx + r * Math.cos(a0);
+						const y0 = cy + r * Math.sin(a0);
+						const x1 = cx + r * Math.cos(a1);
+						const y1 = cy + r * Math.sin(a1);
+						const large = sweep > Math.PI ? 1 : 0;
+						const d = `M ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1}`;
+						angle = a1;
+						return { d, color: i === active ? ACCENT : MUTED, i };
+					});
+				}
+
+				function paint() {
+					const h = items[active];
+					el.innerHTML = `
+						<p>سهامداران شرکت اعتبارسنجی ایران:</p>
+						<div class="dana-magic-root dana-holders dana-holders--solid" dir="rtl">
+							<h3 class="dana-holders__title">${data.title || "سهامداران"}</h3>
+							<div class="dana-holders__row">
+								<div class="dana-holders__chart">
+									<svg viewBox="0 0 100 100" class="dana-holders__svg">${slices()
+										.map(
+											(s) =>
+												`<path data-i="${s.i}" d="${s.d}" fill="none" stroke="${s.color}" stroke-width="14" class="dana-holders__seg${s.i === active ? " is-active" : ""}"/>`
+										)
+										.join("")}</svg>
+									<div class="dana-holders__logo-wrap"><img class="dana-holders__logo" src="${h.logo}" alt="${h.name}"/></div>
+								</div>
+								<button type="button" class="dana-holders__card" id="holders-next">
+									<span class="dana-holders__name">${h.name}</span>
+									<span class="dana-holders__pct tabular-nums" id="holders-pct">${faNumber(Math.round(h.percent))} %</span>
+								</button>
+							</div>
+							<div class="dana-holders__dots">${items
+								.map(
+									(_, i) =>
+										`<button type="button" class="dana-holders__dot${i === active ? " is-active" : ""}" data-i="${i}"></button>`
+								)
+								.join("")}</div>
+						</div>`;
+					el.querySelectorAll("[data-i]").forEach((btn) => {
+						btn.addEventListener("click", () => {
+							active = Number(btn.getAttribute("data-i"));
+							paint();
+						});
+					});
+					el.querySelector("#holders-next")?.addEventListener("click", () => {
+						active = (active + 1) % items.length;
+						paint();
+					});
+				}
+				paint();
+			}
+
+			async function renderCreditors(el) {
+				el.innerHTML = `<p>تأمین‌کنندگان:</p><div class="dana-magic-root dana-creditors"><p class="dana-creditors__empty">بارگذاری…</p></div>`;
+				try {
+					const res = await fetch("/static/dana/magic-data/creditors.json");
+					if (!res.ok) throw new Error("creditors " + res.status);
+					const data = await res.json();
+					const tabs = data.tabs || [];
+					const groups = data.groups || {};
+					let active = tabs[0]?.id || "banks";
+
+					function paint() {
+						const items = groups[active] || [];
+						el.innerHTML = `
+							<p>تأمین‌کنندگان داده‌ها:</p>
+							<div class="dana-magic-root dana-creditors dana-creditors--solid" dir="rtl">
+								<h3 class="dana-creditors__title">${data.title || ""}</h3>
+								<div class="dana-creditors__tabs" role="tablist">
+									${tabs
+										.map(
+											(t) =>
+												`<button type="button" class="dana-creditors__tab${t.id === active ? " is-active" : ""}" data-tab="${t.id}">${t.label}</button>`
+										)
+										.join("")}
+								</div>
+								<div class="dana-creditors__grid">
+									${items
+										.map(
+											(it) => `
+										<div class="dana-creditors__card" title="${it.name}">
+											${it.logo ? `<img class="dana-creditors__logo" src="${it.logo}" alt="" width="60" height="60"/>` : `<span class="dana-creditors__fallback">${it.name.slice(0, 1)}</span>`}
+											<span class="dana-creditors__name">${it.name}</span>
+										</div>`
+										)
+										.join("")}
+								</div>
+							</div>`;
+						el.querySelectorAll("[data-tab]").forEach((btn) => {
+							btn.addEventListener("click", () => {
+								active = btn.getAttribute("data-tab");
+								paint();
+							});
+						});
+					}
+					paint();
+				} catch (err) {
+					el.innerHTML = `<p class="dana-creditors__empty">خطا در بارگذاری تأمین‌کنندگان</p>`;
+					console.error(err);
+				}
+			}
+
 			function showTokens(kind) {
 				const samples = {
 					a: `<<<MAGIC:CREDIT_SCORE_BANDS {"score":610,"variant":"vertical"}>>>`,
 					b: `<<<MAGIC:CREDIT_SCORE_GAUGE {"score":720,"band":"خوب","variant":"ring"}>>>`,
 					clarify: `<<<MAGIC:CLARIFY_OPTIONS {"title":"لطفاً نوع گزارش را انتخاب کنید"}>>>`,
+					timeline: `<<<MAGIC:COMPANY_TIMELINE {"variant":"vertical"}>>>`,
+					shareholders: `<<<MAGIC:SHAREHOLDERS {}>>>`,
+					creditors: `<<<MAGIC:CREDITORS {}>>>`,
 					pair: `امتیاز شما محاسبه شد.\n<<<MAGIC:CREDIT_SCORE_GAUGE {"score":610,"variant":"ring"}>>>\n<<<MAGIC:CLARIFY_OPTIONS {}>>>`
 				};
 				tokenOut.textContent = samples[kind] || samples.a;
@@ -354,16 +531,22 @@
 			const mountA = document.getElementById("mount-a");
 			const mountB = document.getElementById("mount-b");
 			const mountC = document.getElementById("mount-c");
+			const mountT = document.getElementById("mount-t");
+			const mountS = document.getElementById("mount-s");
+			const mountR = document.getElementById("mount-r");
 
-			function boot(scoreA = 610, scoreB = 720) {
-				renderLadder(mountA, scoreA);
-				renderRing(mountB, scoreB);
+			async function boot() {
+				renderLadder(mountA, 610);
+				renderRing(mountB, 720);
 				renderClarify(mountC);
+				renderTimeline(mountT);
+				await renderShareholders(mountS);
+				await renderCreditors(mountR);
 				showTokens("pair");
 			}
 
 			document.querySelectorAll("[data-demo]").forEach((btn) => {
-				btn.addEventListener("click", () => {
+				btn.addEventListener("click", async () => {
 					const kind = btn.getAttribute("data-demo");
 					if (kind === "a") {
 						renderLadder(mountA, 610);
@@ -374,8 +557,17 @@
 					} else if (kind === "clarify") {
 						renderClarify(mountC);
 						showTokens("clarify");
+					} else if (kind === "timeline") {
+						renderTimeline(mountT);
+						showTokens("timeline");
+					} else if (kind === "shareholders") {
+						await renderShareholders(mountS);
+						showTokens("shareholders");
+					} else if (kind === "creditors") {
+						await renderCreditors(mountR);
+						showTokens("creditors");
 					} else {
-						boot(610, 610);
+						await boot();
 						showTokens("pair");
 					}
 				});
