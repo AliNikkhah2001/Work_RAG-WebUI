@@ -18,7 +18,7 @@
 		temporaryChatEnabled,
 		selectedFolder
 	} from '$lib/stores';
-	import { danaThemePack, isDanaBranded } from '$lib/dana/theme';
+	import { danaThemePack, isDanaBranded, isDanaRedesign } from '$lib/dana/theme';
 	import { refreshChatList, refreshFolderChatLists } from '$lib/stores/chatList';
 	import { sanitizeResponseContent, extractCurlyBraceWords } from '$lib/utils';
 	import {
@@ -30,6 +30,8 @@
 	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
 
 	import Suggestions from './Suggestions.svelte';
+	import DanaBrandHeader from '$lib/components/dana/DanaBrandHeader.svelte';
+	import DanaFeatureCards from '$lib/components/dana/DanaFeatureCards.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import EyeSlash from '$lib/components/icons/EyeSlash.svelte';
 	import MessageInput from './MessageInput.svelte';
@@ -195,6 +197,12 @@
 						</div>
 					</div>
 
+					{#if $isDanaRedesign}
+						<div class="dana-home w-full flex flex-col items-center gap-6">
+							<DanaBrandHeader />
+							<DanaFeatureCards onSelect={(e) => dispatch('submit', e)} />
+						</div>
+					{:else}
 					<h2
 						class="{$isDanaBranded
 							? 'dana-empty-title text-4xl @sm:text-5xl font-bold tracking-tight'
@@ -219,6 +227,7 @@
 							{$i18n.t('Hello, {{name}}', { name: $user?.name })}
 						{/if}
 					</h2>
+					{/if}
 				</div>
 
 				<div class="flex mt-1 mb-2">
