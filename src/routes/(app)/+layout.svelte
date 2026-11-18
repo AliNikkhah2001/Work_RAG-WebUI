@@ -43,9 +43,10 @@
 		chatId,
 		chats
 	} from '$lib/stores';
-	import { isDanaBranded } from '$lib/dana/theme';
+	import { isDanaBranded, isDanaRedesign } from '$lib/dana/theme';
 
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
+	import DanaSidebar from '$lib/components/dana/DanaSidebar.svelte';
 	import SettingsModal from '$lib/components/chat/SettingsModal.svelte';
 	import ChangelogModal from '$lib/components/ChangelogModal.svelte';
 	import AccountPending from '$lib/components/layout/Overlay/AccountPending.svelte';
@@ -491,7 +492,9 @@
 			{#if !['user', 'admin'].includes($user?.role)}
 				<AccountPending />
 			{:else}
-				{#if !$isDanaBranded}
+				{#if $isDanaRedesign}
+					<DanaSidebar />
+				{:else if !$isDanaBranded}
 					<Sidebar />
 				{/if}
 

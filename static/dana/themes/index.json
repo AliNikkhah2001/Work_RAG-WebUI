@@ -1,6 +1,7 @@
 {
-  "default": "ics-maroon",
+  "default": "ics-redesign",
   "themes": [
+    "ics-redesign",
     "ics-maroon",
     "ics-dark",
     "ics-gauge",

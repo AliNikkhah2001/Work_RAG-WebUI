@@ -1,9 +1,28 @@
 export type DanaThemeId = 'ics-maroon' | 'ics-dark' | 'vanilla' | string;
 
+export type DanaFeatureCard = {
+	icon?: 'chat' | 'sparkles' | string;
+	title: string;
+	body?: string;
+	/** Sent as the user's message when the card is clicked. */
+	prompt?: string;
+};
+
 export type DanaThemePack = {
 	id: DanaThemeId;
 	label_fa: string;
 	label_en: string;
+	/** 'redesign' enables the 2026 shell: right sidebar, wordmark header, feature cards. */
+	layout?: 'classic' | 'redesign';
+	/** Overrides the default Dana text scale (1.28). */
+	text_scale?: number;
+	redesign?: {
+		wordmark?: string;
+		footer_logo?: string;
+		/** Text-only wordmark at the bottom of the history sidebar. */
+		sidebar_logo?: string;
+		feature_cards?: DanaFeatureCard[];
+	};
 	dir: 'rtl' | 'ltr' | null;
 	locale: string | null;
 	fonts: { sans: string; cssUrl?: string } | null;

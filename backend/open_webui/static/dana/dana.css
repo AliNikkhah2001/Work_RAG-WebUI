@@ -1754,3 +1754,1303 @@ html.dana-theme[data-dana-theme='ics-mono'] #chat-container {
   background: rgba(0,0,0,0.2);
 }
 .dana-anim-logo__label { margin: 0.65rem 0 0; font-size: 0.9rem; opacity: 0.9; }
+
+/* ===== ics-redesign theme (ported from teammate Dana-Front) ===== */
+/* ===================================================================
+   Redesign shell (theme pack "layout": "redesign")
+   Values from Figma file gXP3LKXoa0ftBwf5cGhZtL (Desktop 2/3/4).
+   =================================================================== */
+
+html.dana-theme[data-dana-layout='redesign'] {
+  --dana-r-surface: var(--dana-surface, #fdf1f6);
+  --dana-r-line: var(--dana-line, #daa5bd);
+  --dana-r-text: var(--dana-text, #4a5565);
+  --dana-r-ink: #0a0a0a;
+  --dana-r-gray8: #434343;
+  --dana-r-primary: var(--dana-primary, #910047);
+  --dana-r-shadow: 0px 10px 15px -3px #0000001a;
+  font-size: 100%;
+}
+
+html.dana-theme[data-dana-layout='redesign'] body,
+html.dana-theme[data-dana-layout='redesign'] .app > div {
+  background-color: var(--dana-r-surface) !important;
+  background-image: var(--dana-pattern, none) !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--dana-r-text);
+  font-weight: 500;
+}
+
+/* --- Sidebar (left edge, 283px) ------------------------------------ */
+/* Shell owns the layout slot; its width animates on toggle while the panel inside
+   stays 283px and is pinned to the shell's right edge, so it slides out under the clip. */
+.dana-sidebar-shell {
+  order: 99; /* RTL flex row: last child sits on the left like the design */
+  flex: 0 0 283px;
+  width: 283px;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.dana-sidebar-shell.is-mobile {
+  display: contents;
+}
+
+.dana-sidebar {
+  flex: 0 0 283px;
+  width: 283px;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 17px 24px 30px;
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.dana-sidebar.is-mobile {
+  position: fixed;
+  inset-block: 0;
+  left: 0;
+  right: auto;
+  z-index: 60;
+  max-width: 86vw;
+  box-shadow: var(--dana-r-shadow);
+}
+
+.dana-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: rgba(30, 0, 15, 0.18);
+}
+
+.dana-sidebar__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-inline-start: -1px;
+}
+
+.dana-sidebar__tools {
+  display: flex;
+  gap: 27px;
+}
+
+.dana-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  color: var(--dana-r-gray8);
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.dana-icon-btn:hover {
+  color: var(--dana-r-primary);
+}
+
+.dana-icon-btn:focus-visible,
+.dana-sidebar__new:focus-visible,
+.dana-sidebar__item:focus-visible,
+.dana-card:focus-visible,
+.dana-composer-send:focus-visible,
+.dana-composer-icon:focus-visible {
+  outline: 2px solid var(--dana-r-primary);
+  outline-offset: 2px;
+}
+
+.dana-sidebar__new {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  align-self: flex-start;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 20px;
+  color: var(--dana-r-gray8);
+  transition: background-color 0.15s ease;
+}
+
+.dana-sidebar__new:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.dana-sidebar__heading {
+  margin-top: 20px;
+  padding: 0 8px;
+  font-size: 20px;
+  line-height: 34px;
+  color: var(--dana-r-gray8);
+}
+
+.dana-sidebar__list {
+  margin-top: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scrollbar-width: thin;
+}
+
+.dana-sidebar__item {
+  display: block;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 27px;
+  color: var(--dana-r-gray8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.15s ease;
+}
+
+.dana-sidebar__item:hover {
+  background: rgba(0, 0, 0, 0.035);
+}
+
+.dana-sidebar__item.is-active {
+  background: #ebebeb;
+}
+
+.dana-sidebar__more {
+  padding: 6px 8px;
+  color: var(--dana-r-text);
+}
+
+.dana-sidebar__empty {
+  padding: 8px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #8a8a8a;
+}
+
+.dana-sidebar__foot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding-top: 16px;
+}
+
+.dana-sidebar__logo {
+  width: 176px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.dana-sidebar__avatar {
+  display: inline-flex;
+  border-radius: 9999px;
+}
+
+.dana-sidebar__avatar img {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  object-fit: cover;
+}
+
+.dana-sidebar-rail {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 40;
+  display: flex;
+  gap: 27px;
+}
+
+/* --- Brand header ("دانا" wordmark + tagline) ---------------------- */
+.dana-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 268px;
+  max-width: 100%;
+  padding: 16px;
+}
+
+.dana-brand__wordmark {
+  width: 146px;
+  height: 48px;
+  user-select: none;
+}
+
+.dana-brand__fallback {
+  font-size: 48px;
+  line-height: 48px;
+  color: #010101;
+}
+
+.dana-brand__tagline {
+  /* 22px glyphs on a 20px line: descenders overflow the line box. Padding gives them room
+     inside any overflow:hidden collapse; the negative margin keeps the layout unchanged. */
+  margin: -6px 0;
+  padding: 6px 0;
+  font-size: 22px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--dana-r-text);
+  white-space: nowrap;
+}
+
+.dana-navbar {
+  position: relative;
+  z-index: 30;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 56px;
+  padding: 59px 16px 12px;
+}
+
+/* Desktop chat: brand shrinks into a slim top bar once the thread scrolls
+   (.is-scrolled, set in Navbar.svelte). Mobile already uses the compact bar. */
+@media (min-width: 768px) {
+  .dana-navbar:not(.dana-navbar--home) {
+    transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dana-navbar:not(.dana-navbar--home) .dana-brand {
+    transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1), gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dana-navbar:not(.dana-navbar--home) .dana-brand__wordmark {
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dana-navbar:not(.dana-navbar--home) .dana-brand__tagline {
+    max-height: 32px;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  }
+  .dana-navbar.is-scrolled:not(.dana-navbar--home) {
+    padding-top: 16px;
+    padding-bottom: 8px;
+  }
+  .dana-navbar.is-scrolled .dana-brand {
+    padding: 0;
+    gap: 0;
+  }
+  .dana-navbar.is-scrolled .dana-brand__wordmark {
+    width: 120px;
+    height: 40px;
+  }
+  .dana-navbar.is-scrolled .dana-brand__tagline {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .dana-navbar,
+  .dana-navbar .dana-brand,
+  .dana-navbar .dana-brand__wordmark,
+  .dana-navbar .dana-brand__tagline {
+    transition: none;
+  }
+}
+
+/* Wide screens: ChatTabs offsets the main pane 36px for its tab bar, which the
+   redesign hides. Without this the navbar (and logo) sit 36px below the sidebar button. */
+html.dana-theme[data-dana-layout='redesign'] [data-main-chat-pane][data-panel-group] {
+  top: 0 !important;
+  height: 100% !important;
+}
+
+/* Home has no header content; keep only a thin strip for the action buttons. */
+.dana-navbar.dana-navbar--home {
+  min-height: 0;
+  padding: 8px 16px 0;
+}
+
+.dana-navbar--home .dana-brand {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* Chat pages: compact top bar (sidebar button + small wordmark). */
+  /* Logo top = 16px on every page so it lines up with the shrunk home brand
+     and the 40px rail buttons (also top: 16px). */
+  .dana-navbar:not(.dana-navbar--home) {
+    align-items: center;
+    min-height: 68px;
+    padding: 16px 64px 12px;
+  }
+  /* Home strip takes no height, so the sticky brand starts at the very top. */
+  .dana-navbar.dana-navbar--home {
+    padding: 0;
+  }
+  .dana-navbar:not(.dana-navbar--home) .dana-brand {
+    width: auto;
+    padding: 0;
+    gap: 0;
+  }
+  /* Same size as the shrunk home brand (.dana-home.is-scrolled). */
+  .dana-navbar .dana-brand__wordmark {
+    width: 120px;
+    height: 40px;
+  }
+  .dana-navbar .dana-brand__tagline {
+    display: none;
+  }
+
+  /* Home: brand + composer form a frosted sticky header; cards scroll under it.
+     Once scrolled (.is-scrolled, set in Placeholder.svelte) the brand shrinks
+     into the top row beside the sidebar button. */
+  .dana-home.dana-home {
+    padding-top: 0;
+  }
+  .dana-home > div:has(.dana-home__composer) {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: 0 -24px;
+    padding: 56px 24px 20px;
+    width: calc(100% + 48px);
+    transition: padding 0.25s ease, background-color 0.25s ease;
+  }
+  .dana-home.is-scrolled > div:has(.dana-home__composer) {
+    background-color: rgba(253, 241, 246, 0.9);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 12px), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 12px), transparent);
+  }
+  .dana-home .dana-brand {
+    transition: padding 0.25s ease, gap 0.25s ease;
+  }
+  .dana-home .dana-brand__wordmark {
+    transition: width 0.25s ease, height 0.25s ease;
+  }
+  .dana-home .dana-brand__tagline {
+    max-height: 32px;
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.2s ease;
+  }
+  .dana-home.is-scrolled > div:has(.dana-home__composer) {
+    padding-top: 16px;
+  }
+  .dana-home.is-scrolled .dana-brand {
+    padding: 0 0 12px;
+    gap: 0;
+  }
+  .dana-home.is-scrolled .dana-brand__wordmark {
+    width: 120px;
+    height: 40px;
+  }
+  .dana-home.is-scrolled .dana-brand__tagline {
+    max-height: 0;
+    opacity: 0;
+  }
+  .dana-home .dana-home__composer {
+    margin-top: 16px;
+  }
+  html.dana-theme[data-dana-layout='redesign'] .dana-home .dana-home__composer #message-input-container {
+    min-height: 0;
+    background: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  /* Floating sidebar button: bare icon, no chip. */
+  .dana-sidebar-rail {
+    top: 16px;
+    left: 12px;
+  }
+  .dana-sidebar-rail .dana-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  .dana-navbar__actions {
+    top: 20px;
+    inset-inline-end: 16px;
+  }
+}
+
+.dana-navbar__actions {
+  position: absolute;
+  top: 24px;
+  inset-inline-end: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dana-navbar__actions #temporary-chat-button,
+.dana-navbar__actions #chat-context-menu-button {
+  display: none;
+}
+
+html.dana-theme[data-dana-layout='redesign'] #messages-container .pt-18,
+html.dana-theme[data-dana-layout='redesign'] #messages-container .pt-4 {
+  padding-top: 0.75rem;
+}
+
+html.dana-theme[data-dana-layout='redesign'] #messages-container {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 24px);
+}
+
+/* Chat column: 1020px like the design */
+html.dana-theme[data-dana-layout='redesign'] #chat-pane .max-w-\[58rem\] {
+  max-width: calc(1020px + 1.75rem) !important;
+}
+
+/* --- Home (empty state) ------------------------------------------- */
+.dana-home {
+  min-height: 100%;
+  max-width: 1273px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 24px 11px;
+}
+
+/* Auto margins above the brand and above the footer center the main group vertically. */
+.dana-home > div:first-child {
+  font-size: 1rem;
+  margin-top: auto;
+}
+
+.dana-home__composer {
+  margin-top: 59px;
+  max-width: 1225px;
+  font-size: 1rem;
+  text-align: start;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-home__composer #message-input-container {
+  min-height: 219px;
+}
+
+.dana-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 268px);
+  justify-content: center;
+  gap: 17px;
+  width: 100%;
+  margin-top: 59px;
+}
+
+.dana-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 208px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--dana-r-shadow);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: dana-card-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+
+.dana-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 14px 20px -3px #0000001f;
+}
+
+.dana-card:active {
+  transform: translateY(-1px);
+}
+
+.dana-card__icon {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  color: var(--dana-r-primary);
+}
+
+.dana-card__title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 800;
+  color: var(--dana-r-ink);
+}
+
+.dana-card__body {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--dana-r-text);
+}
+
+@keyframes dana-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dana-home__footer {
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+.dana-home__footer img {
+  width: 256px;
+  height: 72px;
+  margin-inline: auto;
+}
+
+@media (max-width: 920px) {
+  .dana-cards {
+    grid-template-columns: minmax(0, 420px);
+    gap: 14px;
+    margin-top: 32px;
+  }
+  .dana-card {
+    height: auto;
+    padding: 24px 16px;
+  }
+  .dana-home {
+    padding-top: 24px;
+  }
+  .dana-home__composer {
+    margin-top: 32px;
+  }
+  html.dana-theme[data-dana-layout='redesign'] .dana-home__composer #message-input-container {
+    min-height: 150px;
+  }
+}
+
+/* --- Composer ------------------------------------------------------ */
+html.dana-theme[data-dana-layout='redesign'] #message-input-container {
+  justify-content: space-between;
+  min-height: 150px;
+  padding: 24px !important;
+  border: 1px solid #c9c9c9 !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  backdrop-filter: blur(8px) !important;
+  box-shadow: none !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] #message-input-container:focus-within {
+  border-color: #a9a9a9 !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] #chat-input,
+html.dana-theme[data-dana-layout='redesign'] #chat-input *,
+html.dana-theme[data-dana-layout='redesign'] #chat-input *::before {
+  font-size: 14px !important;
+  line-height: 20px;
+  color: #000;
+}
+
+html.dana-theme[data-dana-layout='redesign'] #chat-input .is-empty::before,
+html.dana-theme[data-dana-layout='redesign'] #chat-input [data-placeholder]::before {
+  color: #6a7282;
+}
+
+.dana-composer-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-top: 12px;
+}
+
+.dana-composer-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: var(--dana-r-primary);
+  color: #fff;
+  transition: transform 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+}
+
+.dana-composer-send:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.dana-composer-send:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.dana-composer-send:disabled {
+  cursor: default;
+}
+
+.dana-composer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  color: #424242;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.dana-composer-icon:hover {
+  color: var(--dana-r-primary);
+  background: rgba(145, 0, 71, 0.05);
+}
+
+/* --- Messages ------------------------------------------------------ */
+html.dana-theme[data-dana-layout='redesign'] .user-message .justify-end {
+  justify-content: flex-start;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-bubble {
+  max-width: min(100%, 582px) !important;
+  padding: 16px !important;
+  border-radius: 16px !important;
+  background: var(--dana-bubble-bg, #910047) !important;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-bubble,
+html.dana-theme[data-dana-layout='redesign'] .dana-user-bubble * {
+  color: var(--dana-bubble-fg, #fff) !important;
+  font-size: 20px !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] div.shrink-0:has(> .assistant-message-profile-image),
+html.dana-theme[data-dana-layout='redesign'] h3:has(#response-message-model-name) {
+  display: none !important;
+}
+
+/* Bot answers span the full message column (same width as the composer). */
+html.dana-theme[data-dana-layout='redesign'] .dana-assistant-col {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .chat-assistant .markdown-prose {
+  color: #000;
+  font-size: 20px;
+  line-height: normal;
+}
+
+/* Figma: answer and user-bubble text are w_Ray Medium 20px, normal leading.
+   Prose styles set p/li smaller, so target them directly (MAGIC widgets keep their own sizes). */
+html.dana-theme[data-dana-layout='redesign'] .chat-assistant .markdown-prose :is(p, li, td, th, blockquote):not([class*='dana-']),
+html.dana-theme[data-dana-layout='redesign'] .dana-user-bubble :is(p, .markdown-prose) {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .chat-assistant .markdown-prose :is(p, li):not([class*='dana-']) {
+  color: #000;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons {
+  gap: 16px;
+  margin-top: 4px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons > *:not([data-dana-keep]):not(:has([data-dana-keep])) {
+  display: none !important;
+}
+
+/* MAGIC credit-score gauge: not in Figma; restyled with the redesign card tokens
+   (same glass card as the home feature cards, Ray type, fit-to-content width). */
+html.dana-theme[data-dana-layout='redesign'] .dana-score-gauge {
+  width: fit-content;
+  max-width: 100%;
+  gap: 24px;
+  padding: 20px 24px;
+  border: 0;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 15px -3px #0000001a;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-score-gauge__score {
+  font-family: 'Ray FaNum', var(--dana-font-sans, inherit);
+  font-weight: 800;
+  color: #0a0a0a;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-score-gauge__label {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: normal;
+  color: #0a0a0a;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-score-gauge__band {
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-score-gauge__range,
+html.dana-theme[data-dana-layout='redesign'] .dana-score-gauge__meta {
+  margin-top: 8px;
+  font-family: 'Ray FaNum', var(--dana-font-sans, inherit);
+  font-size: 14px;
+  color: #4a5565;
+  opacity: 1;
+}
+
+/* Hover: primary stroke, no grey chip. */
+html.dana-theme[data-dana-layout='redesign'] .buttons button[data-dana-keep]:hover {
+  background: transparent !important;
+  color: var(--dana-r-primary, #910047) !important;
+}
+
+/* Selected like / dislike: solid primary icon, no grey chip. */
+html.dana-theme[data-dana-layout='redesign'] .buttons button[data-dana-keep].is-rated {
+  background: transparent !important;
+  color: var(--dana-r-primary, #910047) !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons button[data-dana-keep].is-rated svg path {
+  fill: currentColor;
+}
+
+/* --- Feedback form (after like / dislike) --------------------------- */
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback {
+  margin-block: 16px;
+  padding: 24px;
+  border: 0 !important;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 15px -3px #0000001a;
+  color: #101010;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #101010;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__close {
+  display: inline-flex;
+  padding: 6px;
+  border-radius: 8px;
+  color: #646464;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__close:hover {
+  color: var(--dana-r-primary, #910047);
+  background: rgba(145, 0, 71, 0.06);
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__scale {
+  gap: 8px;
+  margin-top: 16px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__scale button {
+  font-family: 'Ray FaNum', var(--dana-font-sans, inherit);
+  font-size: 16px;
+  border: 1px solid var(--dana-r-line, #daa5bd);
+  background: var(--dana-chip-bg, #f9eef2);
+  color: #101010;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__scale button:hover:not(:disabled) {
+  border-color: var(--dana-r-primary, #910047);
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__scale button.is-selected {
+  border-color: var(--dana-r-primary, #910047);
+  background: var(--dana-r-primary, #910047);
+  color: #fff;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__scale button:disabled {
+  border-color: #e6e6e6;
+  background: rgba(255, 255, 255, 0.5);
+  color: #b8b8b8;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__legend {
+  font-family: 'Ray FaNum', var(--dana-font-sans, inherit);
+  font-size: 14px;
+  color: #646464;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__reasons {
+  gap: 8px;
+  margin-top: 12px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback > div:has(.dana-feedback__reasons) .dana-feedback__title {
+  margin-top: 24px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__reasons button {
+  padding: 6px 14px;
+  border: 1px solid var(--dana-r-line, #daa5bd);
+  border-radius: 12px;
+  background: var(--dana-chip-bg, #f9eef2);
+  color: #101010;
+  font-size: 14px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__reasons button:hover {
+  border-color: var(--dana-r-primary, #910047);
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__reasons button.is-selected {
+  border-color: var(--dana-r-primary, #910047);
+  background: var(--dana-r-primary, #910047);
+  color: #fff;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__comment {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid #c9c9c9;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  color: #101010;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__comment:focus {
+  border-color: var(--dana-r-line, #daa5bd);
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__footer {
+  align-items: center;
+  margin-top: 16px;
+}
+
+/* Model-evaluation tags and the openwebui.com review link are admin tooling. */
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__tags,
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__community {
+  display: none;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__footer {
+  justify-content: flex-start;
+}
+
+/* Primary action, same look as the composer send button. */
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__save,
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit #confirm-edit-message-button {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: var(--dana-send-bg, #910047) !important;
+  color: #fff !important;
+  font-size: 14px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback__save:hover,
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit #confirm-edit-message-button:hover {
+  background: var(--dana-primary-shade, #6d0035) !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-feedback .max-w-80 {
+  max-width: 480px;
+}
+
+/* --- Scroll-to-bottom button (glass circle, primary arrow) ---------- */
+html.dana-theme[data-dana-layout='redesign'] .dana-scroll-bottom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--dana-r-line, #daa5bd) !important;
+  background: #fff !important;
+  box-shadow: 0 10px 15px -3px #0000001a;
+  color: var(--dana-r-primary, #910047);
+  transition: background-color 0.15s ease;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-scroll-bottom:hover {
+  background: var(--dana-chip-bg, #f9eef2) !important;
+}
+
+/* --- User message edit box ------------------------------------------ */
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit {
+  padding: 24px;
+  border: 1px solid #c9c9c9;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6) !important;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit:focus-within {
+  border-color: var(--dana-r-line, #daa5bd);
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit textarea {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+  color: #101010;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit > div:last-child {
+  align-items: center;
+  margin: 16px 0 0;
+}
+
+/* Edit offers only send + cancel. */
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit #save-edit-message-button {
+  display: none;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit #close-edit-message-button {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit #close-edit-message-button {
+  color: #646464 !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-edit #close-edit-message-button:hover {
+  background: rgba(145, 0, 71, 0.06) !important;
+  color: var(--dana-r-primary, #910047) !important;
+}
+
+/* User message hover row: time + edit + copy + delete (version arrows hidden). */
+html.dana-theme[data-dana-layout='redesign'] .dana-user-actions {
+  gap: 8px;
+  margin-top: 8px;
+  color: #646464;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-actions > *:not([data-dana-keep]):not(:has([data-dana-keep])) {
+  display: none !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-actions time[data-dana-keep] {
+  margin: 0 0 0 4px;
+  font-family: 'Ray FaNum', var(--dana-font-sans, inherit);
+  font-size: 14px;
+  color: #646464;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-actions button[data-dana-keep] {
+  width: 28px;
+  height: 28px;
+  padding: 5px;
+  border-radius: 8px;
+  color: #646464;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-user-actions button[data-dana-keep]:hover {
+  color: var(--dana-r-primary);
+  background: rgba(145, 0, 71, 0.06);
+}
+
+/* Figma: action row sits on the left, reading time, like, dislike from the left edge. */
+html.dana-theme[data-dana-layout='redesign'] .buttons {
+  direction: ltr;
+  justify-content: flex-start !important;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons > :has(time) {
+  order: -1;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons [data-dana-keep] {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  color: #646464;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons button[data-dana-keep] {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons button[data-dana-keep] svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Empty editor resolves dir="auto" to LTR; keep the Persian placeholder on the right. */
+html.dana-theme[data-dana-layout='redesign'] #chat-input .is-editor-empty {
+  direction: rtl;
+  text-align: right;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .buttons time {
+  direction: rtl;
+  unicode-bidi: isolate;
+  margin: 0;
+  font-family: 'Ray FaNum', var(--dana-font-sans, inherit);
+  font-weight: 400;
+  font-size: 16px;
+  color: #646464;
+}
+
+/* Follow-up suggestions as stacked chips (582px) */
+html.dana-theme[data-dana-layout='redesign'] .dana-followups__label,
+html.dana-theme[data-dana-layout='redesign'] .dana-followups hr {
+  display: none;
+}
+
+/* Pin RTL so chips hug the right edge even when the message resolves to LTR. */
+html.dana-theme[data-dana-layout='redesign'] .dana-followups {
+  margin-top: 32px;
+  direction: rtl;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-followups > div:last-child {
+  align-items: flex-start;
+  gap: 16px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-followups > div:last-child > *:not(hr) {
+  width: min(100%, 582px);
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-followups button {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--dana-r-line);
+  border-radius: 16px;
+  background: var(--dana-chip-bg, #f9eef2);
+  color: #101010;
+  font-size: 18px;
+  text-align: start;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-followups button .line-clamp-1 {
+  white-space: normal;
+  -webkit-line-clamp: 2;
+}
+
+html.dana-theme[data-dana-layout='redesign'] .dana-followups button:hover {
+  border-color: var(--dana-r-primary);
+  background: #f6e3eb;
+}
+
+/* --- Search modal (535px, no dim) ---------------------------------- */
+.dana-search-backdrop {
+  background: transparent !important;
+}
+
+.dana-search {
+  width: 535px !important;
+  max-width: calc(100vw - 24px) !important;
+  padding: 16px;
+  border: 0 !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--dana-r-shadow, 0px 10px 15px -3px #0000001a) !important;
+}
+
+.dana-search .dana-search__bar {
+  height: 37px;
+  padding: 0;
+  gap: 8px;
+}
+
+.dana-search .dana-search__bar input {
+  font-size: 16px;
+  color: #4a5565;
+  caret-color: #4a5565;
+}
+
+.dana-search .dana-search__bar input::placeholder {
+  color: #4a5565;
+}
+
+.dana-search .dana-search__close {
+  width: 37px;
+  height: 37px;
+  max-width: none;
+}
+
+.dana-search .dana-search__bar button:has(.dana-search__close) {
+  height: 37px;
+}
+
+.dana-search .border-t {
+  border-top: 0 !important;
+}
+
+.dana-search [aria-busy] {
+  height: 340px;
+}
+
+.dana-search [aria-busy] > div:first-child {
+  padding: 0;
+}
+
+.dana-search #workspace-search-results-label {
+  font-size: 14px;
+  line-height: 20px;
+  color: #4a5565;
+}
+
+.dana-search #workspace-search-results-label + span,
+.dana-search [role='option'] .sm\:block {
+  display: none !important;
+}
+
+.dana-search #workspace-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.dana-search [role='option'] {
+  min-height: 32px;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000;
+}
+
+.dana-search .dana-search__icon {
+  color: var(--dana-r-gray8, #434343);
+}
+
+/* --- Snackbar (svelte-sonner) — white card, brand accents ---------- */
+/* Toaster lives outside .app; vars override sonner's light/dark + richColors palettes. */
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toaster] {
+  --normal-bg: #fff;
+  --normal-border: var(--dana-r-line, #daa5bd);
+  --normal-text: #101010;
+  --success-bg: #fff;
+  --success-border: var(--dana-r-line, #daa5bd);
+  --success-text: #101010;
+  --info-bg: #fff;
+  --info-border: var(--dana-r-line, #daa5bd);
+  --info-text: #101010;
+  --warning-bg: #fff;
+  --warning-border: var(--dana-r-line, #daa5bd);
+  --warning-text: #101010;
+  --error-bg: #fff;
+  --error-border: var(--dana-r-line, #daa5bd);
+  --error-text: #101010;
+  --border-radius: 16px;
+  font-family: var(--dana-font-sans, inherit);
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast][data-styled='true'] {
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--dana-r-line, #daa5bd);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--dana-r-shadow, 0px 10px 15px -3px #0000001a);
+  color: #101010;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-title] {
+  font-weight: 500;
+  color: #101010;
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-description] {
+  color: #646464;
+}
+
+/* Icon carries the status color; primary for neutral/info. */
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-icon] {
+  color: var(--dana-r-primary, #910047);
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast][data-type='success'] [data-icon] {
+  color: #1f8a4c;
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast][data-type='warning'] [data-icon] {
+  color: #b86e00;
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast][data-type='error'] [data-icon] {
+  color: #c4161c;
+}
+
+/* Error keeps a brand-tinted surface so it reads as distinct without going full red. */
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast][data-type='error'] {
+  border-color: #e7b3b5;
+  background: rgba(255, 246, 246, 0.95);
+}
+
+/* Close: plain icon chip like the feedback form close, not sonner's floating badge. */
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-close-button] {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--dana-r-line, #daa5bd) !important;
+  background: #fff !important;
+  color: #646464 !important;
+  box-shadow: none;
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-close-button]:hover {
+  border-color: var(--dana-r-primary, #910047) !important;
+  background: var(--dana-chip-bg, #f9eef2) !important;
+  color: var(--dana-r-primary, #910047) !important;
+}
+
+/* Action / cancel buttons match the composer send button. */
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-button] {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: var(--dana-send-bg, #910047);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-button]:hover {
+  background: var(--dana-primary-shade, #6d0035);
+}
+
+html.dana-theme[data-dana-layout='redesign'] [data-sonner-toast] [data-cancel] {
+  border: 1px solid var(--dana-r-line, #daa5bd);
+  background: var(--dana-chip-bg, #f9eef2);
+  color: #101010;
+}

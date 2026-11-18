@@ -7,16 +7,17 @@ import type { DanaThemeId, DanaThemePack } from './types';
 export const DANA_THEME_IDS = [
 	'ics-dark',
 	'ics-maroon',
+	'ics-redesign',
 	'ics-gauge',
 	'ics-stair',
 	'ics-mono',
 	'vanilla'
 ] as const;
-export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-maroon';
+export const DANA_DEFAULT_THEME: DanaThemeId = 'ics-redesign';
 export const DANA_STORAGE_KEY = 'dana.theme_id';
 export const DANA_DEFAULT_VERSION_KEY = 'dana.theme_default_ver';
 /** Bump when shipping a new product default so stale localStorage is migrated once. */
-export const DANA_DEFAULT_VERSION = '5-maroon-white-default';
+export const DANA_DEFAULT_VERSION = '8-ics-redesign-default';
 const DANA_THEME_ALIASES: Record<string, DanaThemeId> = {};
 
 export const danaThemeId = writable<DanaThemeId>(DANA_DEFAULT_THEME);
@@ -71,13 +72,14 @@ export function resolveInitialDanaThemeId(): DanaThemeId {
 		/* non-browser */
 	}
 
-	// Migrate browsers when product default theme set changes
+	// Migrate browsers when the product default theme changes: a shipped default must
+	// supersede whatever the browser cached, so users land on the new default once.
+	let migrated = false;
 	try {
 		if (localStorage.getItem(DANA_DEFAULT_VERSION_KEY) !== DANA_DEFAULT_VERSION) {
 			localStorage.setItem(DANA_DEFAULT_VERSION_KEY, DANA_DEFAULT_VERSION);
-			if (!fromConfig && !fromQuery) {
-				localStorage.setItem(DANA_STORAGE_KEY, DANA_DEFAULT_THEME);
-			}
+			migrated = true;
+			localStorage.setItem(DANA_STORAGE_KEY, fromConfig || DANA_DEFAULT_THEME);
 		}
 		// Explicit ?dana_theme= sticks for subsequent visits
 		if (fromQuery) {
@@ -94,8 +96,12 @@ export function resolveInitialDanaThemeId(): DanaThemeId {
 			return null;
 		}
 	})();
-	// Prefer query/storage so gallery switcher can override container DEFAULT_INTERFACE_SETTINGS
-	const raw = (fromQuery || fromStorage || fromConfig || DANA_DEFAULT_THEME) as string;
+	// Migrated browsers take the shipped/container default; otherwise storage wins so the
+	// gallery switcher can override container DEFAULT_INTERFACE_SETTINGS.
+	const raw = (
+		fromQuery ||
+		(migrated ? fromConfig || DANA_DEFAULT_THEME : fromStorage || fromConfig || DANA_DEFAULT_THEME)
+	) as string;
 	const candidate = DANA_THEME_ALIASES[raw] || raw;
 	return (DANA_THEME_IDS as readonly string[]).includes(candidate)
 		? (candidate as DanaThemeId)
@@ -115,6 +121,7 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 		root.classList.remove('dana-theme');
 		root.classList.remove('dark');
 		root.removeAttribute('data-dana-theme');
+		root.removeAttribute('data-dana-layout');
 		removeStylesheet('dana-brand-css');
 		removeStylesheet('dana-font-css');
 		setTextScale(1);
@@ -124,15 +131,24 @@ export async function applyDanaTheme(id: DanaThemeId = resolveInitialDanaThemeId
 
 	root.classList.add('dana-theme');
 	root.setAttribute('data-dana-theme', pack.id);
+	const redesign = pack.layout === 'redesign';
+	if (redesign) {
+		root.setAttribute('data-dana-layout', 'redesign');
+	} else {
+		root.removeAttribute('data-dana-layout');
+	}
 	const darkShell = ['ics-dark', 'ics-gauge', 'ics-stair', 'ics-mono'].includes(pack.id);
 	if (!darkShell) {
 		root.classList.remove('dark');
 	}
 
 	// Immersive chat chrome: no left/right side panels
-	showSidebar.set(false);
+	// Redesign keeps its own history sidebar (DanaSidebar), so leave sidebar state alone.
+	if (!redesign) {
+		showSidebar.set(false);
+	}
 	showTabs.set(false);
-	setTextScale(1.28);
+	setTextScale(pack.text_scale ?? 1.28);
 
 	for (const [k, v] of Object.entries(pack.colors || {})) {
 		root.style.setProperty(k, v);
@@ -204,3 +220,9 @@ export async function setDanaThemeId(id: DanaThemeId): Promise<void> {
 }
 
 export const isDanaBranded = derived(danaThemeId, ($id) => $id !== 'vanilla');
+
+/** True when the active pack opts into the redesigned shell (layout: "redesign"). */
+export const isDanaRedesign = derived(
+	[danaThemeId, danaThemePack],
+	([$id, $pack]) => $id !== 'vanilla' && $pack?.layout === 'redesign'
+);

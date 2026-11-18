@@ -1,0 +1,164 @@
+{
+  "id": "ics-redesign",
+  "label_fa": "ICS ریدیزاین",
+  "label_en": "ICS Redesign",
+  "layout": "redesign",
+  "text_scale": 1,
+  "dir": "rtl",
+  "locale": "fa-IR",
+  "fonts": {
+    "sans": "\"RAY\", \"Ray\", \"Vazirmatn\", ui-sans-serif, system-ui, sans-serif",
+    "cssUrl": "/static/dana/brand/fonts/ray.css"
+  },
+  "colors": {
+    "--dana-primary": "#910047",
+    "--dana-primary-shade": "#6D0035",
+    "--dana-primary-deep": "#910047",
+    "--dana-primary-tint": "#c880a3",
+    "--dana-accent": "#a7336c",
+    "--dana-bg": "#ffffff",
+    "--dana-fg": "#1a1a1a",
+    "--dana-splash-bg": "#2C0015",
+    "--dana-input-border": "#DAA5BD",
+    "--dana-send-bg": "#910047",
+    "--dana-send-fg": "#ffffff",
+    "--dana-gauge-blue": "#1E88E5",
+    "--dana-gauge-green": "#00C853",
+    "--dana-gauge-yellow": "#FFD600",
+    "--dana-gauge-orange": "#FFAB00",
+    "--dana-gauge-red": "#FF5252",
+    "--dana-surface": "#FDF1F6",
+    "--dana-panel": "#FEFAFC",
+    "--dana-input-bg": "#FEF9FB",
+    "--dana-line": "#DAA5BD",
+    "--dana-text": "#4A5565",
+    "--dana-chip-bg": "#F9EEF2",
+    "--dana-bubble-bg": "#910047",
+    "--dana-bubble-fg": "#ffffff",
+    "--dana-pattern": "url('/static/dana/brand/redesign/background.png')"
+  },
+  "redesign": {
+    "wordmark": "/static/dana/brand/redesign/dana-wordmark.svg",
+    "footer_logo": "/static/dana/brand/redesign/ics-wordmark.svg",
+    "sidebar_logo": "/static/dana/brand/redesign/ics-wordmark-text.png",
+    "feature_cards": [
+      {
+        "icon": "chat",
+        "title": "تحلیل هوشمند گزارش اعتباری",
+        "body": "شناسایی دقیق دلایل کاهش امتیاز و ارائه راهکارهای کاربردی ارتقای رتبه",
+        "prompt": "گزارش اعتباری من را تحلیل کن؛ دلایل کاهش امتیاز چیست و چه راهکارهایی برای ارتقای رتبه دارم؟"
+      },
+      {
+        "icon": "sparkles",
+        "title": "مشاور ۲۴ ساعته قوانین و ضوابط",
+        "body": "پاسخ لحظه‌ای به ضوابط بانک مرکزی، اعتبارسنجی تسهیلات، چک صیادی و امور مالیاتی",
+        "prompt": "ضوابط بانک مرکزی درباره اعتبارسنجی تسهیلات و چک صیادی چیست؟"
+      },
+      {
+        "icon": "sparkles",
+        "title": "راهنمای سریع پیگیری و پشتیبانی",
+        "body": "اطلاع از تقویم به‌روزرسانی بانک‌ها و نحوه ثبت درخواست اصلاح اطلاعات نادرست",
+        "prompt": "اطلاعات بانک‌ها در گزارش اعتباری هر چند وقت به‌روز می‌شود و چگونه درخواست اصلاح اطلاعات نادرست ثبت کنم؟"
+      }
+    ]
+  },
+  "logo": "/static/dana/brand/icons/extracted/ics-maroon-logo-hor.png",
+  "favicon": "/static/dana/brand/icons/dana-icon-512.png",
+  "keyvisual": "/static/dana/brand/keyvisual/extracted/ics-keyvisual-blocks.png",
+  "splash": {
+    "webm": "/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor.webm",
+    "gif": "/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor-still.png"
+  },
+  "chat_background": {
+    "image": "/static/dana/brand/backgrounds/extracted/ics-letterhead-a4.png",
+    "gif": "/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor-still.png",
+    "webm": "/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor.webm",
+    "still": "/static/dana/brand/motion/web/ICS_Maroon-Logo_Hor-still.png"
+  },
+  "copy": {
+    "product_name": "دستیار اعتباری نوین ایران",
+    "subtitle": "شرکت اعتبارسنجی ایران",
+    "empty_title": "دستیار اعتباری نوین ایران",
+    "empty_body": "سؤال اعتبارسنجی خود را بپرسید.",
+    "tagline": "دستیار اعتباری نوین ایران",
+    "new_chat": "گفتگوی جدید",
+    "history_heading": "سابقه‌ی چت‌ها:",
+    "history_empty": "هنوز گفتگویی ندارید.",
+    "search_placeholder": "جستجو ...",
+    "search_heading": "گفتگوهای قبلی:",
+    "placeholder": "پیام خود را بنویسید…",
+    "send": "ارسال",
+    "feedback_useful": "مفید بود",
+    "feedback_not_useful": "مفید نبود",
+    "feedback_report": "گزارش خطا",
+    "suggestions_heading": "پیشنهادها"
+  },
+  "prompt_suggestions": [
+    {
+      "id": "dana-credit-score",
+      "title": [
+        "رتبه اعتباری",
+        "معنای نمره و بازه‌ها"
+      ],
+      "content": "رتبه اعتباری چیست و بازه‌های نمره اعتباری چگونه تفسیر می‌شوند؟"
+    },
+    {
+      "id": "dana-report-howto",
+      "title": [
+        "گزارش اعتباری",
+        "چگونه دریافت کنم؟"
+      ],
+      "content": "چگونه می‌توانم گزارش اعتباری خود را از شرکت اعتبارسنجی ایران دریافت کنم؟"
+    },
+    {
+      "id": "dana-company-check",
+      "title": [
+        "استعلام شرکت",
+        "وضعیت و سوابق"
+      ],
+      "content": "چگونه وضعیت اعتباری و سوابق یک شرکت را بررسی کنم؟"
+    },
+    {
+      "id": "dana-improve-score",
+      "title": [
+        "بهبود رتبه",
+        "اقدامات مؤثر"
+      ],
+      "content": "چه اقداماتی برای بهبود رتبه اعتباری مؤثر است؟"
+    },
+    {
+      "id": "dana-dispute",
+      "title": [
+        "اعتراض به گزارش",
+        "فرآیند اصلاح"
+      ],
+      "content": "در صورت وجود خطا در گزارش اعتباری، فرآیند اعتراض و اصلاح چگونه است؟"
+    },
+    {
+      "id": "dana-loan-eligibility",
+      "title": [
+        "وام و تسهیلات",
+        "نقش رتبه اعتباری"
+      ],
+      "content": "رتبه اعتباری چه نقشی در دریافت وام و تسهیلات بانکی دارد؟"
+    }
+  ],
+  "magic_variants": {
+    "gauge": "ring",
+    "bands": "vertical",
+    "timeline": "horizontal",
+    "table": "cards",
+    "list": "chips",
+    "logo": "maroon",
+    "clarify": "icons"
+  },
+  "component_tokens": {
+    "input_radius": "1rem",
+    "button_radius": "9999px",
+    "sidebar_accent": "#BA0C54"
+  },
+  "feedback": {
+    "show_useful": true,
+    "show_report": true
+  }
+}
