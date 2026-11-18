@@ -119,10 +119,7 @@
 
 <SearchModal
 	bind:show={$showSearch}
-	variant="dana"
 	kind="chat"
-	placeholder={copy.search_placeholder ?? ''}
-	heading={copy.search_heading ?? ''}
 	onClose={() => {
 		closeOnMobile();
 	}}
@@ -179,7 +176,7 @@
 			</div>
 			<!-- No account menu when auth is disabled (everyone is the shared default user). -->
 			{#if $user && $config?.features?.auth !== false}
-				<UserMenu role={$user?.role} profile={$config?.features?.enable_user_status ?? true}>
+				<UserMenu role={$user?.role} profile={true}>
 					<button type="button" class="dana-sidebar__avatar" aria-label={$i18n.t('User menu')}>
 						<img
 							src={`${WEBUI_API_BASE_URL}/users/${$user?.id}/profile/image`}
