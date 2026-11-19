@@ -52,11 +52,9 @@
 
 	function iconSrc(item: ClarifyItem): string {
 		const key = (item.icon || item.id || 'search').replace(/[^a-z0-9_-]/gi, '');
-		if (key === 'person' || key === 'legal' || key === 'cheque') {
-			// Prefer ICS24 white-bg PNGs; fall back to legacy magic icons.
-			return `${ICS_CLARIFY}/${key}.png`;
-		}
-		return `${ICON_BASE}/${key}.png`;
+		// Every clarify card has its own PNG in the ICS24 folder. The legacy
+		// magic folder only has person/legal/cheque, so the other six 404'd.
+		return `${ICS_CLARIFY}/${key}.png`;
 	}
 
 	function onImgError(ev: Event, item: ClarifyItem) {
